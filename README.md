@@ -5,7 +5,7 @@
 ***  
 ## <a name='quickMenu'>Quick Menu</a>
 1. [Quick Menu]('quickMenu')  
-2. [Setup]('setup')  
+2. [Setup]('#setup')  
 2.1 [Prerequisites]('prerequisites)  
 2.2 [Installation]('installation')  
 ***  
