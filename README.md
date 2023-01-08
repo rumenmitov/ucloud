@@ -5,8 +5,8 @@
 ***  
 ## Table of Contents
 1. [Table of Contents](https://github.com/rumenmitov/ucloud/blob/master/README.md#quick-menu)  
-2. [Setup](https://github.com/rumenmitov/ucloud/edit/master/README.md#setup)    
-2.1 [Prerequisites](https://github.com/rumenmitov/ucloud/edit/master/README.md#installation)  
+2. [Setup](https://github.com/rumenmitov/ucloud/blob/master/README.md#setup)    
+2.1 [Prerequisites](https://github.com/rumenmitov/ucloud/blob/master/README.md#installation)  
 2.2 [Installation](https://github.com/rumenmitov/ucloud/blob/master/README.md#installation)  
 ***  
 ## Setup
