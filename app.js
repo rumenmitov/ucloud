@@ -289,9 +289,61 @@ searchRouter.route('/:search_query')
     });
 });
 
+let renameRouter = express.Router();
+renameRouter.use(bodyParser.json());
+renameRouter.use(bodyParser.urlencoded({ extended: true }));
+renameRouter.route('/:renameOBJ')
+.put((req, res, next)=>{
+    let dir = req.body.path;
+    let prevDir = dir.split('/');
+    let removeCurrentDir = prevDir.pop();
+    let removeRoot = prevDir.splice(0, 1);
+    prevDir = prevDir.join('/');
+
+    let prevDirAbs = prevDir;
+    if (prevDir[0] != '/') prevDirAbs = '/' + prevDir;
+
+    let fileListPath = __dirname + '/public/users' + prevDirAbs + '/ucloud_files.txt';
+
+    let queryOBJ = JSON.parse(req.params['renameOBJ']);
+    queryOBJ.newFileName = queryOBJ.newFileName.replace(/ /g,'');
+    queryOBJ.extension = queryOBJ.extension.replace(/ /g,'');
+    if (queryOBJ.extension) queryOBJ.extension = '.' + queryOBJ.extension;
+    if (queryOBJ.type == 'file') queryOBJ.newFileName += queryOBJ.extension;
+
+    let allFilesArray = fs.readFileSync(fileListPath, 'utf-8').split('\r\n');
+
+    let dirAbs = dir;
+    if (dir[0] != '/') dirAbs = '/' + dir;
+    fs.rename(__dirname + '/public/users' + dirAbs, __dirname + '/public/users' + prevDirAbs + '/' + queryOBJ.newFileName, (err)=>{
+        if (err) console.log(err);
+    });
+    
+    for ( let item in allFilesArray ) {
+        if (path.basename(allFilesArray[item]) == queryOBJ.query) {
+            let removed = allFilesArray.splice(item, 1, prevDir + '/' + queryOBJ.newFileName);
+        }
+    }
+
+    if (allFilesArray.length > 0) {
+        for ( let fileName in allFilesArray) {
+            if (fileName == "0") {
+                fs.writeFileSync(fileListPath, allFilesArray[fileName], { encoding: 'utf-8'});
+            } else {
+                fs.writeFileSync(fileListPath, '\r\n' + allFilesArray[fileName], { encoding: 'utf-8', flag: 'a' });
+            }
+        };
+    } else {
+        fs.rm(fileListPath, (err)=> {
+            if (err) console.log(err);
+        });
+    }
+    res.send(`File renamed successfully`);
+})
+
 let deleteRouter = express.Router();
-deleteRouter.use(bodyParser.json())
-deleteRouter.use(bodyParser.urlencoded({ extended: true }))
+deleteRouter.use(bodyParser.json());
+deleteRouter.use(bodyParser.urlencoded({ extended: true }));
 deleteRouter.route('/:deleteOBJ')
 .delete((req, res)=>{
     let dir = req.body.path;
@@ -377,6 +429,7 @@ let backend = express()
 .use('/upload', uploadRouter)
 .use('/mkdir', mkdirRouter)
 .use('/search', searchRouter)
+.use('/rename', renameRouter)
 .use('/delete', deleteRouter);
 https.createServer(sslCredentials, backend).listen(backendPort);
 

@@ -115,6 +115,14 @@ function displayFiles(responseArray) {
             fileBox.appendChild(downloadLink);
         }
 
+        let renameButton = document.createElement('button');
+        renameButton.innerText = 'Rename';
+        renameButton.id = fileName;
+        renameButton.link = file.linkUrl;
+        renameButton.addEventListener('click', renameFile);
+        fileBox.appendChild(renameButton);
+        fileBox.appendChild(document.createElement('br'));
+
         let deleteBtn = document.createElement('button');
         deleteBtn.innerText = 'Delete';
         deleteBtn.id = fileName;
@@ -122,6 +130,35 @@ function displayFiles(responseArray) {
         deleteBtn.addEventListener('click', deleteFile);
         fileBox.appendChild(deleteBtn);
     });
+}
+
+function renameFile(event) {
+    let extensionArray = event.target.id.split('.');
+    let extension = '';
+    let type = 'directory';
+    if (extensionArray.length > 1) {
+        extension = extensionArray[extensionArray.length-1];
+        type = 'file';
+    }
+
+    let newFileName = prompt('Enter new file name:');
+    if (type == 'directory') {
+        if (newFileName.split('.')[1]) alert('Since this is a directory, everything after the first dot will be dropped');
+        newFileName = newFileName.split('.')[0];
+    }
+
+    let renameRequest = new XMLHttpRequest();
+        
+        let renameOBJ = JSON.stringify({ query: event.target.id, newFileName: newFileName, type: type, extension: extension });
+
+        renameRequest.open(`put`, `https://192.168.178.86:${port}/rename/${renameOBJ}`);
+        renameRequest.setRequestHeader("Content-type", "application/json");
+        renameRequest.send(JSON.stringify({ path: event.target.link }));
+
+        renameRequest.onload = function() {
+            alert(this.responseText);
+            location.href = `https://192.168.178.86/homePage/homePage.html?pwd=${currentDir}`;
+        }
 }
 
 function deleteFile(event) {
