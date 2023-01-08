@@ -212,7 +212,7 @@ mkdirRouter.route('/')
 
     let removeCurrentDir = dir.split('/').pop();
 
-    let name = req.body.folderName;
+    let name = req.body.folderName.replace(/ /g,'');
 
     if (path.extname(name)) {
         res.send(`Folders cannot have extensions in their name. Please try again without the dot: <a href='https://192.168.178.86/homePage/homePage.html?pwd=${req.body.path}'>Back to site</a>`);
