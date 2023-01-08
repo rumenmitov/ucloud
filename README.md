@@ -9,7 +9,7 @@
 2.1 [Prerequisites]('prerequisites)  
 2.2 [Installation]('installation')  
 ***  
-## <a name='setup'>Setup  </a>
+## Setup
 ### <a name='prerequisites'>Prerequisites</a>
 - [x] Node v18+ (https://nodejs.org/en/download/)
 - [x] npm v9+
