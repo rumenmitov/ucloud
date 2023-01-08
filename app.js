@@ -236,7 +236,7 @@ mkdirRouter.route('/')
 
         if (fs.existsSync(fileListPath)) fs.writeFileSync(fileListPath, '\r\n' + dir + '/' + name, { encoding: 'utf-8', flag: 'a' });
         else fs.writeFileSync(fileListPath, dir + '/' + name, { encoding: 'utf-8', flag: 'w' });
-        res.redirect(`https://192.168.178.86?pwd=${dir}`);
+        res.redirect(`https://192.168.178.86/homePage/homePage.html?pwd=${dir}`);
     });
 });
 
