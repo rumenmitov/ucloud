@@ -23,7 +23,7 @@
         <img title='Search' src="./images_website/search.png" id="searchImg" alt="search">
         <img title='New folder' src="./images_website/mkdirIcon.png" id="mkdirImg" alt="create folder">
     </div>
-    <form id='uploadForm' action="https://192.168.178.86:3000/upload/" method="post" enctype="multipart/form-data">
+    <form id='uploadForm' action="https://192.168.178.86:backendPort/upload/" method="post" enctype="multipart/form-data">
         <label for="userFile">Upload a File!</label>
         <input type="file" name="userFile" id="userFile" required>
         <label for="file_name">Rename File</label>
@@ -41,7 +41,7 @@
         <button id="clearSearchBtn">Clear</button>
         <img src="./images_website/close.png" id='closeSearch' alt="close">
     </div>
-    <form id="folderForm" method="post" action="https://192.168.178.86:3000/mkdir/">
+    <form id="folderForm" method="post" action="https://192.168.178.86:backendPort/mkdir/">
         <label for="folderName">Create a new folder:</label>
         <input type="text" name="folderName" id="folderName" required>
         <label for="path">Location:</label>

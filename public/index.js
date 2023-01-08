@@ -4,7 +4,7 @@ if (pwd) currentDir = pwd;
 
 function getAllFiles(dir) {
     let xhttp = new XMLHttpRequest();
-    xhttp.open('post', `https://192.168.178.86:3000/home/`);
+    xhttp.open('post', `https://192.168.178.86:backendPort/home/`);
     xhttp.setRequestHeader("Content-type", "application/json");
     xhttp.send(dir);
     
@@ -134,7 +134,7 @@ function deleteFile(event) {
         
         let deleteOBJ = JSON.stringify({ query: event.target.id, type: targetType });
 
-        deleteRequest.open(`delete`, `https://192.168.178.86:3000/delete/${deleteOBJ}`);
+        deleteRequest.open(`delete`, `https://192.168.178.86:3100/delete/${deleteOBJ}`);
         deleteRequest.setRequestHeader("Content-type", "application/json");
         deleteRequest.send(JSON.stringify({ path: event.target.link }));
 

@@ -8,6 +8,7 @@ const  fs = require('fs'),
       cors = require('cors'),
       formidable = require('formidable'),
       find = require('find'),
+      replace = require('replace-in-file'),
       open = require('open');
 
 let homeRouter = express.Router();
@@ -225,6 +226,29 @@ for ( let i = 0; i < process.argv.length; i++ ) {
                 backendPort = 3000;
                 console.log('Port was not defined. Defaulting to port 3000\n'.red);
             }
+
+            let prevPort = fs.readFileSync(__dirname + '/port.txt', { encoding: 'utf-8' });
+
+            let changePortHtml = replace.sync({
+                files: __dirname + '/public/index.html',
+                from: `https://192.168.178.86:${prevPort}`,
+                to: `https://192.168.178.86:${backendPort}`
+            });
+            let changePortHtml2 = replace.sync({
+                files: __dirname + '/public/index.html',
+                from: `https://192.168.178.86:${prevPort}`,
+                to: `https://192.168.178.86:${backendPort}`
+            });
+            console.log(changePortHtml);
+            console.log(changePortHtml2);
+            let changePortJs = replace.sync({
+                files: __dirname + '/public/index.js',
+                from: `https://192.168.178.86:${prevPort}`,
+                to: `https://192.168.178.86:${backendPort}`
+            });
+            console.log(changePortJs);
+            fs.writeFileSync(__dirname + '/port.txt', backendPort, { encoding: 'utf-8', flag: 'w' });
+            console.clear();
         } catch (e) {
             console.log(e);
         }
