@@ -229,24 +229,13 @@ for ( let i = 0; i < process.argv.length; i++ ) {
 
             let prevPort = fs.readFileSync(__dirname + '/port.txt', { encoding: 'utf-8' });
 
-            let changePortHtml = replace.sync({
-                files: __dirname + '/public/index.html',
-                from: `https://192.168.178.86:${prevPort}`,
-                to: `https://192.168.178.86:${backendPort}`
+            let changePort = replace.sync({
+                files: __dirname + '/public/index.*',
+                from: `const port = ${prevPort}`,
+                to: `const port = ${backendPort}`
             });
-            let changePortHtml2 = replace.sync({
-                files: __dirname + '/public/index.html',
-                from: `https://192.168.178.86:${prevPort}`,
-                to: `https://192.168.178.86:${backendPort}`
-            });
-            console.log(changePortHtml);
-            console.log(changePortHtml2);
-            let changePortJs = replace.sync({
-                files: __dirname + '/public/index.js',
-                from: `https://192.168.178.86:${prevPort}`,
-                to: `https://192.168.178.86:${backendPort}`
-            });
-            console.log(changePortJs);
+            console.log(changePort);
+            
             fs.writeFileSync(__dirname + '/port.txt', backendPort, { encoding: 'utf-8', flag: 'w' });
             console.clear();
         } catch (e) {

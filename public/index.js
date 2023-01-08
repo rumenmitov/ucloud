@@ -2,9 +2,11 @@ let pwd = (location.href).split('?pwd=')[1];
 let currentDir = 'home';
 if (pwd) currentDir = pwd; 
 
+const port = 3000;
+
 function getAllFiles(dir) {
     let xhttp = new XMLHttpRequest();
-    xhttp.open('post', `https://192.168.178.86:backendPort/home/`);
+    xhttp.open('post', `https://192.168.178.86:${port}/home/`);
     xhttp.setRequestHeader("Content-type", "application/json");
     xhttp.send(dir);
     
@@ -134,7 +136,7 @@ function deleteFile(event) {
         
         let deleteOBJ = JSON.stringify({ query: event.target.id, type: targetType });
 
-        deleteRequest.open(`delete`, `https://192.168.178.86:3100/delete/${deleteOBJ}`);
+        deleteRequest.open(`delete`, `https://192.168.178.86:${port}/delete/${deleteOBJ}`);
         deleteRequest.setRequestHeader("Content-type", "application/json");
         deleteRequest.send(JSON.stringify({ path: event.target.link }));
 
@@ -151,6 +153,10 @@ window.onload = () => {
     document.querySelector('#logo').addEventListener('click', function() {
         location.href = 'https://192.168.178.86';
     });
+
+    document.querySelector('#uploadForm').addEventListener('load', function(e) {
+        e.target.action = `https://192.168.178.86:${port}/upload/`
+    })
 
     document.querySelector('#filePath').addEventListener('click', (e)=>{
         e.target.value = currentDir;
@@ -181,7 +187,7 @@ window.onload = () => {
         if (!search_query) return getAllFiles(JSON.stringify({ path: currentDir}));
 
         let xhttp = new XMLHttpRequest();
-        xhttp.open('get', `https://192.168.178.86:3000/search/${search_query}`);
+        xhttp.open('get', `https://192.168.178.86:${port}/search/${search_query}`);
         xhttp.send(null);
 
         xhttp.onload = function() {
@@ -215,6 +221,10 @@ window.onload = () => {
     });
 
     document.querySelector('#path').click();
+
+    document.querySelector('#folderForm').addEventListener('load', function(e) {
+        e.target.action = `https://192.168.178.86:${port}/mkdir/`;
+    });
 
     document.querySelector('#clearFolderBtn').addEventListener('click', function() {
         document.querySelector('#folderName').value = "";
