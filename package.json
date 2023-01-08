@@ -1,6 +1,6 @@
 {
   "name": "ucloud",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Your very own cloud file service!",
   "main": "app.js",
   "dependencies": {
