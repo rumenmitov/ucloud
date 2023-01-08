@@ -12,7 +12,7 @@
 ## Setup
 ### Prerequisites
 - [x] [Node v18+](https://nodejs.org/en/download/)
-- [x] npm v9+
+- [x] npm v8+
   
 ### Installation
 1. Clone the program    
