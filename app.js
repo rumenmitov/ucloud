@@ -230,12 +230,7 @@ mkdirRouter.route('/')
 
     let removeCurrentDir = dir.split('/').pop();
 
-    let name = req.body.folderName.replace(/ /g,'');
-
-    if (path.extname(name)) {
-        res.send(`Folders cannot have extensions in their name. Please try again without the dot: <a href='https://192.168.178.86/homePage/homePage.html?pwd=${req.body.path}'>Back to site</a>`);
-        return next();
-    }
+    let name = req.body.folderName;
 
     if (fs.existsSync(fileListPath)) {
         let allFilesArray = fs.readFileSync(fileListPath, 'utf-8').split('\r\n');
@@ -306,8 +301,6 @@ renameRouter.route('/:renameOBJ')
     let fileListPath = __dirname + '/public/users' + prevDirAbs + '/ucloud_files.txt';
 
     let queryOBJ = JSON.parse(req.params['renameOBJ']);
-    queryOBJ.newFileName = queryOBJ.newFileName.replace(/ /g,'');
-    queryOBJ.extension = queryOBJ.extension.replace(/ /g,'');
     if (queryOBJ.extension) queryOBJ.extension = '.' + queryOBJ.extension;
     if (queryOBJ.type == 'file') queryOBJ.newFileName += queryOBJ.extension;
 

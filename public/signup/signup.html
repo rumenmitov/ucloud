@@ -10,15 +10,15 @@
 <body>
     <form action="https://192.168.178.86:3000/signup/" method="post">
         <label for="firstName">First Name:</label>
-        <input type="text" name="firstName" autocomplete="given-name" required>
+        <input type="text" name="firstName" autocomplete="given-name" required pattern="[a-zA-Z_0-9\s]{1,20}">
         <label for="lastName">Last Name:</label>
-        <input type="text" name="lastName" autocomplete="family-name" required>
+        <input type="text" name="lastName" autocomplete="family-name" required pattern="[a-zA-Z_0-9\s]{1,20}">
         <label for="email">Email:</label>
         <input type="email" name="email" id="email" required readonly>
         <label for="dob">Birth Date:</label>
         <input type="date" name="dob" autocomplete="bday" required>
         <label for="username">Username:</label>
-        <input type="text" name="username" required>
+        <input type="text" name="username" required pattern="[a-zA-Z_0-9]{1,20}">
         <label for="password">Password:</label>
         <input type="password" name="password" autocomplete="new-password" required>
         <button type="submit">Sign-up</button>
