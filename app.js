@@ -55,30 +55,48 @@ signupRouter.route('/')
         return next();
     }
 
+    req.body.firstName = req.body.firstName.toUpperCase();
+    req.body.lastName = req.body.lastName.toUpperCase();
+    req.body.email = req.body.email.toLowerCase();
+
     client.connect(err => {
         if (err) console.log(err);
 
         let usersCollection = client.db('ucloud').collection('users');
-        usersCollection.find({ username: req.body.username }).toArray((err, results) =>{
+
+        usersCollection.find({ email: req.body.email }).toArray((err, results) =>{
             if (err) console.log(err);
 
-            if (results.length != 0) {
-                res.send('Oops! Username already taken. Please try with another one');
+            if (results[0]) {
+                res.send('Oops! Email is already in use.');
                 client.close();
                 return next();
-            }
-
-            usersCollection.insertOne(req.body, err => {
-                if (err) console.log(err);
-
-                fs.mkdir(__dirname + '/public/users/' + req.body.username, (err)=> {
+            } else {
+                usersCollection.find({ username: req.body.username }).toArray((err, results) =>{
                     if (err) console.log(err);
-                    
-                    res.redirect(`https://192.168.178.86/homePage/homePage.html?pwd=${req.body.username}`);
-                    client.close();
+
+                    if (results[0]) {
+                        console.log(results);
+                        res.send('Oops! Username already taken. Please try with another one');
+                        client.close();
+                        return next();
+                    }
+        
+                    usersCollection.insertOne(req.body, err => {
+                        if (err) console.log(err);
+        
+                        fs.mkdir(__dirname + '/public/users/' + req.body.username, (err)=> {
+                            if (err) console.log(err);
+                            
+                            res.redirect(`https://192.168.178.86/homePage/homePage.html?pwd=${req.body.username}`);
+                            client.close();
+                        });
+                    });
                 });
-            });
+
+            }
         });
+        
     });
 });
 
