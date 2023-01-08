@@ -1,4 +1,0 @@
-home/Photos
-home/Videos
-home/Documents
-home/Funny

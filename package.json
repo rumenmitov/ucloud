@@ -1,6 +1,6 @@
 {
   "name": "ucloud",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "Your very own cloud file service!",
   "main": "app.js",
   "dependencies": {
@@ -47,8 +47,10 @@
     "mime": "^1.6.0",
     "mime-db": "^1.52.0",
     "mime-types": "^2.1.35",
+    "mongodb": "^4.13.0",
     "ms": "^2.0.0",
     "negotiator": "^0.6.3",
+    "nodemailer": "^6.8.0",
     "object-assign": "^4.1.1",
     "object-inspect": "^1.12.2",
     "on-finished": "^2.4.1",

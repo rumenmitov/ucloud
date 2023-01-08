@@ -4,52 +4,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UCloud</title>
-    <link rel="shortcut icon" href="./images_website/logo.png" type="image/x-icon">
-    <link rel="stylesheet" href="index.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet">
-    <script defer src="./index.js"></script>
+    <title>UCloud - Welcome</title>
 </head>
 <body>
-    <header>
-        <img src="./images_website/logo.png" id='logo' alt="logo">
-        <p><i>Make it your own!</i></p>
-    </header>
-    <h1 id="location"></h1>
-    <div id="actionIcons">
-        <img title='Upload a file' src="./images_website/upload.png" id="uploadImg" alt="upload">
-        <img title='Search' src="./images_website/search.png" id="searchImg" alt="search">
-        <img title='New folder' src="./images_website/mkdirIcon.png" id="mkdirImg" alt="create folder">
-    </div>
-    <form id='uploadForm' method="post" enctype="multipart/form-data">
-        <label for="userFile">Upload a File!</label>
-        <input type="file" name="userFile" id="userFile" required>
-        <label for="file_name">Rename File</label>
-        <input type="text" name="file_name" placeholder="(optional)">
-        <label for="filePath">Location:</label>
-        <input type="text" name="filePath" id="filePath" readonly required>
-        <button type="submit" id="uploadBtn">Upload</button>
-        <button  type='button' id="clearBtn">Clear</button>
-        <img src="./images_website/close.png" id='closeUpload' alt="close">
-    </form>
-    <div id="searchForm">
-        <label for="search_query">Look for a File:</label>
-        <input type="text" name="search_query" id="search_query" placeholder="Search...">
-        <button type="button" id="searchBtn">Search</button>
-        <button id="clearSearchBtn">Clear</button>
-        <img src="./images_website/close.png" id='closeSearch' alt="close">
-    </div>
-    <form id="folderForm" method="post">
-        <label for="folderName">Create a new folder:</label>
-        <input type="text" name="folderName" id="folderName" required>
-        <label for="path">Location:</label>
-        <input type="text" name="path" id="path" readonly required>
-        <button type="submit" id="createFolderBtn">Create</button>
-        <button id="clearFolderBtn">Clear</button>
-        <img src="./images_website/close.png" id='closeFolder' alt="close">
-    </form>
-    <div id="box"></div>
+    <a href="./verification/verification.html">Create an account</a>
+    <a href="./login/login.html">Login</a>
 </body>
 </html>

@@ -1,4 +1,0 @@
-back.backlink
-home/Funny/funnymonke.gif
-home/Funny/macho.gif
-home/Funny/test
