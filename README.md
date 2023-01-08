@@ -15,16 +15,14 @@
 - [x] npm v9+
   
 ### Installation
-1. Clone the program:   
+1. Clone the program    
+2. Install dependencies   
+3. Start the program  
+  
+You can do so by following this script:
 ```  
-git clone https://github.com/rumenmitov/ucloud.git  
-```    
-2. Install dependencies:   
-```   
+git clone https://github.com/rumenmitov/ucloud.git   
 npm install  
-```
-3. Start the program:   
-```  
 npm run start  
 ```  
   
