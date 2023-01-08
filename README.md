@@ -15,7 +15,7 @@
 - [x] npm v9+
   
 ### Installation
-- Clone the program: `git clone `  
+- Clone the program: `git clone https://github.com/rumenmitov/ucloud.git`  
 - Install dependencies: `npm install`
 - Start the program: `npm run start`  
   
