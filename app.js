@@ -1,4 +1,3 @@
-const { verify } = require('crypto');
 const  fs = require('fs'),
       path = require('path'),
       http = require('http'),
@@ -6,6 +5,7 @@ const  fs = require('fs'),
       colors = require('colors'),
       express = require('express'),
       bodyParser = require('body-parser'),
+      cookieParser = require('cookie-parser'),
       cors = require('cors'),
       nodemailer = require('nodemailer');
       mongodb = require('mongodb'),
@@ -76,7 +76,6 @@ signupRouter.route('/')
                     if (err) console.log(err);
 
                     if (results[0]) {
-                        console.log(results);
                         res.send('Oops! Username already taken. Please try with another one');
                         client.close();
                         return next();
@@ -117,6 +116,7 @@ loginRouter.route('/')
                 return next()
             } else {
                 if (results[0].password == req.body.password) {
+                    res.cookie('username', results[0].username, { signed: true, httpOnly: true, secure: true });
                     res.redirect(`https://192.168.178.86/homePage/homePage.html?pwd=${results[0].username}`);
                 } else {
                     res.send('Username and password do not match. <a href="https://192.168.178.86/login/login.html">Try again</a>');
@@ -142,8 +142,7 @@ homeRouter.route('/')
     try {
         filesArray = fs.readFileSync(fileListPath, 'utf-8');
     } catch (e) {
-        if (e.code === 'ENOENT');
-        return res.redirect(`https://192.168.178.86?pwd=${dir}`);
+        if (e.code === 'ENOENT') return;
     }
     filesArray = filesArray.split('\r\n');
 
@@ -170,6 +169,13 @@ uploadRouter.route('/')
         if (err) console.log(err);
 
         let dir = fields.filePath;
+
+        let ownerofDir = dir.split('/')[0];
+        if (ownerofDir !== req.signedCookies.username) {
+            res.send(`Error: User lacking permission to edit. <a href='https://192.168.178.86/homePage/homePage.html?pwd=${fields.filePath}'>Back to site</a>`);
+            return next();
+        }
+
         let fileListPath = __dirname + '/public/users/' + dir + '/ucloud_files.txt';
 
         if (fields.file_name) {
@@ -280,6 +286,25 @@ searchRouter.route('/:search_query')
                 searchData.push({ name: filePath, linkUrl: filePath, type: type });
             });
             res.send(searchData);
+        });
+    });
+});
+
+let searchUsersRouter = express.Router();
+searchUsersRouter.use(bodyParser.urlencoded({ extended: true }));
+searchUsersRouter.route('/:search_query')
+.get((req, res)=>{
+    let search_query = req.params['search_query'];
+    
+    client.connect(err => {
+        if (err) console.log(err);
+
+        let usersCollection = client.db('ucloud').collection('users');
+        usersCollection.find({ 'username': search_query }).toArray((err, results)=>{
+            if (err) console.log(err);
+
+            res.send(results);
+            client.close();
         });
     });
 });
@@ -415,6 +440,7 @@ let sslCredentials = {
 
 let backend = express()
 .use(cors())
+.use(cookieParser('5ecret_Key'))
 .use('/verify', verifyRouter)
 .use('/signup', signupRouter)
 .use('/login', loginRouter)
@@ -422,11 +448,13 @@ let backend = express()
 .use('/upload', uploadRouter)
 .use('/mkdir', mkdirRouter)
 .use('/search', searchRouter)
+.use('/search_users', searchUsersRouter)
 .use('/rename', renameRouter)
 .use('/delete', deleteRouter);
 https.createServer(sslCredentials, backend).listen(backendPort);
 
 let frontend = express()
+.use(cors())
 .use(express.static(__dirname + '/public'));
 
 http.createServer((req, res)=>{

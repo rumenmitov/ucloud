@@ -156,6 +156,32 @@ img, video, iframe{
     width: 5vw;
 }
 
+#search_usersForm {
+    display: none;
+    width: 50vw;
+    height: 70vh;
+    position: fixed;
+    margin-top: 25vh;
+    border: 1px solid rgb(0, 86, 121);
+    background: rgba(243, 248, 248, 0.7);
+    backdrop-filter: blur(10px);
+    border-radius: 10%;
+    z-index: 100;
+}
+
+#search_usersForm > * {
+    display: block;
+    margin-top: 3vh;
+    margin-left: 3vw;
+}
+
+#search_usersForm #closeSearchUsers {
+    position: absolute;
+    left: 40vw;
+    top: 3vh;
+    width: 5vw;
+}
+
 #box {
     margin-top: 45vh;
     display: grid;

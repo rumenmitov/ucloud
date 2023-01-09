@@ -13,6 +13,7 @@ function getAllFiles(dir) {
     xhttp.send(dir);
     
     xhttp.onload = function() {
+        console.log(this.responseText);
         let responseArray = JSON.parse(this.responseText);
         displayFiles(responseArray);
     };
@@ -75,7 +76,6 @@ function displayFiles(responseArray) {
                 iframe.src = link;
                 fileBox.appendChild(iframe);
             } else if (type === 'backlink'){
-                console.log(currentDir);
                 let prevDir = currentDir.split('/');
                 let removeCurrectDir = prevDir.pop();
                 prevDir = prevDir[prevDir.length-1];
@@ -186,6 +186,30 @@ function deleteFile(event) {
     }
 }
 
+function displayUsers(responseArray) {
+    document.querySelector('#location').innerHTML = 'Results';
+
+    if (document.querySelector('#box')) document.querySelector('#box').remove();
+    let body = document.querySelector('body');
+    let box = document.createElement('div');
+    box.id = 'box';
+    body.appendChild(box);
+
+    if (!responseArray[0]) {
+        let p = document.createElement('p');
+        p.innerText = 'No users found!';
+        box.appendChild(p);
+        return;
+    }
+
+    responseArray.forEach(user => {
+        let a = document.createElement('a');
+        a.href = `https://192.168.178.86/homePage/homePage.html?pwd=${user.username}`;
+        a.innerText = user.username;
+        box.appendChild(a);
+    });
+}
+
 window.onload = () => {
     document.querySelector('#location').innerHTML = '/' + currentDir;
 
@@ -280,6 +304,42 @@ window.onload = () => {
 
     document.querySelector('#closeFolder').addEventListener('click', function() {
         document.querySelector('#folderForm').style = 'display:none;';
+    });
+
+    document.querySelector('#searchUsersImg').addEventListener('click', function() {
+        document.querySelector('#search_usersForm').style = 'display:block';
+    });
+
+    document.querySelector('#searchUsersBtn').addEventListener('click', function() {
+        let search_query = document.querySelector('#search_users_query').value;
+
+        document.querySelector('#box').remove();
+        let box = document.createElement("div");
+        box.id='box';
+        document.querySelector('body').appendChild(box);
+
+        if (!search_query) return document.write('No users found!');
+
+        let xhttp = new XMLHttpRequest();
+        xhttp.open('get', `https://192.168.178.86:${port}/search_users/${search_query}`);
+        xhttp.send(null);
+
+        xhttp.onload = function() {
+            displayUsers(JSON.parse(this.responseText));
+        };
+    });
+
+    document.querySelector('#clearSearchUsersBtn').addEventListener('click', function() {
+        document.querySelector('#search_users_query').value = "";
+        document.querySelector('#searchUsersBtn').click();
+    });
+
+    document.querySelector('#closeSearchUsers').addEventListener('click', function() {
+        document.querySelector('#search_usersForm').style = 'display:none;';
+    });
+
+    document.querySelector('#search_usersForm').addEventListener('mouseleave', function() {
+        document.querySelector('#search_usersForm').style = 'display:none;';
     });
 
     // Key press events

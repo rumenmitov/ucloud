@@ -22,6 +22,7 @@
         <img title='Upload a file' src="../images_website/upload.png" id="uploadImg" alt="upload">
         <img title='Search' src="../images_website/search.png" id="searchImg" alt="search">
         <img title='New folder' src="../images_website/mkdirIcon.png" id="mkdirImg" alt="create folder">
+        <img  title='Seach Users' src="../images_website/search_users.png" id='searchUsersImg' alt="search users">
     </div>
     <form id='uploadForm' method="post" enctype="multipart/form-data">
         <label for="userFile">Upload a File!</label>
@@ -42,7 +43,7 @@
         <img src="../images_website/close.png" id='closeSearch' alt="close">
     </div>
     <form id="folderForm" method="post">
-        <label for="folderName">Create a new folder:</label>
+        <label for="folderName">Create a New Folder:</label>
         <input type="text" name="folderName" id="folderName" required pattern="[a-zA-Z_0-9]{1,20}">
         <label for="path">Location:</label>
         <input type="text" name="path" id="path" readonly required>
@@ -50,6 +51,13 @@
         <button id="clearFolderBtn">Clear</button>
         <img src="../images_website/close.png" id='closeFolder' alt="close">
     </form>
+    <div id="search_usersForm">
+        <label for="search_users_query">Look for a User:</label>
+        <input type="text" name="search_users_query" id="search_users_query" placeholder="Search...">
+        <button type="button" id="searchUsersBtn">Search</button>
+        <button id="clearSearchUsersBtn">Clear</button>
+        <img src="../images_website/close.png" id='closeSearchUsers' alt="close">
+    </div>
     <div id="box"></div>
 </body>
 </html>
