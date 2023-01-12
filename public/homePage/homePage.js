@@ -10,17 +10,27 @@ function getAllFiles(dir) {
     let xhttp = new XMLHttpRequest();
     xhttp.open('post', `https://192.168.178.86:${port}/home/`);
     xhttp.setRequestHeader("Content-type", "application/json");
+    xhttp.withCredentials = true;
     xhttp.send(dir);
-    
     xhttp.onload = function() {
-        console.log(this.responseText);
-        let responseArray = JSON.parse(this.responseText);
-        displayFiles(responseArray);
+        let responseOBJ = JSON.parse(this.responseText);
+
+        if (document.querySelector('section')) document.querySelector('section').remove();
+        let section = document.createElement('section');
+        document.querySelector('body').appendChild(section);
+
+        let greeter = document.createElement('p');
+        greeter.innerText = responseOBJ.greeter;
+        section.appendChild(greeter);
+
+        let avatar = document.createElement('img');
+        avatar.src = responseOBJ.avatarPath;
+        avatar.style = 'display:inline;';
+        greeter.appendChild(avatar);
+
+        displayFiles(responseOBJ.data);
     };
 }
-
-getAllFiles(JSON.stringify({ path: currentDir }));
-
 
 function displayFiles(responseArray) {
 
@@ -211,39 +221,76 @@ function displayUsers(responseArray) {
 }
 
 window.onload = () => {
-    document.querySelector('#location').innerHTML = '/' + currentDir;
+    getAllFiles(JSON.stringify({ path: currentDir }));
 
-    document.querySelector('#logo').addEventListener('click', function() {
+    let domOBJ = {
+        location: document.querySelector('#location'),
+        logo: document.querySelector('#logo'),
+        uploadForm: document.querySelector('#uploadForm'),
+        uploadBtn: document.querySelector('#uploadBtn'),
+        filePath: document.querySelector('#filePath'),
+        clearBtn: document.querySelector('#clearBtn'),
+        userFile: document.querySelector('#userFile'),
+        uploadImg: document.querySelector('#uploadImg'),
+        closeUpload: document.querySelector('#closeUpload'),
+        searchBtn: document.querySelector('#searchBtn'),
+        search_query: document.querySelector('#search_query'),
+        clearSearchBtn: document.querySelector('#clearSearchBtn'),
+        searchImg: document.querySelector('#searchImg'),
+        searchForm: document.querySelector('#searchForm'),
+        closeSearch: document.querySelector('#closeSearch'),
+        path: document.querySelector('#path'),
+        folderForm: document.querySelector('#folderForm'),
+        createFolderBtn: document.querySelector('#createFolderBtn'),
+        clearFolderBtn: document.querySelector('#clearFolderBtn'),
+        folderName: document.querySelector('#folderName'),
+        mkdirImg: document.querySelector('#mkdirImg'),
+        closeFolder: document.querySelector('#closeFolder'),
+        searchUsersImg: document.querySelector('#searchUsersImg'),
+        search_usersForm: document.querySelector('#search_usersForm'),
+        searchUsersBtn: document.querySelector('#searchUsersBtn'),
+        clearSearchUsersBtn: document.querySelector('#clearSearchUsersBtn'),
+        search_users_query: document.querySelector('#search_users_query'),
+        closeSearchUsers: document.querySelector('#closeSearchUsers')
+    };
+
+
+    domOBJ.location.innerHTML = '/' + currentDir;
+
+    domOBJ.logo.addEventListener('click', function() {
         let storage = JSON.parse(localStorage.getItem('ucloud'));
         location.href = `https://192.168.178.86/homePage/homePage.html?pwd=${storage.username}`;
     });
 
-    document.querySelector('#uploadForm').addEventListener('click', function(e) {
-        document.querySelector('#uploadForm').action = `https://192.168.178.86:${port}/upload/`;
+    domOBJ.uploadForm.addEventListener('click', function(e) {
+        domOBJ.uploadForm.action = `https://192.168.178.86:${port}/upload/`;
     });
 
-    document.querySelector('#uploadForm').click();
+    domOBJ.uploadForm.click();
 
-    document.querySelector('#filePath').addEventListener('click', (e)=>{
+    domOBJ.filePath.addEventListener('click', (e)=>{
         e.target.value = currentDir;
     });
 
-    document.querySelector('#filePath').click();
+    domOBJ.filePath.click();
 
-    document.querySelector('#clearBtn').addEventListener('click', function() {
-        document.querySelector('#userFile').value = "";
+    domOBJ.clearBtn.addEventListener('click', function() {
+        domOBJ.userFile.value = "";
     });
 
-    document.querySelector('#uploadImg').addEventListener('click', function() {
-        document.querySelector('#uploadForm').style = 'display:block;';
+    domOBJ.uploadImg.addEventListener('click', function() {
+        domOBJ.uploadForm.style = 'display:block;';
     });
 
-    document.querySelector('#closeUpload').addEventListener('click', function() {
-        document.querySelector('#uploadForm').style = 'display:none;';
+    domOBJ.closeUpload.addEventListener('click', function() {
+        domOBJ.uploadForm.style = 'display:none;';
     });
 
-    document.querySelector('#searchBtn').addEventListener('click', function() {
-        let search_query = document.querySelector('#search_query').value;
+    domOBJ.searchBtn.addEventListener('click', function() {
+        let searchOBJ = {
+            search_query: document.querySelector('#search_query').value,
+            path: currentDir
+        };
 
         document.querySelector('#box').remove();
         let box = document.createElement("div");
@@ -253,7 +300,8 @@ window.onload = () => {
         if (!search_query) return getAllFiles(JSON.stringify({ path: currentDir}));
 
         let xhttp = new XMLHttpRequest();
-        xhttp.open('get', `https://192.168.178.86:${port}/search/${search_query}`);
+        xhttp.open('get', `https://192.168.178.86:${port}/search/${JSON.stringify(searchOBJ)}`);
+        xhttp.withCredentials = true;
         xhttp.send(null);
 
         xhttp.onload = function() {
@@ -261,56 +309,56 @@ window.onload = () => {
         };
     });
 
-    document.querySelector('#search_query').addEventListener('input', ()=>{
-        document.querySelector('#searchBtn').click();
+    domOBJ.search_query.addEventListener('input', ()=>{
+        domOBJ.searchBtn.click();
     });
 
-    document.querySelector('#clearSearchBtn').addEventListener('click', function() {
-        document.querySelector('#search_query').value = "";
-        document.querySelector('#searchBtn').click();
+    domOBJ.clearSearchBtn.addEventListener('click', function() {
+        domOBJ.search_query.value = "";
+        domOBJ.searchBtn.click();
     });
 
-    document.querySelector('#searchImg').addEventListener('click', function() {
-        document.querySelector('#searchForm').style = 'display:block;';
+    domOBJ.searchImg.addEventListener('click', function() {
+        domOBJ.searchForm.style = 'display:block;';
     });
 
-    document.querySelector('#closeSearch').addEventListener('click', function() {
-        document.querySelector('#searchForm').style = 'display:none;';
+    domOBJ.closeSearch.addEventListener('click', function() {
+        domOBJ.searchForm.style = 'display:none;';
     });
 
-    document.querySelector('#searchForm').addEventListener('mouseleave', function() {
-        document.querySelector('#searchForm').style = 'display:none;';
+    domOBJ.searchForm.addEventListener('mouseleave', function() {
+        domOBJ.searchForm.style = 'display:none;';
     });
 
-    document.querySelector('#path').addEventListener('click', (e)=>{
+    domOBJ.path.addEventListener('click', (e)=>{
         e.target.value = currentDir;
     });
 
-    document.querySelector('#path').click();
+    domOBJ.path.click();
 
-    document.querySelector('#folderForm').addEventListener('click', function() {
-        document.querySelector('#folderForm').action = `https://192.168.178.86:${port}/mkdir/`;
+    domOBJ.folderForm.addEventListener('click', function() {
+        domOBJ.folderForm.action = `https://192.168.178.86:${port}/mkdir/`;
     });
 
-    document.querySelector('#folderForm').click();
+    domOBJ.folderForm.click();
 
-    document.querySelector('#clearFolderBtn').addEventListener('click', function() {
-        document.querySelector('#folderName').value = "";
+    domOBJ.clearFolderBtn.addEventListener('click', function() {
+        domOBJ.folderName.value = "";
     });
 
-    document.querySelector('#mkdirImg').addEventListener('click', function() {
-        document.querySelector('#folderForm').style = 'display:block;';
+    domOBJ.mkdirImg.addEventListener('click', function() {
+        domOBJ.folderForm.style = 'display:block;';
     });
 
-    document.querySelector('#closeFolder').addEventListener('click', function() {
-        document.querySelector('#folderForm').style = 'display:none;';
+    domOBJ.closeFolder.addEventListener('click', function() {
+        domOBJ.folderForm.style = 'display:none;';
     });
 
-    document.querySelector('#searchUsersImg').addEventListener('click', function() {
-        document.querySelector('#search_usersForm').style = 'display:block';
+    domOBJ.searchUsersImg.addEventListener('click', function() {
+        domOBJ.search_usersForm.style = 'display:block';
     });
 
-    document.querySelector('#searchUsersBtn').addEventListener('click', function() {
+    domOBJ.searchUsersBtn.addEventListener('click', function() {
         let search_query = document.querySelector('#search_users_query').value;
 
         document.querySelector('#box').remove();
@@ -326,30 +374,45 @@ window.onload = () => {
 
         xhttp.onload = function() {
             displayUsers(JSON.parse(this.responseText));
+            domOBJ.search_usersForm.style = 'display:none;';
         };
     });
 
-    document.querySelector('#clearSearchUsersBtn').addEventListener('click', function() {
-        document.querySelector('#search_users_query').value = "";
-        document.querySelector('#searchUsersBtn').click();
+    domOBJ.clearSearchUsersBtn.addEventListener('click', function() {
+        domOBJ.search_users_query.value = "";
+        domOBJ.searchUsersBtn.click();
     });
 
-    document.querySelector('#closeSearchUsers').addEventListener('click', function() {
-        document.querySelector('#search_usersForm').style = 'display:none;';
+    domOBJ.closeSearchUsers.addEventListener('click', function() {
+        domOBJ.search_usersForm.style = 'display:none;';
     });
 
-    document.querySelector('#search_usersForm').addEventListener('mouseleave', function() {
-        document.querySelector('#search_usersForm').style = 'display:none;';
+    domOBJ.search_usersForm.addEventListener('mouseleave', function() {
+        domOBJ.search_usersForm.style = 'display:none;';
+    });
+
+    domOBJ.search_usersForm.addEventListener('mouseleave', function() {
+        domOBJ.search_usersForm.style = 'display:none;';
     });
 
     // Key press events
-    document.querySelector('#uploadForm').addEventListener('keypress', e => {
-        if (e.keyCode == 13) document.querySelector('#uploadBtn').click();
-        else if (e.keyCode == 27) document.querySelector('#closeUpload').click();
+    domOBJ.uploadForm.addEventListener('keypress', e => {
+        if (e.keyCode == 13) domOBJ.uploadBtn.click();
+        else if (e.keyCode == 27) domOBJ.closeUpload.click();
     });
 
-    document.querySelector('#searchForm').addEventListener('keypress', e => {
-        if (e.keyCode == 13) document.querySelector('#searchBtn').click();
-        else if (e.keyCode == 27) document.querySelector('#closeSearch').click();
+    domOBJ.searchForm.addEventListener('keypress', e => {
+        if (e.keyCode == 13) domOBJ.searchBtn.click();
+        else if (e.keyCode == 27) domOBJ.closeSearch.click();
+    });
+
+    domOBJ.folderForm.addEventListener('keypress', e => {
+        if (e.keyCode == 13) domOBJ.createFolderBtn.click();
+        else if (e.keyCode == 27) domOBJ.closeFolder.click();
+    });
+
+    domOBJ.search_usersForm.addEventListener('keypress', e => {
+        if (e.keyCode == 13) domOBJ.searchUsersBtn.click();
+        else if (e.keyCode == 27) domOBJ.clearSearchUsersBtn.click();
     });
 }

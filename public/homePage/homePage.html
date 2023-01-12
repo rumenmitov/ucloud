@@ -17,6 +17,8 @@
         <img src="../images_website/logo.png" id='logo' alt="logo">
         <p><i>Make it your own!</i></p>
     </header>
+    <section>
+    </section>
     <h1 id="location"></h1>
     <div id="actionIcons">
         <img title='Upload a file' src="../images_website/upload.png" id="uploadImg" alt="upload">
@@ -37,7 +39,7 @@
     </form>
     <div id="searchForm">
         <label for="search_query">Look for a File:</label>
-        <input type="text" name="search_query" id="search_query" placeholder="Search...">
+        <input type="text" name="search_query" id="search_query" placeholder="Search..." pattern="[a-zA-Z_0-9.\s]{1,20}">
         <button type="button" id="searchBtn">Search</button>
         <button id="clearSearchBtn">Clear</button>
         <img src="../images_website/close.png" id='closeSearch' alt="close">
@@ -53,7 +55,7 @@
     </form>
     <div id="search_usersForm">
         <label for="search_users_query">Look for a User:</label>
-        <input type="text" name="search_users_query" id="search_users_query" placeholder="Search...">
+        <input type="text" name="search_users_query" id="search_users_query" placeholder="Search..." pattern="[a-zA-Z_0-9]{1,20}">
         <button type="button" id="searchUsersBtn">Search</button>
         <button id="clearSearchUsersBtn">Clear</button>
         <img src="../images_website/close.png" id='closeSearchUsers' alt="close">

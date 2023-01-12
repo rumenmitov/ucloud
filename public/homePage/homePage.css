@@ -30,6 +30,21 @@ header > img, p {
     margin-right: auto;
 }
 
+section {
+    position: absolute;
+    top: 3vh;
+    left: 2vw;
+    width: 50vw;
+    z-index: 200;
+    padding-bottom: 10vh;
+}
+
+section img {
+    width: 4vw;
+    margin-left: 3vw;
+    transform: translateY(2vh);
+}
+
 #location {
     position: absolute;
     top: 30vh;
