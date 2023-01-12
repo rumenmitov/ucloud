@@ -20,13 +20,14 @@ function getAllFiles(dir) {
         document.querySelector('body').appendChild(section);
 
         let greeter = document.createElement('p');
-        greeter.innerText = responseOBJ.greeter;
         section.appendChild(greeter);
-
+        
         let avatar = document.createElement('img');
         avatar.src = responseOBJ.avatarPath;
         avatar.style = 'display:inline;';
         greeter.appendChild(avatar);
+        
+        greeter.innerText = responseOBJ.greeter;
 
         displayFiles(responseOBJ.data);
     };
