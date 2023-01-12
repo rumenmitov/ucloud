@@ -64,6 +64,13 @@ signupRouter.route("/").post((req, res, next) => {
     return next();
   }
 
+  if (req.body.password !== req.body.password_confirm) {
+    res.send(
+      `Passwords do not match! <a href='https://192.168.178.86/signup/signup.html?userCode=${btoa(req.body.email)}'>Try again!</a>`
+    );
+    return next();
+  }
+
   req.body.firstName = req.body.firstName.toUpperCase();
   req.body.lastName = req.body.lastName.toUpperCase();
   req.body.email = req.body.email.toLowerCase();
@@ -122,6 +129,7 @@ signupRouter.route("/").post((req, res, next) => {
                         { encoding: "utf-8", flag: "w" }
                       );
 
+                      req.session.username = req.body.username;
                       res.redirect(
                         `https://192.168.178.86/homePage/homePage.html?pwd=${req.body.username}`
                       );
@@ -215,6 +223,29 @@ homeRouter.route("/").post((req, res) => {
   };
   res.send(responseOBJ);
   res.end();
+});
+
+let avatarRouter = express.Router();
+avatarRouter.use(bodyParser.urlencoded({ extended: true }));
+avatarRouter.route('/').post((req, res, next)=>{
+  let form = formidable({ multiples: true });
+  form.parse(req, (err, fields, files)=>{
+    if (err) console.log(err);
+
+    console.log(path.extname(files.avatarImg.originalFilename));
+
+    if (path.extname(files.avatarImg.originalFilename) !== '.jpg' && path.extname(files.avatarImg.originalFilename) !== '.png' && path.extname(files.avatarImg.originalFilename) !== '.gif' && path.extname(files.avatarImg.originalFilename) !== '.webp') {
+      res.send(`Profile pic must be one of the following file types: jpeg, png, gif, webp. <a href='https://192.168.178.86/homePage/homePage.html?pwd=${req.session.username}'>Back to site</a>`);
+      return next();
+    }
+
+    fs.rename(files.avatarImg.filepath, __dirname + `/public/users/${req.session.username}/.${req.session.username}/${req.session.username}_avatar.png`, err=>{
+      if (err) console.log(err);
+
+      res.send(`Profile pic changed. <a href='https://192.168.178.86/homePage/homePage.html?pwd=${req.session.username}'>Back to site</a>`);
+      res.end();
+    });
+  });
 });
 
 let uploadRouter = express.Router();
@@ -424,6 +455,13 @@ searchUsersRouter.route("/:search_query").get((req, res) => {
     usersCollection.find({ username: search_query }).toArray((err, results) => {
       if (err) console.log(err);
 
+      if (results[0]) {
+        results.forEach(user => {
+          if (fs.existsSync(__dirname + `/public/users/${user.username}/.${user.username}/${user.username}_avatar.png`)) user.avatarLink = `../users/${user.username}/.${user.username}/${user.username}_avatar.png`;
+          else user.avatarLink = '../images_website/avatar.png';
+        });
+      }
+
       res.send(results);
       client.close();
     });
@@ -441,7 +479,7 @@ renameRouter.route("/:renameOBJ").put((req, res, next) => {
   let removeRoot = prevDir.splice(0, 1);
   prevDir = prevDir.join("/");
   
-  let ownerofDir = dir.split("/")[0];
+  let ownerofDir = dir.split("/")[1];
   if (ownerofDir !== req.session.username) {
     res.send(
       `Error: User lacking permission to edit. <a href='https://192.168.178.86/homePage/homePage.html?pwd=${prevDir}'>Back to site</a>`
@@ -505,14 +543,13 @@ renameRouter.route("/:renameOBJ").put((req, res, next) => {
 let deleteRouter = express.Router();
 deleteRouter.use(bodyParser.json());
 deleteRouter.use(bodyParser.urlencoded({ extended: true }));
-deleteRouter.route("/:deleteOBJ").delete((req, res) => {
-  let dir = req.body.path;
+deleteRouter.route("/:deleteOBJ").delete((req, res, next) => {
 
   let prevDir = dir.split("/");
   let removeCurrentDir = prevDir.pop();
   prevDir = prevDir.join("/");
 
-  let ownerofDir = dir.split("/")[0];
+  let ownerofDir = dir.split("/")[1];
   if (ownerofDir !== req.session.username) {
     res.send(
       `Error: User lacking permission to edit. <a href='https://192.168.178.86/homePage/homePage.html?pwd=${prevDir}'>Back to site</a>`
@@ -613,6 +650,7 @@ let backend = express()
   .use("/signup", signupRouter)
   .use("/login", loginRouter)
   .use("/home", homeRouter)
+  .use('/avatar', avatarRouter)
   .use("/upload", uploadRouter)
   .use("/mkdir", mkdirRouter)
   .use("/search", searchRouter)

@@ -19,15 +19,17 @@ function getAllFiles(dir) {
         let section = document.createElement('section');
         document.querySelector('body').appendChild(section);
 
-        let greeter = document.createElement('p');
-        section.appendChild(greeter);
-        
         let avatar = document.createElement('img');
+        avatar.id = 'avatar';
         avatar.src = responseOBJ.avatarPath;
-        avatar.style = 'display:inline;';
-        greeter.appendChild(avatar);
-        
+        avatar.addEventListener('click', function() {
+            avatarForm.style = 'display:block;';
+        });
+        section.appendChild(avatar);
+
+        let greeter = document.createElement('p');
         greeter.innerText = responseOBJ.greeter;
+        section.appendChild(greeter);
 
         displayFiles(responseOBJ.data);
     };
@@ -164,6 +166,7 @@ function renameFile(event) {
 
         renameRequest.open(`put`, `https://192.168.178.86:${port}/rename/${renameOBJ}`);
         renameRequest.setRequestHeader("Content-type", "application/json");
+        renameRequest.withCredentials = true;
         renameRequest.send(JSON.stringify({ path: event.target.link }));
 
         renameRequest.onload = function() {
@@ -188,6 +191,7 @@ function deleteFile(event) {
 
         deleteRequest.open(`delete`, `https://192.168.178.86:${port}/delete/${deleteOBJ}`);
         deleteRequest.setRequestHeader("Content-type", "application/json");
+        deleteRequest.withCredentials = true;
         deleteRequest.send(JSON.stringify({ path: event.target.link }));
 
         deleteRequest.onload = function() {
@@ -213,11 +217,26 @@ function displayUsers(responseArray) {
         return;
     }
 
+    let userTable = document.createElement('table');
+    box.appendChild(userTable);
+    console.log(userTable);
+
     responseArray.forEach(user => {
+        let userRow = document.createElement('tr');
+        userTable.appendChild(userRow);
+
+        let avatarTD = document.createElement('td');
+        userRow.appendChild(avatarTD);
+        let avatar = document.createElement('img');
+        avatar.src = user.avatarLink;
+        avatarTD.appendChild(avatar);
+
+        let usernameTD = document.createElement('td');
+        userRow.appendChild(usernameTD);
         let a = document.createElement('a');
         a.href = `https://192.168.178.86/homePage/homePage.html?pwd=${user.username}`;
         a.innerText = user.username;
-        box.appendChild(a);
+        usernameTD.appendChild(a);
     });
 }
 
@@ -227,6 +246,11 @@ window.onload = () => {
     let domOBJ = {
         location: document.querySelector('#location'),
         logo: document.querySelector('#logo'),
+        avatarForm: document.querySelector('#avatarForm'),
+        clearAvatarBtn: document.querySelector('#clearAvatarBtn'),
+        avatarImg: document.querySelector('#avatarImg'),
+        uploadAvatarBtn: document.querySelector('#uploadAvatarBtn'),
+        closeAvatarUpload: document.querySelector('#closeAvatarUpload'),
         uploadForm: document.querySelector('#uploadForm'),
         uploadBtn: document.querySelector('#uploadBtn'),
         filePath: document.querySelector('#filePath'),
@@ -261,6 +285,18 @@ window.onload = () => {
     domOBJ.logo.addEventListener('click', function() {
         let storage = JSON.parse(localStorage.getItem('ucloud'));
         location.href = `https://192.168.178.86/homePage/homePage.html?pwd=${storage.username}`;
+    });
+
+    domOBJ.avatarForm.addEventListener('click', function(e) {
+        domOBJ.avatarForm.action = `https://192.168.178.86:${port}/avatar/`;
+    });
+
+    domOBJ.clearAvatarBtn.addEventListener('click', function() {
+        domOBJ.avatarImg.value = '';
+    });
+
+    domOBJ.closeAvatarUpload.addEventListener('click', function() {
+        domOBJ.avatarForm.style = 'display:none;';
     });
 
     domOBJ.uploadForm.addEventListener('click', function(e) {
@@ -415,5 +451,11 @@ window.onload = () => {
     domOBJ.search_usersForm.addEventListener('keypress', e => {
         if (e.keyCode == 13) domOBJ.searchUsersBtn.click();
         else if (e.keyCode == 27) domOBJ.clearSearchUsersBtn.click();
+    });
+
+    domOBJ.avatarForm.addEventListener('keypress', e => {
+        console.log(e);
+        if (e.keyCode == 13) domOBJ.uploadAvatarBtn.click();
+        else if (e.keyCode == 27) domOBJ.clearAvatarBtn.click();
     });
 }

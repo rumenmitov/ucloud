@@ -26,6 +26,13 @@
         <img title='New folder' src="../images_website/mkdirIcon.png" id="mkdirImg" alt="create folder">
         <img  title='Seach Users' src="../images_website/search_users.png" id='searchUsersImg' alt="search users">
     </div>
+    <form id='avatarForm' method="post" enctype="multipart/form-data">
+        <label for="avatarImg">Upload a Profile Pic:</label>
+        <input type="file" name="avatarImg" id="avatarImg" required>
+        <button  type='button' id="clearAvatarBtn">Clear</button>
+        <button type="submit" id="uploadAvatarBtn">Upload</button>
+        <img src="../images_website/close.png" id='closeAvatarUpload' alt="close">
+    </form>
     <form id='uploadForm' method="post" enctype="multipart/form-data">
         <label for="userFile">Upload a File!</label>
         <input type="file" name="userFile" id="userFile" required>
@@ -39,7 +46,7 @@
     </form>
     <div id="searchForm">
         <label for="search_query">Look for a File:</label>
-        <input type="text" name="search_query" id="search_query" placeholder="Search..." pattern="[a-zA-Z_0-9.\s]{1,20}">
+        <input type="text" name="search_query" id="search_query" placeholder="Search..." pattern="[a-zA-Z_0-9.\s]{1,20}" autocomplete="off">
         <button type="button" id="searchBtn">Search</button>
         <button id="clearSearchBtn">Clear</button>
         <img src="../images_website/close.png" id='closeSearch' alt="close">
@@ -55,7 +62,7 @@
     </form>
     <div id="search_usersForm">
         <label for="search_users_query">Look for a User:</label>
-        <input type="text" name="search_users_query" id="search_users_query" placeholder="Search..." pattern="[a-zA-Z_0-9]{1,20}">
+        <input type="text" name="search_users_query" id="search_users_query" placeholder="Search..." pattern="[a-zA-Z_0-9]{1,20}" autocomplete="off">
         <button type="button" id="searchUsersBtn">Search</button>
         <button id="clearSearchUsersBtn">Clear</button>
         <img src="../images_website/close.png" id='closeSearchUsers' alt="close">
