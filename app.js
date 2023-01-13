@@ -1,4 +1,3 @@
-const { info } = require("console");
 const fs = require("fs"),
   path = require("path"),
   http = require("http"),
@@ -181,6 +180,24 @@ loginRouter.route("/").post((req, res, next) => {
           return next();
         }
       });
+  });
+});
+
+let userExistsRouter = express.Router();
+userExistsRouter.use(bodyParser.json());
+userExistsRouter.use(bodyParser.urlencoded({ extended: true }));
+userExistsRouter.route('/').post((req, res)=>{
+  client.connect(err =>{
+    if (err) console.log(err);
+
+    let usersCollection = client.db('ucloud').collection('users');
+    usersCollection.find({ 'username': req.body.user }).toArray((err, results)=>{
+      if (err) console.log(err);
+
+      if (!results[0]) res.send({ error: 'Error! User does not exit!' });
+      client.close();
+      res.end();
+    });
   });
 });
 
@@ -544,7 +561,9 @@ let deleteRouter = express.Router();
 deleteRouter.use(bodyParser.json());
 deleteRouter.use(bodyParser.urlencoded({ extended: true }));
 deleteRouter.route("/:deleteOBJ").delete((req, res, next) => {
+  let queryOBJ = JSON.parse(req.params["deleteOBJ"]);
 
+  let dir = req.body.path;
   let prevDir = dir.split("/");
   let removeCurrentDir = prevDir.pop();
   prevDir = prevDir.join("/");
@@ -560,8 +579,6 @@ deleteRouter.route("/:deleteOBJ").delete((req, res, next) => {
   if (prevDir[0] != "/") prevDir = "/" + prevDir;
   let fileListPath =
     __dirname + "/public/users" + prevDir + "/ucloud_files.txt";
-
-  let queryOBJ = JSON.parse(req.params["deleteOBJ"]);
 
   let allFilesArray = fs.readFileSync(fileListPath, "utf-8").split("\r\n");
 
@@ -649,6 +666,7 @@ let backend = express()
   .use("/verify", verifyRouter)
   .use("/signup", signupRouter)
   .use("/login", loginRouter)
+  .use('/userExists', userExistsRouter)
   .use("/home", homeRouter)
   .use('/avatar', avatarRouter)
   .use("/upload", uploadRouter)

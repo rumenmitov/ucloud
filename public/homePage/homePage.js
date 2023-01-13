@@ -6,6 +6,19 @@ let currentDir = pwd;
 
 const port = 3000;
 
+let userExistsRequest = new XMLHttpRequest();
+userExistsRequest.open('post', `https://192.168.178.86:${port}/userExists/`);
+userExistsRequest.setRequestHeader("Content-type", "application/json");
+userExistsRequest.withCredentials = true;
+userExistsRequest.send(JSON.stringify({ user: username }));
+
+userExistsRequest.onload = function() {
+    if ((JSON.parse(this.responseText)).error === 'Error! User does not exit!') {
+        alert(JSON.parse(this.responseText).error);
+        location.href = 'https://192.168.178.86';
+    }
+};
+
 function getAllFiles(dir) {
     let xhttp = new XMLHttpRequest();
     xhttp.open('post', `https://192.168.178.86:${port}/home/`);
