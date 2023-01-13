@@ -1,18 +1,21 @@
 #search_usersForm {
     display: block;
     width: 50vw;
-    height: 70vh;
+    height: 30vh;
     position: fixed;
-    margin-top: 25vh;
-    border: 1px solid rgb(0, 86, 121);
-    background: rgba(243, 248, 248, 0.7);
+    margin-top: 35vh;
+    margin-left: 20vw;
+    /* border: 1px solid rgb(0, 86, 121); */
+    background: rgba(225, 250, 250, 0.7);
     backdrop-filter: blur(10px);
-    border-radius: 10%;
+    /* border-radius: 10%; */
     z-index: 100;
+    font-size: 5vw;
+    text-align: center;
 }
 
 #search_usersForm > * {
-    display: block;
+    display: inline;
     margin-top: 3vh;
     margin-left: 3vw;
 }
@@ -22,8 +25,23 @@
     display: grid;
     column-gap: 1vw;
     row-gap: 15vh;
-    grid-template-columns: auto auto;
-    justify-content: space-evenly;
+    grid-template-columns: auto auto auto;
+    justify-content:space-evenly;
+}
+
+.sign {
+    border: 3px solid rgb(255, 255, 255);
+    background-color: blue;
+    color: white;
+    padding: 25%;
+    width: 20vw;
+    text-align: center;
+}
+
+.sign:hover {
+    border: 3px solid blue;
+    background-color: rgb(255, 255, 255);
+    color: rgb(42, 5, 255);
 }
 
 td {
