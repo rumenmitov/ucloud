@@ -3,6 +3,7 @@ if (!pwd) alert('Error: Missing username!');
 const username = pwd.split('/')[0];
 if (!localStorage.getItem('ucloud')) localStorage.setItem('ucloud', JSON.stringify({ username: username }));
 let currentDir = pwd;
+let freeSpace;
 
 const port = 3000;
 
@@ -16,6 +17,9 @@ userExistsRequest.onload = function() {
     if ((JSON.parse(this.responseText)).error === 'Error! User does not exit!') {
         alert(JSON.parse(this.responseText).error);
         location.href = 'https://192.168.178.86';
+    } else {
+        freeSpace = (JSON.parse(this.responseText)).freeSpace;
+        console.log(freeSpace);
     }
 };
 
@@ -327,6 +331,13 @@ window.onload = () => {
     domOBJ.clearBtn.addEventListener('click', function() {
         domOBJ.userFile.value = "";
     });
+
+    domOBJ.userFile.onchange = function() {
+        if (this.files[0].size > freeSpace) {
+            alert('Upload unsuccessful! You do not have enough space on your account!');
+            this.value = '';
+        }
+    };
 
     domOBJ.uploadImg.addEventListener('click', function() {
         domOBJ.uploadForm.style = 'display:block;';

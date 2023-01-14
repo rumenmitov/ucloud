@@ -1,5 +1,6 @@
 const fs = require("fs"),
   path = require("path"),
+  folderSize = require('fast-folder-size'),
   http = require("http"),
   https = require("https"),
   colors = require("colors"),
@@ -195,8 +196,13 @@ userExistsRouter.route('/').post((req, res)=>{
       if (err) console.log(err);
 
       if (!results[0]) res.send({ error: 'Error! User does not exit!' });
-      client.close();
-      res.end();
+      folderSize(__dirname + `/public/users/${req.body.user}`, (err, bytes)=>{
+        if (err) console.log(err);
+
+        res.send({ freeSpace: 1000000000-bytes });
+        client.close();
+        res.end();
+      })
     });
   });
 });
