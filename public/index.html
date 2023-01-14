@@ -9,14 +9,17 @@
     <title>UCloud - Welcome</title>
 </head>
 <body>
+    <img src="./images_website/logo.png" alt="logo" id="logo" srcset="">
     <div id="box">
-        <a href="./verification/verification.html" class="sign">Create an account</a>
-        <a href="./login/login.html" class="sign">Login</a>
         <div id="search_usersForm">
             <label for="search_users_query">Look for a User:</label>
             <input type="text" name="search_users_query" id="search_users_query" placeholder="Search..." pattern="[a-zA-Z_0-9]{1,20}" autocomplete="off">
             <button type="submit" id="searchUsersBtn">Search</button>
             <button id="clearSearchUsersBtn">Clear</button>
+        </div><br>
+        <div id="sign">
+            <a href="./verification/verification.html">Create an account</a>
+            <a href="./login/login.html">Login</a>
         </div>
     </div>
 </body>
