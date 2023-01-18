@@ -33,7 +33,7 @@ function displayUsers(responseArray) {
         let usernameTD = document.createElement('td');
         userRow.appendChild(usernameTD);
         let a = document.createElement('a');
-        a.href = `https://192.168.178.86/homePage/homePage.html?pwd=${user.username}`;
+        a.href = `https://172.105.83.6/homePage/homePage.html?pwd=${user.username}`;
         a.innerText = user.username;
         usernameTD.appendChild(a);
     });
@@ -59,7 +59,7 @@ window.onload = function() {
         if (!search_query) return document.write('No users found!');
 
         let xhttp = new XMLHttpRequest();
-        xhttp.open('get', `https://192.168.178.86:${port}/search_users/${search_query}`);
+        xhttp.open('get', `https://172.105.83.6:${port}/search_users/${search_query}`);
         xhttp.send(null);
 
         xhttp.onload = function() {
