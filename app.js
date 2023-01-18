@@ -67,7 +67,7 @@ signupRouter.route("/").post((req, res, next) => {
 
   if (req.body.password !== req.body.password_confirm) {
     res.send(
-      `Passwords do not match! <a href='https://172.105.83.6/signup/signup.html?userCode=${btoa(req.body.email)}'>Try again!</a>`
+      `Passwords do not match! <a href='https://172.105.83.6/signup/signup.html?userCode=${Buffer.from(req.body.email).toString('base64')}'>Try again!</a>`
     );
     return next();
   }
