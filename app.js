@@ -38,7 +38,8 @@ const client = new mongodb.MongoClient(AtlasUrl, {
 let verifyRouter = express.Router();
 verifyRouter.use(bodyParser.urlencoded({ extended: true }));
 verifyRouter.route("/").post((req, res) => {
-  let encodedEmail = btoa(req.body.email);
+  // let encodedEmail = btoa(req.body.email);
+  let encodedEmail = Buffer.from(req.body.email).toString('base64');
   mailTransporter.sendMail(
     {
       from: auth.user,
