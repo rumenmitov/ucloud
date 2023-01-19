@@ -622,70 +622,69 @@ deleteRouter.route("/:deleteOBJ").delete((req, res, next) => {
 
 // --- Server ---
 console.clear();
-let backendPort = 3000;
-for (let i = 0; i < process.argv.length; i++) {
-  if (process.argv[i] == "-p") {
-    try {
-      backendPort = process.argv[i + 1];
-      if (backendPort == undefined) {
-        backendPort = 3000;
-        console.log("Port was not defined. Defaulting to port 3000\n".red);
-      }
+// let backendPort = 3000;
+// for (let i = 0; i < process.argv.length; i++) {
+//   if (process.argv[i] == "-p") {
+//     try {
+//       backendPort = process.argv[i + 1];
+//       if (backendPort == undefined) {
+//         backendPort = 3000;
+//         console.log("Port was not defined. Defaulting to port 3000\n".red);
+//       }
 
-      let prevPort = fs.readFileSync(__dirname + "/port.txt", {
-        encoding: "utf-8",
-      });
+//       let prevPort = fs.readFileSync(__dirname + "/port.txt", {
+//         encoding: "utf-8",
+//       });
 
-      let changePort = replace.sync({
-        files: __dirname + "/public/index.*",
-        from: `const port = ${prevPort}`,
-        to: `const port = ${backendPort}`,
-      });
-      console.log(changePort);
+//       let changePort = replace.sync({
+//         files: __dirname + "/public/index.*",
+//         from: `const port = ${prevPort}`,
+//         to: `const port = ${backendPort}`,
+//       });
+//       console.log(changePort);
 
-      fs.writeFileSync(__dirname + "/port.txt", backendPort, {
-        encoding: "utf-8",
-        flag: "w",
-      });
-      console.clear();
-    } catch (e) {
-      console.log(e);
-    }
-  }
-}
+//       fs.writeFileSync(__dirname + "/port.txt", backendPort, {
+//         encoding: "utf-8",
+//         flag: "w",
+//       });
+//       console.clear();
+//     } catch (e) {
+//       console.log(e);
+//     }
+//   }
+// }
 
 let sslCredentials = {
   key: fs.readFileSync("/etc/letsencrypt/live/www.ucloudproject.com/privkey.pem"),
   cert: fs.readFileSync("/etc/letsencrypt/live/www.ucloudproject.com/fullchain.pem"),
 };
 
-let backend = express()
-  .use(cookieSession({
-    keys: ['_0dedeae2e90cb813022508fa213e9c53']
-  }))
-  .use(cors({
-    origin: true,
-    methods: ['GET', 'PUT', 'POST', 'DELETE'],
-    credentials: true,
-    preflightContinue: true
-  }))
-  .use("/verify", verifyRouter)
-  .use("/signup", signupRouter)
-  .use("/login", loginRouter)
-  .use('/userExists', userExistsRouter)
-  .use("/home", homeRouter)
-  .use('/avatar', avatarRouter)
-  .use("/upload", uploadRouter)
-  .use("/mkdir", mkdirRouter)
-  .use("/search", searchRouter)
-  .use("/search_users", searchUsersRouter)
-  .use("/rename", renameRouter)
-  .use("/delete", deleteRouter);
-https.createServer(sslCredentials, backend).listen(backendPort);
+// let backend = express()
+// https.createServer(sslCredentials, backend).listen(backendPort);
 
 let frontend = express()
-  .use(cors())
-  .use(express.static(__dirname + "/public"));
+.use(cookieSession({
+  keys: ['_0dedeae2e90cb813022508fa213e9c53']
+}))
+.use(cors({
+  origin: true,
+  methods: ['GET', 'PUT', 'POST', 'DELETE'],
+  credentials: true,
+  preflightContinue: true
+}))
+.use(express.static(__dirname + "/public"))
+.use("/verify", verifyRouter)
+.use("/signup", signupRouter)
+.use("/login", loginRouter)
+.use('/userExists', userExistsRouter)
+.use("/home", homeRouter)
+.use('/avatar', avatarRouter)
+.use("/upload", uploadRouter)
+.use("/mkdir", mkdirRouter)
+.use("/search", searchRouter)
+.use("/search_users", searchUsersRouter)
+.use("/rename", renameRouter)
+.use("/delete", deleteRouter);
 
 http
   .createServer((req, res) => {
@@ -697,7 +696,7 @@ http
 https.createServer(sslCredentials, frontend).listen(443);
 
 console.log(`Frontend listening on ports 80 and 443 ✔`.green);
-console.log(`Backend listening on port ${backendPort} ☁\n`.blue);
+// console.log(`Backend listening on port ${backendPort} ☁\n`.blue);
 console.log(`Website: https://ucloudproject.com ⭐\n\n`.yellow);
 console.log("-------------------------------\n");
 
