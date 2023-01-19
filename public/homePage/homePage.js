@@ -8,7 +8,7 @@ let freeSpace;
 const port = 3000;
 
 let userExistsRequest = new XMLHttpRequest();
-userExistsRequest.open('post', `https://172.105.83.6:${port}/userExists/`);
+userExistsRequest.open('post', `https://ucloudproject.com:${port}/userExists/`);
 userExistsRequest.setRequestHeader("Content-type", "application/json");
 userExistsRequest.withCredentials = true;
 userExistsRequest.send(JSON.stringify({ user: username }));
@@ -16,7 +16,7 @@ userExistsRequest.send(JSON.stringify({ user: username }));
 userExistsRequest.onload = function() {
     if ((JSON.parse(this.responseText)).error === 'Error! User does not exit!') {
         alert(JSON.parse(this.responseText).error);
-        location.href = 'https://172.105.83.6';
+        location.href = 'https://ucloudproject.com';
     } else {
         freeSpace = (JSON.parse(this.responseText)).freeSpace;
         console.log(freeSpace);
@@ -25,7 +25,7 @@ userExistsRequest.onload = function() {
 
 function getAllFiles(dir) {
     let xhttp = new XMLHttpRequest();
-    xhttp.open('post', `https://172.105.83.6:${port}/home/`);
+    xhttp.open('post', `https://ucloudproject.com:${port}/home/`);
     xhttp.setRequestHeader("Content-type", "application/json");
     xhttp.withCredentials = true;
     xhttp.send(dir);
@@ -63,7 +63,7 @@ function displayFiles(responseArray) {
         if (file.name === 'ucloud_files.txt') return;
 
         const fileName = file.name.split('/').pop();
-        const link = `https://172.105.83.6/users${file.linkUrl}`;
+        const link = `https://ucloudproject.com/users${file.linkUrl}`;
         const type = file.type;
 
         let fileBox = document.createElement('div');
@@ -77,7 +77,7 @@ function displayFiles(responseArray) {
             image.title = fileName;
             image.type = 'directory';
             image.onclick = (e) => {
-                location.href = `https://172.105.83.6/homePage/homePage.html?pwd=${file.name}`;
+                location.href = `https://ucloudproject.com/homePage/homePage.html?pwd=${file.name}`;
             };
             fileBox.appendChild(image);
 
@@ -85,7 +85,7 @@ function displayFiles(responseArray) {
             a.innerHTML = fileName + '<br>';
             a.title = file.linkUrl;
             a.onclick = (e) => {
-                location.href = `https://172.105.83.6/homePage/homePage.html?pwd=${file.name}`;
+                location.href = `https://ucloudproject.com/homePage/homePage.html?pwd=${file.name}`;
             };
             fileBox.appendChild(a);
         } else {
@@ -119,7 +119,7 @@ function displayFiles(responseArray) {
                 image.title = prevDir;
                 image.id = prevDir;
                 image.onclick = (e) => {
-                    location.href = `https://172.105.83.6/homePage/homePage.html?pwd=${prevDirPath}`;
+                    location.href = `https://ucloudproject.com/homePage/homePage.html?pwd=${prevDirPath}`;
                 };
                 fileBox.appendChild(image);
 
@@ -127,7 +127,7 @@ function displayFiles(responseArray) {
                 a.innerHTML = prevDir;
                 a.title = prevDir;
                 a.onclick = (e) => {
-                    location.href = `https://172.105.83.6/homePage/homePage.html?pwd=${prevDirPath}`;
+                    location.href = `https://ucloudproject.com/homePage/homePage.html?pwd=${prevDirPath}`;
                 };
                 fileBox.appendChild(a);
                 return;
@@ -181,14 +181,14 @@ function renameFile(event) {
         
         let renameOBJ = JSON.stringify({ query: event.target.id, newFileName: newFileName, type: type, extension: extension });
 
-        renameRequest.open(`put`, `https://172.105.83.6:${port}/rename/${renameOBJ}`);
+        renameRequest.open(`put`, `https://ucloudproject.com:${port}/rename/${renameOBJ}`);
         renameRequest.setRequestHeader("Content-type", "application/json");
         renameRequest.withCredentials = true;
         renameRequest.send(JSON.stringify({ path: event.target.link }));
 
         renameRequest.onload = function() {
             alert(this.responseText);
-            location.href = `https://172.105.83.6/homePage/homePage.html?pwd=${currentDir}`;
+            location.href = `https://ucloudproject.com/homePage/homePage.html?pwd=${currentDir}`;
         }
 }
 
@@ -206,14 +206,14 @@ function deleteFile(event) {
         
         let deleteOBJ = JSON.stringify({ query: event.target.id, type: targetType });
 
-        deleteRequest.open(`delete`, `https://172.105.83.6:${port}/delete/${deleteOBJ}`);
+        deleteRequest.open(`delete`, `https://ucloudproject.com:${port}/delete/${deleteOBJ}`);
         deleteRequest.setRequestHeader("Content-type", "application/json");
         deleteRequest.withCredentials = true;
         deleteRequest.send(JSON.stringify({ path: event.target.link }));
 
         deleteRequest.onload = function() {
             alert(this.responseText);
-            location.href = `https://172.105.83.6/homePage/homePage.html?pwd=${currentDir}`;
+            location.href = `https://ucloudproject.com/homePage/homePage.html?pwd=${currentDir}`;
         }
     }
 }
@@ -251,7 +251,7 @@ function displayUsers(responseArray) {
         let usernameTD = document.createElement('td');
         userRow.appendChild(usernameTD);
         let a = document.createElement('a');
-        a.href = `https://172.105.83.6/homePage/homePage.html?pwd=${user.username}`;
+        a.href = `https://ucloudproject.com/homePage/homePage.html?pwd=${user.username}`;
         a.innerText = user.username;
         usernameTD.appendChild(a);
     });
@@ -301,11 +301,11 @@ window.onload = () => {
 
     domOBJ.logo.addEventListener('click', function() {
         let storage = JSON.parse(localStorage.getItem('ucloud'));
-        location.href = `https://172.105.83.6/homePage/homePage.html?pwd=${storage.username}`;
+        location.href = `https://ucloudproject.com/homePage/homePage.html?pwd=${storage.username}`;
     });
 
     domOBJ.avatarForm.addEventListener('click', function(e) {
-        domOBJ.avatarForm.action = `https://172.105.83.6:${port}/avatar/`;
+        domOBJ.avatarForm.action = `https://ucloudproject.com:${port}/avatar/`;
     });
 
     domOBJ.clearAvatarBtn.addEventListener('click', function() {
@@ -317,7 +317,7 @@ window.onload = () => {
     });
 
     domOBJ.uploadForm.addEventListener('click', function(e) {
-        domOBJ.uploadForm.action = `https://172.105.83.6:${port}/upload/`;
+        domOBJ.uploadForm.action = `https://ucloudproject.com:${port}/upload/`;
     });
 
     domOBJ.uploadForm.click();
@@ -361,7 +361,7 @@ window.onload = () => {
         if (!search_query) return getAllFiles(JSON.stringify({ path: currentDir}));
 
         let xhttp = new XMLHttpRequest();
-        xhttp.open('get', `https://172.105.83.6:${port}/search/${JSON.stringify(searchOBJ)}`);
+        xhttp.open('get', `https://ucloudproject.com:${port}/search/${JSON.stringify(searchOBJ)}`);
         xhttp.withCredentials = true;
         xhttp.send(null);
 
@@ -398,7 +398,7 @@ window.onload = () => {
     domOBJ.path.click();
 
     domOBJ.folderForm.addEventListener('click', function() {
-        domOBJ.folderForm.action = `https://172.105.83.6:${port}/mkdir/`;
+        domOBJ.folderForm.action = `https://ucloudproject.com:${port}/mkdir/`;
     });
 
     domOBJ.folderForm.click();
@@ -430,7 +430,7 @@ window.onload = () => {
         if (!search_query) return document.write('No users found!');
 
         let xhttp = new XMLHttpRequest();
-        xhttp.open('get', `https://172.105.83.6:${port}/search_users/${search_query}`);
+        xhttp.open('get', `https://ucloudproject.com:${port}/search_users/${search_query}`);
         xhttp.send(null);
 
         xhttp.onload = function() {

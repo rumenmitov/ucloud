@@ -38,14 +38,13 @@ const client = new mongodb.MongoClient(AtlasUrl, {
 let verifyRouter = express.Router();
 verifyRouter.use(bodyParser.urlencoded({ extended: true }));
 verifyRouter.route("/").post((req, res) => {
-  // let encodedEmail = btoa(req.body.email);
   let encodedEmail = Buffer.from(req.body.email).toString('base64');
   mailTransporter.sendMail(
     {
       from: auth.user,
       to: req.body.email,
       subject: "UCloud Verification",
-      html: `<a href='https://172.105.83.6/signup/signup.html?userCode=${encodedEmail}'>Verify</a>`,
+      html: `<a href='https://ucloudproject.com/signup/signup.html?userCode=${encodedEmail}'>Verify</a>`,
     },
     (err) => {
       if (err) console.log(err);
@@ -60,14 +59,14 @@ signupRouter.use(bodyParser.urlencoded({ extended: true }));
 signupRouter.route("/").post((req, res, next) => {
   if (!req.body.email) {
     res.send(
-      "Invlid email. Please try with a valid email address: <a href=`https://172.105.83.6/verification/verification.html`>Click here to verify</a>"
+      "Invlid email. Please try with a valid email address: <a href=`https://ucloudproject.com/verification/verification.html`>Click here to verify</a>"
     );
     return next();
   }
 
   if (req.body.password !== req.body.password_confirm) {
     res.send(
-      `Passwords do not match! <a href='https://172.105.83.6/signup/signup.html?userCode=${Buffer.from(req.body.email).toString('base64')}'>Try again!</a>`
+      `Passwords do not match! <a href='https://ucloudproject.com/signup/signup.html?userCode=${Buffer.from(req.body.email).toString('base64')}'>Try again!</a>`
     );
     return next();
   }
@@ -132,7 +131,7 @@ signupRouter.route("/").post((req, res, next) => {
 
                       req.session.username = req.body.username;
                       res.redirect(
-                        `https://172.105.83.6/homePage/homePage.html?pwd=${req.body.username}`
+                        `https://ucloudproject.com/homePage/homePage.html?pwd=${req.body.username}`
                       );
                       client.close();
                     }
@@ -162,7 +161,7 @@ loginRouter.route("/").post((req, res, next) => {
 
         if (!results[0]) {
           res.send(
-            'Username and password do not match. <a href="https://172.105.83.6/login/login.html">Try again</a>'
+            'Username and password do not match. <a href="https://ucloudproject.com/login/login.html">Try again</a>'
           );
           client.close();
           return next();
@@ -170,11 +169,11 @@ loginRouter.route("/").post((req, res, next) => {
           if (results[0].password == req.body.password) {
             req.session.username = results[0].username;
             res.redirect(
-              `https://172.105.83.6/homePage/homePage.html?pwd=${results[0].username}`
+              `https://ucloudproject.com/homePage/homePage.html?pwd=${results[0].username}`
             );
           } else {
             res.send(
-              'Username and password do not match. <a href="https://172.105.83.6/login/login.html">Try again</a>'
+              'Username and password do not match. <a href="https://ucloudproject.com/login/login.html">Try again</a>'
             );
           }
 
@@ -259,14 +258,14 @@ avatarRouter.route('/').post((req, res, next)=>{
     console.log(path.extname(files.avatarImg.originalFilename));
 
     if (path.extname(files.avatarImg.originalFilename) !== '.jpg' && path.extname(files.avatarImg.originalFilename) !== '.png' && path.extname(files.avatarImg.originalFilename) !== '.gif' && path.extname(files.avatarImg.originalFilename) !== '.webp') {
-      res.send(`Profile pic must be one of the following file types: jpeg, png, gif, webp. <a href='https://172.105.83.6/homePage/homePage.html?pwd=${req.session.username}'>Back to site</a>`);
+      res.send(`Profile pic must be one of the following file types: jpeg, png, gif, webp. <a href='https://ucloudproject.com/homePage/homePage.html?pwd=${req.session.username}'>Back to site</a>`);
       return next();
     }
 
     fs.rename(files.avatarImg.filepath, __dirname + `/public/users/${req.session.username}/.${req.session.username}/${req.session.username}_avatar.png`, err=>{
       if (err) console.log(err);
 
-      res.send(`Profile pic changed. <a href='https://172.105.83.6/homePage/homePage.html?pwd=${req.session.username}'>Back to site</a>`);
+      res.send(`Profile pic changed. <a href='https://ucloudproject.com/homePage/homePage.html?pwd=${req.session.username}'>Back to site</a>`);
       res.end();
     });
   });
@@ -284,7 +283,7 @@ uploadRouter.route("/").post((req, res, next) => {
     let ownerofDir = dir.split("/")[0];
     if (ownerofDir !== req.session.username) {
       res.send(
-        `Error: User lacking permission to edit. <a href='https://172.105.83.6/homePage/homePage.html?pwd=${fields.filePath}'>Back to site</a>`
+        `Error: User lacking permission to edit. <a href='https://ucloudproject.com/homePage/homePage.html?pwd=${fields.filePath}'>Back to site</a>`
       );
       return next();
     }
@@ -314,7 +313,7 @@ uploadRouter.route("/").post((req, res, next) => {
 
     if (files.userFile.originalFilename.toLowerCase() === "ucloud_files.txt") {
       res.send(
-        `File cannot be named: <i>${files.userFile.originalFilename.toLowerCase()}</i>! Please try a different name: <a href='https://172.105.83.6/homePage/homePage.html?pwd=${
+        `File cannot be named: <i>${files.userFile.originalFilename.toLowerCase()}</i>! Please try a different name: <a href='https://ucloudproject.com/homePage/homePage.html?pwd=${
           fields.filePath
         }'>Back to site</a>`
       );
@@ -323,12 +322,12 @@ uploadRouter.route("/").post((req, res, next) => {
 
     if (path.extname(files.userFile.originalFilename) === ".backlink") {
       res.send(
-        `File cannot have extension: <i>.backlink</i>! Please try a different extension: <a href='https://172.105.83.6/homePage/homePage.html?pwd=${fields.filePath}'>Back to site</a>`
+        `File cannot have extension: <i>.backlink</i>! Please try a different extension: <a href='https://ucloudproject.com/homePage/homePage.html?pwd=${fields.filePath}'>Back to site</a>`
       );
       return next();
     } else if (path.extname(files.userFile.originalFilename) === ".") {
       res.send(
-        `File name cannot end on a dot! Please try a different extension: <a href='https://172.105.83.6/homePage/homePage.html?pwd=${fields.filePath}'>Back to site</a>`
+        `File name cannot end on a dot! Please try a different extension: <a href='https://ucloudproject.com/homePage/homePage.html?pwd=${fields.filePath}'>Back to site</a>`
       );
       return next();
     }
@@ -338,7 +337,7 @@ uploadRouter.route("/").post((req, res, next) => {
       for (let item in allFilesArray) {
         if (allFilesArray[item] === name) {
           res.send(
-            `File already exists! <a href='https://172.105.83.6/homePage/homePage.html?pwd=${fields.filePath}'>Back to site</a>`
+            `File already exists! <a href='https://ucloudproject.com/homePage/homePage.html?pwd=${fields.filePath}'>Back to site</a>`
           );
           return next();
         }
@@ -355,7 +354,7 @@ uploadRouter.route("/").post((req, res, next) => {
     fs.rename(oldPath, newPath, (err) => {
       if (err) console.log(err);
       res.send(
-        `File upload was successful. <a href="https://172.105.83.6/homePage/homePage.html?pwd=${fields.filePath}">Back to site</a>`
+        `File upload was successful. <a href="https://ucloudproject.com/homePage/homePage.html?pwd=${fields.filePath}">Back to site</a>`
       );
     });
   });
@@ -372,7 +371,7 @@ mkdirRouter.route("/").post((req, res, next) => {
   let ownerofDir = dir.split("/")[0];
   if (ownerofDir !== req.session.username) {
     res.send(
-      `Error: User lacking permission to edit. <a href='https://172.105.83.6/homePage/homePage.html?pwd=${dir}'>Back to site</a>`
+      `Error: User lacking permission to edit. <a href='https://ucloudproject.com/homePage/homePage.html?pwd=${dir}'>Back to site</a>`
     );
     return next();
   }
@@ -384,7 +383,7 @@ mkdirRouter.route("/").post((req, res, next) => {
     for (let item in allFilesArray) {
       if (allFilesArray[item] === dir + "/" + name) {
         res.send(
-          `Folder already exists! <a href='https://172.105.83.6/homePage/homePage.html?pwd=${req.body.path}'>Back to site</a>`
+          `Folder already exists! <a href='https://ucloudproject.com/homePage/homePage.html?pwd=${req.body.path}'>Back to site</a>`
         );
         return next();
       }
@@ -410,7 +409,7 @@ mkdirRouter.route("/").post((req, res, next) => {
         encoding: "utf-8",
         flag: "w",
       });
-    res.redirect(`https://172.105.83.6/homePage/homePage.html?pwd=${dir}`);
+    res.redirect(`https://ucloudproject.com/homePage/homePage.html?pwd=${dir}`);
   });
 });
 
@@ -506,7 +505,7 @@ renameRouter.route("/:renameOBJ").put((req, res, next) => {
   let ownerofDir = dir.split("/")[1];
   if (ownerofDir !== req.session.username) {
     res.send(
-      `Error: User lacking permission to edit. <a href='https://172.105.83.6/homePage/homePage.html?pwd=${prevDir}'>Back to site</a>`
+      `Error: User lacking permission to edit. <a href='https://ucloudproject.com/homePage/homePage.html?pwd=${prevDir}'>Back to site</a>`
     );
     return next();
   }
@@ -578,7 +577,7 @@ deleteRouter.route("/:deleteOBJ").delete((req, res, next) => {
   let ownerofDir = dir.split("/")[1];
   if (ownerofDir !== req.session.username) {
     res.send(
-      `Error: User lacking permission to edit. <a href='https://172.105.83.6/homePage/homePage.html?pwd=${prevDir}'>Back to site</a>`
+      `Error: User lacking permission to edit. <a href='https://ucloudproject.com/homePage/homePage.html?pwd=${prevDir}'>Back to site</a>`
     );
     return next();
   }
@@ -690,7 +689,7 @@ let frontend = express()
 
 http
   .createServer((req, res) => {
-    res.writeHead(301, { Location: "https://172.105.83.6" });
+    res.writeHead(301, { Location: "https://ucloudproject.com" });
     res.end();
   })
   .listen(80);
@@ -699,7 +698,7 @@ https.createServer(sslCredentials, frontend).listen(443);
 
 console.log(`Frontend listening on ports 80 and 443 ✔`.green);
 console.log(`Backend listening on port ${backendPort} ☁\n`.blue);
-console.log(`Website: https://172.105.83.6 ⭐\n\n`.yellow);
+console.log(`Website: https://ucloudproject.com ⭐\n\n`.yellow);
 console.log("-------------------------------\n");
 
-open("https://172.105.83.6");
+open("https://ucloudproject.com");
