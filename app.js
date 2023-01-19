@@ -655,8 +655,8 @@ for (let i = 0; i < process.argv.length; i++) {
 }
 
 let sslCredentials = {
-  key: fs.readFileSync(__dirname + "/sslCertificate/key.pem"),
-  cert: fs.readFileSync(__dirname + "/sslCertificate/cert.pem"),
+  key: fs.readFileSync("/etc/letsencrypt/live/www.ucloudproject.com/privkey.pem"),
+  cert: fs.readFileSync("/etc/letsencrypt/live/www.ucloudproject.com/fullchain.pem"),
 };
 
 let backend = express()
