@@ -655,8 +655,8 @@ console.clear();
 // }
 
 let sslCredentials = {
-  key: fs.readFileSync("/etc/letsencrypt/live/www.ucloudproject.com/privkey.pem"),
-  cert: fs.readFileSync("/etc/letsencrypt/live/www.ucloudproject.com/fullchain.pem"),
+  key: fs.readFileSync(__dirname + '/sslCertificate/key.pem'),
+  cert: fs.readFileSync(__dirname + "/sslCertificate/cert.pem"),
 };
 
 // let backend = express()
