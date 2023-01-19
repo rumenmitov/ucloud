@@ -663,4 +663,4 @@ console.log(`Frontend listening on ports 80 and 443 ✔\n`.green);
 console.log(`Website: https://ucloudproject.com ⭐\n\n`.yellow);
 console.log("-------------------------------\n");
 
-open("https://ucloudproject.com");
+// open("https://ucloudproject.com");
