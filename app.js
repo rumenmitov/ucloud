@@ -255,8 +255,6 @@ avatarRouter.route('/').post((req, res, next)=>{
   form.parse(req, (err, fields, files)=>{
     if (err) console.log(err);
 
-    console.log(path.extname(files.avatarImg.originalFilename));
-
     if (path.extname(files.avatarImg.originalFilename) !== '.jpg' && path.extname(files.avatarImg.originalFilename) !== '.png' && path.extname(files.avatarImg.originalFilename) !== '.gif' && path.extname(files.avatarImg.originalFilename) !== '.webp') {
       res.send(`Profile pic must be one of the following file types: jpeg, png, gif, webp. <a href='https://ucloudproject.com/homePage/homePage.html?pwd=${req.session.username}'>Back to site</a>`);
       return next();
@@ -622,45 +620,11 @@ deleteRouter.route("/:deleteOBJ").delete((req, res, next) => {
 
 // --- Server ---
 console.clear();
-// let backendPort = 3000;
-// for (let i = 0; i < process.argv.length; i++) {
-//   if (process.argv[i] == "-p") {
-//     try {
-//       backendPort = process.argv[i + 1];
-//       if (backendPort == undefined) {
-//         backendPort = 3000;
-//         console.log("Port was not defined. Defaulting to port 3000\n".red);
-//       }
-
-//       let prevPort = fs.readFileSync(__dirname + "/port.txt", {
-//         encoding: "utf-8",
-//       });
-
-//       let changePort = replace.sync({
-//         files: __dirname + "/public/index.*",
-//         from: `const port = ${prevPort}`,
-//         to: `const port = ${backendPort}`,
-//       });
-//       console.log(changePort);
-
-//       fs.writeFileSync(__dirname + "/port.txt", backendPort, {
-//         encoding: "utf-8",
-//         flag: "w",
-//       });
-//       console.clear();
-//     } catch (e) {
-//       console.log(e);
-//     }
-//   }
-// }
 
 let sslCredentials = {
   key: fs.readFileSync(__dirname + '/sslCertificate/key.pem'),
   cert: fs.readFileSync(__dirname + "/sslCertificate/cert.pem"),
 };
-
-// let backend = express()
-// https.createServer(sslCredentials, backend).listen(backendPort);
 
 let frontend = express()
 .use(cookieSession({
@@ -695,8 +659,7 @@ http
 
 https.createServer(sslCredentials, frontend).listen(443);
 
-console.log(`Frontend listening on ports 80 and 443 ✔`.green);
-// console.log(`Backend listening on port ${backendPort} ☁\n`.blue);
+console.log(`Frontend listening on ports 80 and 443 ✔\n`.green);
 console.log(`Website: https://ucloudproject.com ⭐\n\n`.yellow);
 console.log("-------------------------------\n");
 
