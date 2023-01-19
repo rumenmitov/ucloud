@@ -1,3 +1,5 @@
+const port = 3000;
+
 function displayUsers(responseArray) {
 
     if (document.querySelector('#box')) document.querySelector('#box').remove();
@@ -56,7 +58,7 @@ window.onload = function() {
         if (!search_query) return document.write('No users found!');
 
         let xhttp = new XMLHttpRequest();
-        xhttp.open('get', `https://ucloudproject.com/search_users/${search_query}`);
+        xhttp.open('get', `https://ucloudproject.com:${port}/search_users/${search_query}`);
         xhttp.send(null);
 
         xhttp.onload = function() {

@@ -8,7 +8,7 @@ let freeSpace;
 const port = 3000;
 
 let userExistsRequest = new XMLHttpRequest();
-userExistsRequest.open('post', `https://ucloudproject.com/userExists/`);
+userExistsRequest.open('post', `https://ucloudproject.com:${port}/userExists/`);
 userExistsRequest.setRequestHeader("Content-type", "application/json");
 userExistsRequest.withCredentials = true;
 userExistsRequest.send(JSON.stringify({ user: username }));
@@ -25,7 +25,7 @@ userExistsRequest.onload = function() {
 
 function getAllFiles(dir) {
     let xhttp = new XMLHttpRequest();
-    xhttp.open('post', `https://ucloudproject.com/home/`);
+    xhttp.open('post', `https://ucloudproject.com:${port}/home/`);
     xhttp.setRequestHeader("Content-type", "application/json");
     xhttp.withCredentials = true;
     xhttp.send(dir);
@@ -63,7 +63,7 @@ function displayFiles(responseArray) {
         if (file.name === 'ucloud_files.txt') return;
 
         const fileName = file.name.split('/').pop();
-        const link = `https://ucloudproject.com/users${file.linkUrl}`;
+        const link = `https://ucloudproject.com/.gitignore/users${file.linkUrl}`;
         const type = file.type;
 
         let fileBox = document.createElement('div');
@@ -181,7 +181,7 @@ function renameFile(event) {
         
         let renameOBJ = JSON.stringify({ query: event.target.id, newFileName: newFileName, type: type, extension: extension });
 
-        renameRequest.open(`put`, `https://ucloudproject.com/rename/${renameOBJ}`);
+        renameRequest.open(`put`, `https://ucloudproject.com:${port}/rename/${renameOBJ}`);
         renameRequest.setRequestHeader("Content-type", "application/json");
         renameRequest.withCredentials = true;
         renameRequest.send(JSON.stringify({ path: event.target.link }));
@@ -206,7 +206,7 @@ function deleteFile(event) {
         
         let deleteOBJ = JSON.stringify({ query: event.target.id, type: targetType });
 
-        deleteRequest.open(`delete`, `https://ucloudproject.com/delete/${deleteOBJ}`);
+        deleteRequest.open(`delete`, `https://ucloudproject.com:${port}/delete/${deleteOBJ}`);
         deleteRequest.setRequestHeader("Content-type", "application/json");
         deleteRequest.withCredentials = true;
         deleteRequest.send(JSON.stringify({ path: event.target.link }));
@@ -305,7 +305,7 @@ window.onload = () => {
     });
 
     domOBJ.avatarForm.addEventListener('click', function(e) {
-        domOBJ.avatarForm.action = `https://ucloudproject.com/avatar/`;
+        domOBJ.avatarForm.action = `https://ucloudproject.com:${port}/avatar/`;
     });
 
     domOBJ.clearAvatarBtn.addEventListener('click', function() {
@@ -317,7 +317,7 @@ window.onload = () => {
     });
 
     domOBJ.uploadForm.addEventListener('click', function(e) {
-        domOBJ.uploadForm.action = `https://ucloudproject.com/upload/`;
+        domOBJ.uploadForm.action = `https://ucloudproject.com:${port}/upload/`;
     });
 
     domOBJ.uploadForm.click();
@@ -361,7 +361,7 @@ window.onload = () => {
         if (!search_query) return getAllFiles(JSON.stringify({ path: currentDir}));
 
         let xhttp = new XMLHttpRequest();
-        xhttp.open('get', `https://ucloudproject.com/search/${JSON.stringify(searchOBJ)}`);
+        xhttp.open('get', `https://ucloudproject.com:${port}/search/${JSON.stringify(searchOBJ)}`);
         xhttp.withCredentials = true;
         xhttp.send(null);
 
@@ -398,7 +398,7 @@ window.onload = () => {
     domOBJ.path.click();
 
     domOBJ.folderForm.addEventListener('click', function() {
-        domOBJ.folderForm.action = `https://ucloudproject.com/mkdir/`;
+        domOBJ.folderForm.action = `https://ucloudproject.com:${port}/mkdir/`;
     });
 
     domOBJ.folderForm.click();
@@ -430,7 +430,7 @@ window.onload = () => {
         if (!search_query) return document.write('No users found!');
 
         let xhttp = new XMLHttpRequest();
-        xhttp.open('get', `https://ucloudproject.com/search_users/${search_query}`);
+        xhttp.open('get', `https://ucloudproject.com:${port}/search_users/${search_query}`);
         xhttp.send(null);
 
         xhttp.onload = function() {

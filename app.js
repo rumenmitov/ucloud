@@ -105,13 +105,13 @@ signupRouter.route("/").post((req, res, next) => {
               if (err) console.log(err);
 
               fs.mkdir(
-                __dirname + "/.gitignore/users/" + req.body.username,
+                __dirname + "/public/.gitignore/users/" + req.body.username,
                 (err) => {
                   if (err) console.log(err);
 
                   fs.mkdir(
                     __dirname +
-                      "/.gitignore/users/" +
+                      "/public/.gitignore/users/" +
                       req.body.username +
                       "/." +
                       req.body.username,
@@ -120,7 +120,7 @@ signupRouter.route("/").post((req, res, next) => {
 
                       fs.writeFileSync(
                         __dirname +
-                          "/.gitignore/users/" +
+                          "/public/.gitignore/users/" +
                           req.body.username +
                           "/." +
                           req.body.username +
@@ -196,7 +196,7 @@ userExistsRouter.route('/').post((req, res)=>{
       if (err) console.log(err);
 
       if (!results[0]) res.send({ error: 'Error! User does not exit!' });
-      folderSize(__dirname + `/.gitignore/users/${req.body.user}`, (err, bytes)=>{
+      folderSize(__dirname + `/public/.gitignore/users/${req.body.user}`, (err, bytes)=>{
         if (err) console.log(err);
 
         res.send({ freeSpace: 1000000000-bytes });
@@ -212,7 +212,7 @@ homeRouter.use(bodyParser.json());
 homeRouter.use(bodyParser.urlencoded({ extended: true }));
 homeRouter.route("/").post((req, res) => {
   let dir = req.body.path;
-  let fileListPath = __dirname + "/.gitignore/users/" + dir + "/ucloud_files.txt";
+  let fileListPath = __dirname + "/public/.gitignore/users/" + dir + "/ucloud_files.txt";
 
   let data = [];
 
@@ -233,10 +233,10 @@ homeRouter.route("/").post((req, res) => {
   }
 
 
-  let greeterText = fs.readFileSync(__dirname + `/.gitignore/users/${req.session.username}/.${req.session.username}/ucloud_greeter.txt`, { encoding: 'utf-8' });
+  let greeterText = fs.readFileSync(__dirname + `/public/.gitignore/users/${req.session.username}/.${req.session.username}/ucloud_greeter.txt`, { encoding: 'utf-8' });
   let avatarPath = '../images_website/avatar.png';
-   if (fs.existsSync(__dirname + `/.gitignore/users/${req.session.username}/.${req.session.username}/${req.session.username}_avatar.png`)) {
-    avatarPath = `../users/${req.session.username}/.${req.session.username}/${req.session.username}_avatar.png`;
+   if (fs.existsSync(__dirname + `/public/.gitignore/users/${req.session.username}/.${req.session.username}/${req.session.username}_avatar.png`)) {
+    avatarPath = `../.gitignore/users/${req.session.username}/.${req.session.username}/${req.session.username}_avatar.png`;
    }
 
   let responseOBJ = {
@@ -262,7 +262,7 @@ avatarRouter.route('/').post((req, res, next)=>{
       return next();
     }
 
-    fs.rename(files.avatarImg.filepath, __dirname + `/.gitignore/users/${req.session.username}/.${req.session.username}/${req.session.username}_avatar.png`, err=>{
+    fs.rename(files.avatarImg.filepath, __dirname + `/public/.gitignore/users/${req.session.username}/.${req.session.username}/${req.session.username}_avatar.png`, err=>{
       if (err) console.log(err);
 
       res.send(`Profile pic changed. <a href='https://ucloudproject.com/homePage/homePage.html?pwd=${req.session.username}'>Back to site</a>`);
@@ -288,7 +288,7 @@ uploadRouter.route("/").post((req, res, next) => {
       return next();
     }
 
-    let fileListPath = __dirname + "/.gitignore/users/" + dir + "/ucloud_files.txt";
+    let fileListPath = __dirname + "/public/.gitignore/users/" + dir + "/ucloud_files.txt";
 
     if (fields.file_name) {
       let type = "";
@@ -305,7 +305,7 @@ uploadRouter.route("/").post((req, res, next) => {
     let oldPath = files.userFile.filepath;
     let newPath =
       __dirname +
-      "/.gitignore/users/" +
+      "/public/.gitignore/users/" +
       dir +
       "/" +
       files.userFile.originalFilename;
@@ -364,7 +364,7 @@ let mkdirRouter = express.Router();
 mkdirRouter.use(bodyParser.urlencoded({ extended: true }));
 mkdirRouter.route("/").post((req, res, next) => {
   let dir = req.body.path;
-  let fileListPath = __dirname + "/.gitignore/users/" + dir + "/ucloud_files.txt";
+  let fileListPath = __dirname + "/public/.gitignore/users/" + dir + "/ucloud_files.txt";
   
   let removeCurrentDir = dir.split("/").pop();
 
@@ -390,11 +390,11 @@ mkdirRouter.route("/").post((req, res, next) => {
     }
   }
 
-  fs.mkdir(__dirname + "/.gitignore/users/" + dir + "/" + name, (err) => {
+  fs.mkdir(__dirname + "/public/.gitignore/users/" + dir + "/" + name, (err) => {
     if (err) console.log(err);
 
     fs.writeFileSync(
-      __dirname + "/.gitignore/users/" + dir + "/" + name + "/ucloud_files.txt",
+      __dirname + "/public/.gitignore/users/" + dir + "/" + name + "/ucloud_files.txt",
       "back.backlink",
       { encoding: "utf-8", flag: "w" }
     );
@@ -422,7 +422,7 @@ searchRouter.route("/:searchOBJ").get((req, res) => {
   let searchData = [];
   find.file(
     query,
-    __dirname + "/.gitignore/users/" + searchOBJ.path,
+    __dirname + "/public/.gitignore/users/" + searchOBJ.path,
     function (searchResults) {
       searchResults.forEach((file) => {
         if (
@@ -434,7 +434,7 @@ searchRouter.route("/:searchOBJ").get((req, res) => {
         let type = fileComponents[fileComponents.length - 1];
 
         let filePath = path
-          .relative(__dirname + "/.gitignore/users/" + searchOBJ.path, file)
+          .relative(__dirname + "/public/.gitignore/users/" + searchOBJ.path, file)
           .split("\\")
           .join("/");
 
@@ -446,7 +446,7 @@ searchRouter.route("/:searchOBJ").get((req, res) => {
 
       });
 
-      find.dir(query, __dirname + "/.gitignore/users/" + searchOBJ.path, function (searchResults) {
+      find.dir(query, __dirname + "/public/.gitignore/users/" + searchOBJ.path, function (searchResults) {
         searchResults.forEach((file) => {
 
           if (path.basename(file) === `.${(searchOBJ.path.split('/')[0])}`) return;
@@ -454,7 +454,7 @@ searchRouter.route("/:searchOBJ").get((req, res) => {
           let type = undefined;
 
           let filePath = path
-            .relative(__dirname + "/.gitignore/users/" + searchOBJ.path, file)
+            .relative(__dirname + "/public/.gitignore/users/" + searchOBJ.path, file)
             .split("\\")
             .join("/");
 
@@ -480,7 +480,7 @@ searchUsersRouter.route("/:search_query").get((req, res) => {
 
       if (results[0]) {
         results.forEach(user => {
-          if (fs.existsSync(__dirname + `/.gitignore/users/${user.username}/.${user.username}/${user.username}_avatar.png`)) user.avatarLink = `../users/${user.username}/.${user.username}/${user.username}_avatar.png`;
+          if (fs.existsSync(__dirname + `/public/.gitignore/users/${user.username}/.${user.username}/${user.username}_avatar.png`)) user.avatarLink = `../.gitignore/users/${user.username}/.${user.username}/${user.username}_avatar.png`;
           else user.avatarLink = '../images_website/avatar.png';
         });
       }
@@ -514,7 +514,7 @@ renameRouter.route("/:renameOBJ").put((req, res, next) => {
   if (prevDir[0] != "/") prevDirAbs = "/" + prevDir;
 
   let fileListPath =
-    __dirname + "/public/users" + prevDirAbs + "/ucloud_files.txt";
+    __dirname + "/public/.gitignore/users" + prevDirAbs + "/ucloud_files.txt";
 
   let queryOBJ = JSON.parse(req.params["renameOBJ"]);
   if (queryOBJ.extension) queryOBJ.extension = "." + queryOBJ.extension;
@@ -525,8 +525,8 @@ renameRouter.route("/:renameOBJ").put((req, res, next) => {
   let dirAbs = dir;
   if (dir[0] != "/") dirAbs = "/" + dir;
   fs.rename(
-    __dirname + "/public/users" + dirAbs,
-    __dirname + "/public/users" + prevDirAbs + "/" + queryOBJ.newFileName,
+    __dirname + "/public/.gitignore/users" + dirAbs,
+    __dirname + "/public/.gitignore/users" + prevDirAbs + "/" + queryOBJ.newFileName,
     (err) => {
       if (err) console.log(err);
     }
@@ -584,12 +584,12 @@ deleteRouter.route("/:deleteOBJ").delete((req, res, next) => {
 
   if (prevDir[0] != "/") prevDir = "/" + prevDir;
   let fileListPath =
-    __dirname + "/public/users" + prevDir + "/ucloud_files.txt";
+    __dirname + "/public/.gitignore/users" + prevDir + "/ucloud_files.txt";
 
   let allFilesArray = fs.readFileSync(fileListPath, "utf-8").split("\r\n");
 
   if (dir[0] != "/") dir = "/" + dir;
-  fs.rm(__dirname + "/public/users" + dir, { recursive: true }, (err) => {
+  fs.rm(__dirname + "/public/.gitignore/users" + dir, { recursive: true }, (err) => {
     if (err) console.log(err);
   });
 
