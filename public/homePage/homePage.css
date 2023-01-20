@@ -60,6 +60,10 @@ section p {
     border-bottom: rgb(136, 220, 253) 10px solid;
 }
 
+#profile_menu {
+    display: none;
+}
+
 button {
     width: 10vw;
 }

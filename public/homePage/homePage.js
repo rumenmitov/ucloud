@@ -40,7 +40,7 @@ function getAllFiles(dir) {
         avatar.id = 'avatar';
         avatar.src = responseOBJ.avatarPath;
         avatar.addEventListener('click', function() {
-            avatarForm.style = 'display:block;';
+            profile_menu.style = 'display:block;';
         });
         section.appendChild(avatar);
 
@@ -263,9 +263,9 @@ window.onload = () => {
     let domOBJ = {
         location: document.querySelector('#location'),
         logo: document.querySelector('#logo'),
-        avatarForm: document.querySelector('#avatarForm'),
-        clearAvatarBtn: document.querySelector('#clearAvatarBtn'),
-        avatarImg: document.querySelector('#avatarImg'),
+        profile_menu: document.querySelector('#profile_menu'),
+        avatar_li: document.querySelector('#avatar_li'),
+        logout: document.ySelector('#avatarImg'),
         uploadAvatarBtn: document.querySelector('#uploadAvatarBtn'),
         closeAvatarUpload: document.querySelector('#closeAvatarUpload'),
         uploadForm: document.querySelector('#uploadForm'),
@@ -302,6 +302,10 @@ window.onload = () => {
     domOBJ.logo.addEventListener('click', function() {
         let storage = JSON.parse(localStorage.getItem('ucloud'));
         location.href = `https://ucloudproject.com/homePage/homePage.html?pwd=${storage.username}`;
+    });
+
+    domOBJ.avatar_li.addEventListener('click', function(e) {
+        domOBJ.avatarForm.style = 'display:block';
     });
 
     domOBJ.avatarForm.addEventListener('click', function(e) {
