@@ -61,6 +61,11 @@ section p {
 }
 
 #profile_menu {
+    position: absolute;
+    width: 20vw;
+    top: 2vh;
+    left: 2vw;
+    z-index: 500;
     display: none;
 }
 
