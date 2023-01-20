@@ -70,7 +70,7 @@ input {
 
 img, video, iframe{
     display: block;
-    width: 20vw;
+    width: 10vw;
     max-height: 18vh;
 }
 
