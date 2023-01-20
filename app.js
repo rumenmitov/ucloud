@@ -232,11 +232,11 @@ homeRouter.route("/").post((req, res) => {
     });
   }
 
-  let greeterText = 'You do not have admin permission here'
+  let greeterText = 'You are a GUEST';
   if (fs.existsSync(__dirname + `/public/.gitignore/users/${req.session.username}/.${req.session.username}/ucloud_greeter.txt`, { encoding: 'utf-8' })) {
     greeterText = fs.readFileSync(__dirname + `/public/.gitignore/users/${req.session.username}/.${req.session.username}/ucloud_greeter.txt`, { encoding: 'utf-8' });
   }
-  
+
   let avatarPath = '../images_website/avatar.png';
    if (fs.existsSync(__dirname + `/public/.gitignore/users/${req.session.username}/.${req.session.username}/${req.session.username}_avatar.png`)) {
     avatarPath = `../.gitignore/users/${req.session.username}/.${req.session.username}/${req.session.username}_avatar.png`;
