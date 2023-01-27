@@ -145,6 +145,12 @@ signupRouter.route("/").post((req, res, next) => {
   });
 });
 
+let isUserLoggedInRouter = express.Router();
+isUserLoggedInRouter.route('/').all((req, res)=>{
+    if (req.session.username) res.send(req.session.username);
+    else res.send(null);
+});
+
 let loginRouter = express.Router();
 loginRouter.use(bodyParser.urlencoded({ extended: true }));
 loginRouter.route("/").post((req, res, next) => {
@@ -649,6 +655,7 @@ let serverBackend = express()
 .use(express.static(__dirname + "/public"))
 .use("/verify", verifyRouter)
 .use("/signup", signupRouter)
+.use('/checkLogin', isUserLoggedInRouter)
 .use("/login", loginRouter)
 .use('/logout', logoutRouter)
 .use('/userExists', userExistsRouter)
