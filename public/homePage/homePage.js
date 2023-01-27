@@ -315,6 +315,10 @@ window.onload = () => {
     	xhttp.withCredentials = true;
     	xhttp.send(null);
 
+	xhttp.onload = function() {
+	    location.href = 'https://ucloudproject.com';
+	};
+
     });
 
     domOBJ.profile_menu.addEventListener('mouseleave', function(e) {

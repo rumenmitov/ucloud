@@ -187,7 +187,7 @@ loginRouter.route("/").post((req, res, next) => {
 let logoutRouter = express.Router();
 logoutRouter.route('/').all((req, res)=>{
 	req.session = null;
-	res.redirect('https://ucloudproject.com');
+	res.end();
 });
 
 let userExistsRouter = express.Router();
