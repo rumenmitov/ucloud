@@ -264,7 +264,7 @@ window.onload = () => {
         profile_menu: document.querySelector('#profile_menu'),
         avatar_li: document.querySelector('#avatar_li'),
 	avatarForm: document.querySelector('#avatarForm'),
-	clearAvatarBtn: document.querySelector('#clearAvatarBtn')
+	clearAvatarBtn: document.querySelector('#clearAvatarBtn'),
         logout: document.querySelector('#avatarImg'),
         uploadAvatarBtn: document.querySelector('#uploadAvatarBtn'),
         closeAvatarUpload: document.querySelector('#closeAvatarUpload'),
