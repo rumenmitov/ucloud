@@ -35,7 +35,7 @@ function getAllFiles(dir) {
         document.querySelector('body').appendChild(section);
 
         let avatar = document.createElement('img');
-        avatar.id = 'avatar';
+	avatar.id = 'avatar';
         avatar.src = responseOBJ.avatarPath;
         avatar.addEventListener('click', function() {
             profile_menu.style = 'display:block;';
