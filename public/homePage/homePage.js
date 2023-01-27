@@ -308,7 +308,7 @@ window.onload = () => {
         domOBJ.avatarForm.style = 'display:block';
     });
 
-    domOBJ.avatar_li.addEventListener('onmouseleave', function(e) {
+    domOBJ.avatar_li.addEventListener('mouseleave', function(e) {
 	domOBJ.avatar_li.style = 'display:none';
     });	
 
