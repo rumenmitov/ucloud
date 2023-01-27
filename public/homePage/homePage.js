@@ -308,8 +308,8 @@ window.onload = () => {
         domOBJ.avatarForm.style = 'display:block';
     });
 
-    domOBJ.avatar_li.addEventListener('mouseleave', function(e) {
-	domOBJ.avatar_li.style = 'display:none';
+    domOBJ.profile_menu.addEventListener('mouseleave', function(e) {
+	domOBJ.profile_menu.style = 'display:none';
     });	
 
     domOBJ.avatarForm.addEventListener('click', function(e) {
