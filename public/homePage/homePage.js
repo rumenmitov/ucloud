@@ -5,8 +5,6 @@ if (!localStorage.getItem('ucloud')) localStorage.setItem('ucloud', JSON.stringi
 let currentDir = pwd;
 let freeSpace;
 
-const port = 3000;
-
 let userExistsRequest = new XMLHttpRequest();
 userExistsRequest.open('post', `https://ucloudproject.com/userExists/`);
 userExistsRequest.setRequestHeader("Content-type", "application/json");

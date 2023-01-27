@@ -1,5 +1,3 @@
-const port = 3000;
-
 function displayUsers(responseArray) {
 
     if (document.querySelector('#box')) document.querySelector('#box').remove();

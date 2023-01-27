@@ -12,13 +12,14 @@ const fs = require("fs"),
   mongodb = require("mongodb"),
   formidable = require("formidable"),
   find = require("find"),
-  replace = require("replace-in-file"),
   open = require("open");
+
+require('dotenv').config();
 
 // Nodemailer Config
 const auth = {
-  user: "rumenchopriv@gmail.com",
-  pass: "dfhmfmwiqapknzek",
+  user: process.env.NODEMAILER_USER,
+  pass: process.env.NODEMAILER_PASS,
 };
 
 let mailTransporter = nodemailer.createTransport({
@@ -27,8 +28,7 @@ let mailTransporter = nodemailer.createTransport({
 });
 
 // MongoDB Config
-const AtlasUrl =
-  "mongodb+srv://root:LbCvdPPowUnAtte8@ucloud.omjbojj.mongodb.net/?retryWrites=true&w=majority";
+const AtlasUrl = process.env.ATLAS_URL;
 const client = new mongodb.MongoClient(AtlasUrl, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -629,9 +629,9 @@ let sslCredentials = {
   cert: fs.readFileSync(__dirname + "/sslCertificate/cert.pem"),
 };
 
-let frontend = express()
+let serverBackend = express()
 .use(cookieSession({
-  keys: ['_0dedeae2e90cb813022508fa213e9c53']
+  keys: [ process.env.COOKIE_KEY ]
 }))
 .use(cors({
   origin: true,
@@ -653,6 +653,12 @@ let frontend = express()
 .use("/rename", renameRouter)
 .use("/delete", deleteRouter);
 
+if (process.argv[2] === 'dev') {
+	http.createServer(serverBackend).listen(80)
+	console.log("Server listening on port 80 ✔\n".green);
+	console.log(`Website: http://localhost ⭐\n\n`.yellow);
+
+} else {
 http
   .createServer((req, res) => {
     res.writeHead(301, { Location: "https://ucloudproject.com" });
@@ -660,10 +666,12 @@ http
   })
   .listen(80);
 
-https.createServer(sslCredentials, frontend).listen(443);
-
-console.log(`Frontend listening on ports 80 and 443 ✔\n`.green);
+https.createServer(sslCredentials, serverBackend).listen(443);
+console.log(`Server listening on ports 80 and 443 ✔\n`.green);
 console.log(`Website: https://ucloudproject.com ⭐\n\n`.yellow);
+}
+
+
 console.log("-------------------------------\n");
 
 // open("https://ucloudproject.com");

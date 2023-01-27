@@ -23,6 +23,7 @@
     "depd": "^2.0.0",
     "destroy": "^1.2.0",
     "dezalgo": "^1.0.4",
+    "dotenv": "^16.0.3",
     "ee-first": "^1.1.1",
     "encodeurl": "^1.0.2",
     "escape-html": "^1.0.3",
@@ -65,7 +66,6 @@
     "qs": "^6.11.0",
     "range-parser": "^1.2.1",
     "raw-body": "^2.5.1",
-    "replace-in-file": "^6.3.5",
     "safe-buffer": "^5.2.1",
     "safer-buffer": "^2.1.2",
     "send": "^0.18.0",
@@ -84,7 +84,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js"
+    "start": "node app.js",
+    "dev": "node app.js dev"
   },
   "author": "rumenmitov",
   "license": "ISC"
