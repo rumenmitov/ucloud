@@ -184,6 +184,12 @@ loginRouter.route("/").post((req, res, next) => {
   });
 });
 
+let logoutRouter = express.Router();
+logoutRouter.route('/').all((req, res)=>{
+	req.session = null;
+	res.redirect('https://ucloudproject.com');
+});
+
 let userExistsRouter = express.Router();
 userExistsRouter.use(bodyParser.json());
 userExistsRouter.use(bodyParser.urlencoded({ extended: true }));
@@ -644,6 +650,7 @@ let serverBackend = express()
 .use("/verify", verifyRouter)
 .use("/signup", signupRouter)
 .use("/login", loginRouter)
+.use('/logout', logoutRouter)
 .use('/userExists', userExistsRouter)
 .use("/home", homeRouter)
 .use('/avatar', avatarRouter)

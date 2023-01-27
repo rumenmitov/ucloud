@@ -265,7 +265,7 @@ window.onload = () => {
         avatar_li: document.querySelector('#avatar_li'),
 	avatarForm: document.querySelector('#avatarForm'),
 	clearAvatarBtn: document.querySelector('#clearAvatarBtn'),
-        logout: document.querySelector('#avatarImg'),
+        logout: document.querySelector('#logout'),
         uploadAvatarBtn: document.querySelector('#uploadAvatarBtn'),
         closeAvatarUpload: document.querySelector('#closeAvatarUpload'),
         uploadForm: document.querySelector('#uploadForm'),
@@ -306,6 +306,15 @@ window.onload = () => {
 
     domOBJ.avatar_li.addEventListener('click', function(e) {
         domOBJ.avatarForm.style = 'display:block';
+    });
+
+    domOBJ.logout.addEventListener('click', function() {
+	let xhttp = new XMLHttpRequest();
+	xhttp.open('get', `https://ucloudproject.com/logout/`);
+    	xhttp.setRequestHeader("Content-type", "application/json");
+    	xhttp.withCredentials = true;
+    	xhttp.send(null);
+
     });
 
     domOBJ.profile_menu.addEventListener('mouseleave', function(e) {
