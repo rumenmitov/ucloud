@@ -263,7 +263,7 @@ window.onload = () => {
         logo: document.querySelector('#logo'),
         profile_menu: document.querySelector('#profile_menu'),
         avatar_li: document.querySelector('#avatar_li'),
-        logout: document.ySelector('#avatarImg'),
+        logout: document.querySelector('#avatarImg'),
         uploadAvatarBtn: document.querySelector('#uploadAvatarBtn'),
         closeAvatarUpload: document.querySelector('#closeAvatarUpload'),
         uploadForm: document.querySelector('#uploadForm'),
