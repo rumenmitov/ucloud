@@ -1,5 +1,4 @@
 sslCertificate/
-public/
+public/users/
 dev/
 .env
-users
