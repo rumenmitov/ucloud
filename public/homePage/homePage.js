@@ -61,7 +61,7 @@ function displayFiles(responseArray) {
         if (file.name === 'ucloud_files.txt') return;
 
         const fileName = file.name.split('/').pop();
-        const link = `https://ucloudproject.com/.gitignore/users${file.linkUrl}`;
+        const link = `https://ucloudproject.com/users${file.linkUrl}`;
         const type = file.type;
 
         let fileBox = document.createElement('div');
