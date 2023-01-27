@@ -2,3 +2,4 @@ sslCertificate/
 public/
 dev/
 .env
+users
