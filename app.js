@@ -239,7 +239,7 @@ homeRouter.route("/").post((req, res) => {
 
   let avatarPath = '../images_website/avatar.png';
    if (fs.existsSync(__dirname + `/public/users/${req.session.username}/.${req.session.username}/${req.session.username}_avatar.png`)) {
-    avatarPath = `../users/${req.session.username}/.${req.session.username}/${req.session.username}_avatar.png`;
+    avatarPath = `../users/${req.session.username}/.${req.session.username}/${req.session.username}_avatar.png?${(new Date()).getTime}`;
    }
 
   let responseOBJ = {

@@ -308,6 +308,10 @@ window.onload = () => {
         domOBJ.avatarForm.style = 'display:block';
     });
 
+    domOBJ.avatar_li.addEventListener('onmouseleave', function(e) {
+	domOBJ.avatar_li.style = 'display:none';
+    });	
+
     domOBJ.avatarForm.addEventListener('click', function(e) {
         domOBJ.avatarForm.action = `https://ucloudproject.com/avatar/`;
     });
