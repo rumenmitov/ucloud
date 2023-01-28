@@ -35,6 +35,10 @@ function getAllFiles(dir) {
 
         let avatar = document.createElement('img');
 	avatar.id = 'avatar';
+	avatar.addEventListener('click', function() {
+	  if (localStorage.getItem('username')) domOBJ.profile_menu.style = 'display:block;'; 
+          else domOBJ.login.style = 'display:block;';
+        }); 
         avatar.src = responseOBJ.avatarPath;
         avatar.addEventListener('click', function() {
 	  if (localStorage.getItem('username')) domOBJ.profile_menu.style = 'display:block;'; 
@@ -305,11 +309,6 @@ window.onload = () => {
         let storage = JSON.parse(localStorage.getItem('ucloud'));
         location.href = `https://ucloudproject.com/homePage/homePage.html?pwd=${storage.username}`;
     });
-
-   domOBJ.avatar.addEventListener('click', function() {
-	  if (localStorage.getItem('username')) domOBJ.profile_menu.style = 'display:block;'; 
-          else domOBJ.login.style = 'display:block;';
-        });
 
 
     domOBJ.avatar_li.addEventListener('click', function(e) {
