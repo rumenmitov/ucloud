@@ -70,8 +70,13 @@ section p {
     display: none;
 }
 
+#profile_menu li:hover {
+  cursor: pointer;	
+}
+
 button {
     width: 10vw;
+    cursor:pointer;
 }
 
 input {
