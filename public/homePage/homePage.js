@@ -38,7 +38,7 @@ function getAllFiles(dir) {
         avatar.src = responseOBJ.avatarPath;
         avatar.addEventListener('click', function() {
 	  if (localStorage.getItem('username')) domOBJ.profile_menu.style = 'display:block;'; 
-          else domOBJ.login = 'display:block;';
+          else domOBJ.login.style = 'display:block;';
         });
         section.appendChild(avatar);
 
