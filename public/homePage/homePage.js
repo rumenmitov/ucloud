@@ -17,7 +17,6 @@ userExistsRequest.onload = function() {
         location.href = 'https://ucloudproject.com';
     } else {
         freeSpace = (JSON.parse(this.responseText)).freeSpace;
-        console.log(freeSpace);
     }
 };
 
