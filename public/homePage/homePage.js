@@ -37,7 +37,7 @@ function getAllFiles(dir) {
 	avatar.id = 'avatar';
         avatar.src = responseOBJ.avatarPath;
    avatar.addEventListener('click', function() {
-          if (localStorage.getItem('ucloud')) document.querySelector('#profile_menu').style = 'display:block;';
+          if (responseOBJ.greeter !== 'You are a GUEST') document.querySelector('#profile_menu').style = 'display:block;';
           else document.querySelector('#login').style = 'display:block;';
 });
 
