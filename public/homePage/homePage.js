@@ -261,6 +261,7 @@ window.onload = () => {
     let domOBJ = {
         location: document.querySelector('#location'),
         logo: document.querySelector('#logo'),
+        avatar: document.querySelector('#avatar'),
         login: document.querySelector('#login'),
         profile_menu: document.querySelector('#profile_menu'),
         avatar_li: document.querySelector('#avatar_li'),
@@ -304,6 +305,12 @@ window.onload = () => {
         let storage = JSON.parse(localStorage.getItem('ucloud'));
         location.href = `https://ucloudproject.com/homePage/homePage.html?pwd=${storage.username}`;
     });
+
+   avatar.addEventListener('click', function() {
+	  if (localStorage.getItem('username')) domOBJ.profile_menu.style = 'display:block;'; 
+          else domOBJ.login.style = 'display:block;';
+        });
+
 
     domOBJ.avatar_li.addEventListener('click', function(e) {
         domOBJ.avatarForm.style = 'display:block';
