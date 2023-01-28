@@ -303,7 +303,6 @@ uploadRouter.route("/").post((req, res, next) => {
     }
 
     let fileListPath = __dirname + "/public/users/" + dir + "/ucloud_files.txt";
-
     if (fields.file_name) {
       let type = "";
 
