@@ -472,6 +472,8 @@ searchRouter.route("/:searchOBJ").get((req, res) => {
             .split("\\")
             .join("/");
 
+	  let fileLink = searchOBJ.path + '/' + filePath;
+
           searchData.push({ name: filePath, linkUrl: filePath, type: type });
         });
         res.send(searchData);
