@@ -34,7 +34,7 @@ function displayUsers(responseArray) {
         a.innerText = user.username;
         usernameTD.appendChild(a);
     });
-}
+
 
 window.onload = function() {
     let domOBJ = {

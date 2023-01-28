@@ -496,7 +496,7 @@ searchUsersRouter.route("/:search_query").get((req, res) => {
 
       if (results[0]) {
         results.forEach(user => {
-          if (fs.existsSync(__dirname + `/public/users/${user.username}/.${user.username}/${user.username}_avatar.png`)) user.avatarLink = `../public/users/${user.username}/.${user.username}/${user.username}_avatar.png`;
+          if (fs.existsSync(__dirname + `/public/users/${user.username}/.${user.username}/${user.username}_avatar.png`)) user.avatarLink = `../users/${user.username}/.${user.username}/${user.username}_avatar.png`;
           else user.avatarLink = '../images_website/avatar.png';
         });
       }
