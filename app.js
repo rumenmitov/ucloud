@@ -238,7 +238,7 @@ homeRouter.route("/").post((req, res) => {
       if (fileComponents.length > 1)
         fileType = fileComponents[fileComponents.length - 1];
   
-      let linkPath = "/" + file;
+     let linkPath = "/" + file;
   
       data.push({ name: file, linkUrl: linkPath, type: fileType });
     });
@@ -472,9 +472,9 @@ searchRouter.route("/:searchOBJ").get((req, res) => {
             .split("\\")
             .join("/");
 
-	  let fileLink = searchOBJ.path + '/' + filePath;
+	  let fileName = searchOBJ.path + '/' + filePath;
 
-          searchData.push({ name: filePath, linkUrl: filePath, type: type });
+          searchData.push({ name: fileName, linkUrl: filePath, type: type });
         });
         res.send(searchData);
       });
