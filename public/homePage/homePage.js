@@ -388,6 +388,7 @@ window.onload = () => {
 
         xhttp.onload = function() {
             displayFiles(JSON.parse(this.responseText));
+	    console.log(JSON.parse(this.responseText));
         };
     });
 
