@@ -316,6 +316,7 @@ window.onload = () => {
     	xhttp.send(null);
 
 	xhttp.onload = function() {
+	    localStorage.clear();
 	    location.href = 'https://ucloudproject.com';
 	};
 
