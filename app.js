@@ -213,7 +213,8 @@ passResetRouter.route('/:userCode').post((req, res, next)=>{
 	  
 	  if (!results[0]) res.send('User does not exist! Make sure that you typed your username / email correctly.');
 	  else {
-	    let userId_encoded = results[0]._id.toString('base64');
+	    let userId = results[0]._id.toString();
+	    let userId_encoded = Buffer.from(userId).toString('base64');
 	    mailTransporter.sendMail({
 	      from: auth.user,
 	      to: results[0].email,
