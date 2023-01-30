@@ -202,7 +202,7 @@ passResetRouter.use(bodyParser.urlencoded({ extended: true }));
 passResetRouter.route('/:userCode').post((req, res, next)=>{
   let userCode = req.params['userCode'];
 
-  if (!userCode) {
+  if (userCode == 0) {
 
     client.connect(err => {
       if (err) console.log(err);
