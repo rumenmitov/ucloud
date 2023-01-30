@@ -196,6 +196,63 @@ logoutRouter.route('/').all((req, res)=>{
 	res.send(null);
 });
 
+let passResetRouter = express.Router();
+passResetRouter.use(bodyParser.json());
+passResetRouter.use(bodyParser.urlencoded({ extended: true }));
+passResetRouter.route('/:userCode').post((req, res, next)=>{
+  let userCode = req.params['userCode'];
+
+  if (!userCode) {
+
+    client.connect(err => {
+      if (err) console.log(err);
+
+      let usersCollection = client.db('ucloud').collection('users');
+      usersCollection.find({ $or: [ { username: req.body.username  }, { email: req.body.username  }  ]  }).toArray((err, results)=>{
+	if (err) console.log(err);
+	  
+	  if (!results[0]) res.send('User does not exist! Make sure that you typed your username / email correctly.');
+	  else {
+	    let userId_encoded = results[0]._id.toString('base64');
+	    mailTransporter.sendMail({
+	      from: auth.user,
+	      to: results[0].email,
+	      subject: "UCloud Password Reset",
+	      html: `<a href='https://ucloudproject.com/password_reset/new_password.html?userCode=${userId_encoded}'>Change Password</a>`,
+	  },
+	  (err) => {
+	    if (err) console.log(err);
+
+	    res.send("Password reset email sent. Check your inbox.");
+	  });
+	}
+	client.close();
+      });
+    });
+  } else {
+    if (req.body.newPassword !== req.body.confirmPassword) res.send('Passwords do not match! Please try again!');
+    else {
+      client.connect(err =>{
+	if (err) console.log(err);
+
+	let userId = new mongodb.ObjectID(req.body.userId); 
+	let usersCollection = client.db('ucloud').collection('users');
+	// NOTE: First check if user has not been deleted
+	usersCollection.find({ _id: userId  }).toArray((err, results)=>{
+	  if (err) console.log(err);
+	    
+	  if (!results[0]) res.send('This user does not exist. Please try making an account!');
+	  else {
+	    usersCollection.updateOne( { _id: userId  }, { $set: { password: req.body.newPassword,  password_confirm: req.body.confirmPassword  } }  );
+	    res.send('Password reset successfully!');
+	  }
+	  client.close();
+	});
+      });
+    }
+  }
+});
+
 let userExistsRouter = express.Router();
 userExistsRouter.use(bodyParser.json());
 userExistsRouter.use(bodyParser.urlencoded({ extended: true }));
@@ -659,6 +716,7 @@ let serverBackend = express()
 .use('/checkLogin', isUserLoggedInRouter)
 .use("/login", loginRouter)
 .use('/logout', logoutRouter)
+.use('/passReset', passResetRouter)
 .use('/userExists', userExistsRouter)
 .use("/home", homeRouter)
 .use('/avatar', avatarRouter)

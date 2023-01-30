@@ -1,0 +1,22 @@
+body {
+  text-align:center;
+}
+
+#logo {
+  width: 30vw;
+  aspect-ratio:16/12;
+}
+
+#logo:hover {
+  cursor:pointer;
+}
+
+form {
+  display: block;
+  text-align:center;
+  line-height:5vh;
+}
+
+button:hover {
+  cursor:pointer;
+}
