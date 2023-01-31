@@ -359,7 +359,7 @@ instaUploadRouter.route('/').post((req, res, next)=>{
     
     if (response.statusCode == 200) {
       const $ = cheerio.load(html);
-      $('.x5yr21d .xu96u03 .x1016tqk .x13vifvy .x87ps60 .xh8yej3').forEach((index, image)=>{
+      $('.x5yr21d .xu96u03 .x1016tqk .x13vifvy .x87ps60 .xh8yej3').each((index, image)=>{
 	let imgSrc = $(image).attr('srcset');
 	console.log(imgSrc);
       });
