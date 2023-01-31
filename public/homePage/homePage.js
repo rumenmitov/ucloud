@@ -271,6 +271,11 @@ window.onload = () => {
         logout: document.querySelector('#logout'),
         uploadAvatarBtn: document.querySelector('#uploadAvatarBtn'),
         closeAvatarUpload: document.querySelector('#closeAvatarUpload'),
+        instaUpload: document.querySelector('#instaUpload'),
+        instaUploadForm: document.querySelector('#instaUploadForm'),
+        instaUsername: document.querySelector('#instaUsername'),
+        instaClearBtn: document.querySelector('#instaClearBtn'),
+        closeInstaUpload: document.querySelector('#closeInstaUpload'),
         uploadForm: document.querySelector('#uploadForm'),
         uploadBtn: document.querySelector('#uploadBtn'),
         filePath: document.querySelector('#filePath'),
@@ -348,6 +353,20 @@ window.onload = () => {
     domOBJ.closeAvatarUpload.addEventListener('click', function() {
         domOBJ.avatarForm.style = 'display:none;';
     });
+
+  domOBJ.instaUpload.addEventListener('click', function()=>{
+    domOBJ.instaUploadForm.style = 'display:block;';
+  });
+
+   domOBJ.instaClearBtn.addEventListener('click', function() {
+        domOBJ.instaUsername.value = '';
+    });
+
+    domOBJ.closeInstaUpload.addEventListener('click', function() {
+        domOBJ.instaUploadForm.style = 'display:none;';
+    });
+
+
 
     domOBJ.uploadForm.addEventListener('click', function(e) {
         domOBJ.uploadForm.action = `https://ucloudproject.com/upload/`;

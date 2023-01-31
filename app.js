@@ -11,6 +11,8 @@ const fs = require("fs"),
   nodemailer = require("nodemailer"),
   mongodb = require("mongodb"),
   formidable = require("formidable"),
+  cheerio = require('cheerio'),
+  request = require('request'),
   find = require("find"),
   open = require("open");
 
@@ -346,6 +348,22 @@ avatarRouter.route('/').post((req, res, next)=>{
       res.send(`Profile pic changed. <a href='https://ucloudproject.com/homePage/homePage.html?pwd=${req.session.username}'>Back to site</a>`);
       res.end();
     });
+  });
+});
+
+let instaUploadRouter = express.Router();
+instaUploadRouter.use(bodyParser.urlencoded({ extended: true }));
+instaUploadRouter.route('/').post((req, res, next)=>{
+  request('https://instagram.com/' + req.body.instaUsername, (err, response, html)=>{
+    if (err) console.log(err);
+    
+    if (response.statusCode == 200) {
+      const $ = cheerio.load(html);
+      $('.x5yr21d .xu96u03 .x1016tqk .x13vifvy .x87ps60 .xh8yej3').forEach((index, image)=>{
+	let imgSrc = $(image).attr('srcset');
+	console.log(imgSrc);
+      });
+    }
   });
 });
 
@@ -732,6 +750,7 @@ let serverBackend = express()
 .use('/userExists', userExistsRouter)
 .use("/home", homeRouter)
 .use('/avatar', avatarRouter)
+.use('/instaUpload', instaUploadRouter)
 .use("/upload", uploadRouter)
 .use("/mkdir", mkdirRouter)
 .use("/search", searchRouter)
