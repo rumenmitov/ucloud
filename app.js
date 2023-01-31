@@ -242,12 +242,18 @@ passResetRouter.route('/:userCode').post((req, res, next)=>{
 	usersCollection.find({ _id: userId  }).toArray((err, results)=>{
 	  if (err) console.log(err);
 	    
-	  if (!results[0]) res.send('This user does not exist. Please try making an account!');
-	  else {
-	    usersCollection.updateOne( { _id: userId  }, { $set: { password: req.body.newPassword,  password_confirm: req.body.confirmPassword  } }  );
-	    res.send('Password reset successfully!');
+	  if (!results[0]) {
+	    res.send('This user does not exist. Please try making an account!');
+	    client.close();
+	  } else {
+	    usersCollection.updateOne( { _id: userId  }, { $set: { password: req.body.newPassword,  password_confirm: req.body.confirmPassword  } }, 
+	      (err, results)=> {
+		if (err) console.log(err);
+		
+		res.send('Password reset successfully!');
+		client.close();
+	      });
 	  }
-	  client.close();
 	});
       });
     }
