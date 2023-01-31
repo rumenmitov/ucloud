@@ -156,41 +156,6 @@ img, video, iframe{
     width: 5vw;
 }
 
-#instaUpload {
-  position: absolute;
-  top: 30vh;
-  right: 15vw;
-  cursor:pointer;
-}
-
-
-#instaUploadForm {
-    display: none;
-    width: 50vw;
-    height: 50vh;
-    position: fixed;
-    top: 2vh;
-    right: 10vw;
-    border: 1px solid rgb(0, 86, 121);
-    background-color: rgba(255, 206, 235, 0.7);
-    backdrop-filter: blur(10px);
-    border-radius: 10%;
-    z-index: 500;
-}
-
-#instaUploadForm > * {
-    display: block;
-    margin-top: 3vh;
-    margin-left: 3vw;
-}
-
-#instaUploadForm #closeInstaUpload {
-    position: absolute;
-    left: 40vw;
-    top: 3vh;
-    width: 5vw;
-}
-
 #uploadForm {
     display: none;
     width: 50vw;
