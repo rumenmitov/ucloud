@@ -354,7 +354,7 @@ window.onload = () => {
         domOBJ.avatarForm.style = 'display:none;';
     });
 
-  domOBJ.instaUpload.addEventListener('click', function()=>{
+  domOBJ.instaUpload.addEventListener('click', function() {
     domOBJ.instaUploadForm.style = 'display:block;';
   });
 
