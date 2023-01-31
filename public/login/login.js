@@ -1,5 +1,5 @@
 let xhttp = new XMLHttpRequest();
-xhttp.open('get', 'https://localhost/checkLogin/');
+xhttp.open('get', 'https://ucloudproject.com/checkLogin/');
 xhttp.setRequestHeader("Content-type", "application/json");
 xhttp.withCredentials = true;
 xhttp.send(null);
