@@ -41,7 +41,7 @@
     </form>
     <form id='greeterForm' method="post" action='https://ucloudproject.com/changeGreeter/'>
         <label for="newGreeter">Change Greeter:</label>
-        <input type="text" name="newGreeter" id="newGreeter" required pattern="[a-zA-Z_0-9\s]{0,25}">
+        <input type="text" name="newGreeter" id="newGreeter" required pattern="[a-zA-Z_0-9\s?,!]{0,25}">
         <button  type='button' id="clearGreeterBtn">Clear</button>
         <button type="submit" id="changeGreeterBtn">Change</button>
         <img src="../images_website/close.png" id='closeGreeter' alt="close">
