@@ -381,62 +381,116 @@ uploadRouter.route("/").post((req, res, next) => {
       files.userFile.originalFilename = fields.file_name + type;
     }
 
-    for ( let i = 0; i < files.userFile.length; i++ ) {
-      let oldPath = files.userFile[i].filepath;
-      let newPath =
-	__dirname +
-	"/public/users/" +
-	dir +
-	"/" +
-	files.userFile[i].originalFilename;
-      let name = dir + "/" + files.userFile[i].originalFilename;
+    if (Array.isArray(files.userFile)) {
+      for ( let i = 0; i < files.userFile.length; i++ ) {
+	let oldPath = files.userFile[i].filepath;
+	let newPath =
+	  __dirname +
+	  "/public/users/" +
+	  dir +
+	  "/" +
+	  files.userFile[i].originalFilename;
+	let name = dir + "/" + files.userFile[i].originalFilename;
 
-      if (files.userFile[i].originalFilename.toLowerCase() === "ucloud_files.txt") {
-	res.send(
-	  `File cannot be named: <i>${files.userFile[i].originalFilename.toLowerCase()}</i>! Please try a different name: <a href='https://${LINK}/homePage/homePage.html?pwd=${
-	    fields.filePath
-	  }'>Back to site</a>`
-	);
-	return next();
-      }
+	if (files.userFile[i].originalFilename.toLowerCase() === "ucloud_files.txt") {
+	  res.send(
+	    `File cannot be named: <i>${files.userFile[i].originalFilename.toLowerCase()}</i>! Please try a different name: <a href='https://${LINK}/homePage/homePage.html?pwd=${
+	      fields.filePath
+	    }'>Back to site</a>`
+	  );
+	  return next();
+	}
 
-      if (path.extname(files.userFile[i].originalFilename) === ".backlink") {
-	res.send(
-	  `File cannot have extension: <i>.backlink</i>! Please try a different extension: <a href='https://${LINK}/homePage/homePage.html?pwd=${fields.filePath}'>Back to site</a>`
-	);
-	return next();
-      } else if (path.extname(files.userFile[i].originalFilename) === ".") {
-	res.send(
-	  `File name cannot end on a dot! Please try a different extension: <a href='https://${LINK}/homePage/homePage.html?pwd=${fields.filePath}'>Back to site</a>`
-	);
-	return next();
-      }
+	if (path.extname(files.userFile[i].originalFilename) === ".backlink") {
+	  res.send(
+	    `File cannot have extension: <i>.backlink</i>! Please try a different extension: <a href='https://${LINK}/homePage/homePage.html?pwd=${fields.filePath}'>Back to site</a>`
+	  );
+	  return next();
+	} else if (path.extname(files.userFile[i].originalFilename) === ".") {
+	  res.send(
+	    `File name cannot end on a dot! Please try a different extension: <a href='https://${LINK}/homePage/homePage.html?pwd=${fields.filePath}'>Back to site</a>`
+	  );
+	  return next();
+	}
 
-      if (fs.existsSync(fileListPath)) {
-	let allFilesArray = fs.readFileSync(fileListPath, "utf-8").split("\r\n");
-	for (let item in allFilesArray) {
-	  if (allFilesArray[item] === name) {
-	    res.send(
-	      `File already exists! <a href='https://${LINK}/homePage/homePage.html?pwd=${fields.filePath}'>Back to site</a>`
-	    );
-	    return next();
+	if (fs.existsSync(fileListPath)) {
+	  let allFilesArray = fs.readFileSync(fileListPath, "utf-8").split("\r\n");
+	  for (let item in allFilesArray) {
+	    if (allFilesArray[item] === name) {
+	      res.send(
+		`File already exists! <a href='https://${LINK}/homePage/homePage.html?pwd=${fields.filePath}'>Back to site</a>`
+	      );
+	      return next();
+	    }
 	  }
 	}
-      }
 
-      if (fs.existsSync(fileListPath))
-	fs.writeFileSync(fileListPath, `\r\n` + name, {
-	  encoding: "utf-8",
-	  flag: "a",
+	if (fs.existsSync(fileListPath))
+	  fs.writeFileSync(fileListPath, `\r\n` + name, {
+	    encoding: "utf-8",
+	    flag: "a",
+	  });
+	else fs.writeFileSync(fileListPath, name, { encoding: "utf-8", flag: "w" });
+
+	fs.rename(oldPath, newPath, (err) => {
+	  if (err) console.log(err);
 	});
-      else fs.writeFileSync(fileListPath, name, { encoding: "utf-8", flag: "w" });
+     
+      }
+    } else {
+	let oldPath = files.userFile.filepath;
+	let newPath =
+	  __dirname +
+	  "/public/users/" +
+	  dir +
+	  "/" +
+	  files.userFile.originalFilename;
+	let name = dir + "/" + files.userFile.originalFilename;
 
-      fs.rename(oldPath, newPath, (err) => {
-	if (err) console.log(err);
-      });
-   
+	if (files.userFile.originalFilename.toLowerCase() === "ucloud_files.txt") {
+	  res.send(
+	    `File cannot be named: <i>${files.userFile.originalFilename.toLowerCase()}</i>! Please try a different name: <a href='https://${LINK}/homePage/homePage.html?pwd=${
+	      fields.filePath
+	    }'>Back to site</a>`
+	  );
+	  return next();
+	}
+
+	if (path.extname(files.userFile.originalFilename) === ".backlink") {
+	  res.send(
+	    `File cannot have extension: <i>.backlink</i>! Please try a different extension: <a href='https://${LINK}/homePage/homePage.html?pwd=${fields.filePath}'>Back to site</a>`
+	  );
+	  return next();
+	} else if (path.extname(files.userFile.originalFilename) === ".") {
+	  res.send(
+	    `File name cannot end on a dot! Please try a different extension: <a href='https://${LINK}/homePage/homePage.html?pwd=${fields.filePath}'>Back to site</a>`
+	  );
+	  return next();
+	}
+
+	if (fs.existsSync(fileListPath)) {
+	  let allFilesArray = fs.readFileSync(fileListPath, "utf-8").split("\r\n");
+	  for (let item in allFilesArray) {
+	    if (allFilesArray[item] === name) {
+	      res.send(
+		`File already exists! <a href='https://${LINK}/homePage/homePage.html?pwd=${fields.filePath}'>Back to site</a>`
+	      );
+	      return next();
+	    }
+	  }
+	}
+
+	if (fs.existsSync(fileListPath))
+	  fs.writeFileSync(fileListPath, `\r\n` + name, {
+	    encoding: "utf-8",
+	    flag: "a",
+	  });
+	else fs.writeFileSync(fileListPath, name, { encoding: "utf-8", flag: "w" });
+
+	fs.rename(oldPath, newPath, (err) => {
+	  if (err) console.log(err);
+	});
     }
-
     res.send(
       `File upload was successful. <a href="https://${LINK}/homePage/homePage.html?pwd=${fields.filePath}">Back to site</a>`
     );
