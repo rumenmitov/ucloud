@@ -768,6 +768,13 @@ let sslCredentials = {
   cert: fs.readFileSync(__dirname + "/sslCertificate/cert.pem"),
 };
 
+let PUBLIC_DIR = __dirname + '/public';
+
+if (process.argv[2] === 'dev') {
+  LINK = 'localhost'
+  PUBLIC_DIR = __dirname + '/dev/public';
+}
+
 let serverBackend = express()
 .use(cookieSession({
   keys: [ process.env.COOKIE_KEY ]
@@ -778,7 +785,7 @@ let serverBackend = express()
   credentials: true,
   preflightContinue: true
 }))
-.use(express.static(__dirname + "/public"))
+.use(express.static(PUBLIC_DIR))
 .use("/verify", verifyRouter)
 .use("/signup", signupRouter)
 .use('/checkLogin', isUserLoggedInRouter)
@@ -794,10 +801,6 @@ let serverBackend = express()
 .use("/search_users", searchUsersRouter)
 .use("/rename", renameRouter)
 .use("/delete", deleteRouter);
-
-if (process.argv[2] === 'dev') {
-  LINK = 'localhost'
-}
 
 http
   .createServer((req, res) => {
