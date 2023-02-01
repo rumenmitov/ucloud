@@ -28,15 +28,23 @@
     </div>
 	<p id="login">Login</p>
 	<ul id="profile_menu">
-        <li id="avatar_li">Change Profile Pic</li>
-        <li id="logout">Log out</li>
-    </ul>
+	  <li id="avatar_li">Change Profile Pic</li>
+	  <li id="greeter_li">Change Greeter</li>
+	  <li id="logout">Log out</li>
+	</ul>
     <form id='avatarForm' method="post" enctype="multipart/form-data">
         <label for="avatarImg">Upload a Profile Pic:</label>
         <input type="file" name="avatarImg" id="avatarImg" required>
         <button  type='button' id="clearAvatarBtn">Clear</button>
         <button type="submit" id="uploadAvatarBtn">Upload</button>
         <img src="../images_website/close.png" id='closeAvatarUpload' alt="close">
+    </form>
+    <form id='greeterForm' method="post" action='https://ucloudproject.com/changeGreeter/'>
+        <label for="newGreeter">Change Greeter:</label>
+        <input type="text" name="newGreeter" id="newGreeter" required pattern="[a-zA-Z_0-9\s]{0,25}">
+        <button  type='button' id="clearGreeterBtn">Clear</button>
+        <button type="submit" id="changeGreeterBtn">Change</button>
+        <img src="../images_website/close.png" id='closeGreeter' alt="close">
     </form>
     <form id='uploadForm' method="post" enctype="multipart/form-data">
         <label for="userFile">Upload a File!</label>

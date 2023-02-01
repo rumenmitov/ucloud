@@ -351,6 +351,13 @@ avatarRouter.route('/').post((req, res, next)=>{
   });
 });
 
+let greeterRouter = express.Router();
+greeterRouter.use(bodyParser.urlencoded({ extended: true }));
+greeterRouter.route('/').post((req, res, next)=>{
+  fs.writeFileSync(__dirname + `/public/users/${req.session.username}/.${req.session.username}/ucloud_greeter.txt`, req.body.newGreeter, {encoding:'utf8', flag:'w'});
+  res.send(`Greeter changed successfully! <a href='https://${LINK}/homePage/homePage.html?pwd=${req.session.username}'>Back to site</a>`);
+});
+
 let uploadRouter = express.Router();
 uploadRouter.use(bodyParser.urlencoded({ extended: true }));
 uploadRouter.route("/").post((req, res, next) => {

@@ -267,10 +267,15 @@ window.onload = () => {
         profile_menu: document.querySelector('#profile_menu'),
         avatar_li: document.querySelector('#avatar_li'),
 	avatarForm: document.querySelector('#avatarForm'),
+	uploadAvatarBtn: document.querySelector('#uploadAvatarBtn'),
+        closeAvatarUpload: document.querySelector('#closeAvatarUpload'),	
 	clearAvatarBtn: document.querySelector('#clearAvatarBtn'),
+        greeter_li: document.querySelector('#greeter_li'),
+        greeterForm: document.querySelector('#greeterForm'),
+        newGreeter: document.querySelector('#newGreeter'),
+        clearGreeterBtn: document.querySelector('#clearGreeterBtn'),
+        closeGreeter: document.querySelector('#closeGreeter'),
         logout: document.querySelector('#logout'),
-        uploadAvatarBtn: document.querySelector('#uploadAvatarBtn'),
-        closeAvatarUpload: document.querySelector('#closeAvatarUpload'),
         uploadForm: document.querySelector('#uploadForm'),
         uploadBtn: document.querySelector('#uploadBtn'),
         filePath: document.querySelector('#filePath'),
@@ -311,6 +316,30 @@ window.onload = () => {
         domOBJ.avatarForm.style = 'display:block';
     });
 
+    domOBJ.avatarForm.addEventListener('click', function(e) {
+        domOBJ.avatarForm.action = `https://ucloudproject.com/avatar/`;
+    });
+
+    domOBJ.clearAvatarBtn.addEventListener('click', function() {
+        domOBJ.avatarImg.value = '';
+    });
+
+    domOBJ.closeAvatarUpload.addEventListener('click', function() {
+        domOBJ.avatarForm.style = 'display:none;';
+    });
+
+  domOBJ.greeter_li.addEventListener('click', ()=>{
+    domOBJ.greeterForm.style = 'display:block;';
+  });
+
+  domOBJ.clearGreeterBtn.addEventListener('click', ()=>{
+    domOBJ.newGreeter.value = '';
+  });
+
+  domOBJ.closeGreeter.addEventListener('click', ()=>{
+    domOBJ.greeterForm.style = 'display:none;';
+  });
+
     domOBJ.logout.addEventListener('click', function() {
 	let xhttp = new XMLHttpRequest();
 	xhttp.open('get', `https://ucloudproject.com/logout/`);
@@ -336,18 +365,6 @@ window.onload = () => {
   domOBJ.login.addEventListener('mouseleave', function(e) {
     domOBJ.login.style='display:none;';
   });
-
-    domOBJ.avatarForm.addEventListener('click', function(e) {
-        domOBJ.avatarForm.action = `https://ucloudproject.com/avatar/`;
-    });
-
-    domOBJ.clearAvatarBtn.addEventListener('click', function() {
-        domOBJ.avatarImg.value = '';
-    });
-
-    domOBJ.closeAvatarUpload.addEventListener('click', function() {
-        domOBJ.avatarForm.style = 'display:none;';
-    });
 
     domOBJ.uploadForm.addEventListener('click', function(e) {
         domOBJ.uploadForm.action = `https://ucloudproject.com/upload/`;
