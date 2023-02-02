@@ -63,7 +63,7 @@ function displayFiles(responseArray) {
 
         const fileName = file.name.split('/').pop();
         const link = `https://ucloudproject.com/users${file.linkUrl}`;
-        const type = file.type;
+        const type = file.type.toLowerCase();
 
         let fileBox = document.createElement('div');
         fileBox.class = "fileBox";
