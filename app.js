@@ -376,7 +376,7 @@ uploadRouter.route("/").post((req, res, next) => {
     }
 
     let fileListPath = __dirname + "/public/users/" + dir + "/ucloud_files.txt";
-    if (fields.file_name && files.userFile.length === 1) {
+    if (fields.file_name && !Array.isArray(files.userFile)) {
       let type = "";
 
       let wantedExtensionsArray = fields.file_name.split(".");
