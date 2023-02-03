@@ -1,24 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>UCloud - Login</title>
-    <link rel='stylesheet' href='../portal.css'>
-   <script src='./login.js' defer></script>
-</head>
-<body>
-  <img id='logo' src='../images_website/logo.png' onclick='location.href="https://ucloudproject.com";'>
+    <link rel="stylesheet" href="../portal.css" />
+    <script src="./login.js" defer></script>
+  </head>
+  <body>
+    <img
+      id="logo"
+      src="../images_website/logo.png"
+      onclick='location.href="https://ucloudproject.com";'
+    />
     <form action="https://ucloudproject.com/login/" method="post">
-        <label for="username">Username:</label>
-	<input type="text" name="username"placeholder='Username or email' autocomplete="email" required><br>
-        <label for="password">Password:</label>
-	<input type="password" name="password" autocomplete="current-password" required><br>
-        <button type="submit">Login</button>
+      <label for="username">Username:</label>
+      <input
+        type="text"
+        name="username"
+        placeholder="Username or email"
+        autocomplete="email"
+        required
+      /><br />
+      <label for="password">Password:</label>
+      <input
+        type="password"
+        name="password"
+        autocomplete="current-password"
+        required
+      /><br />
+      <button type="submit">Login</button>
     </form>
-    <hr>
-    <a href='../password_reset/password_reset.html'>Forgot password? Reset it here!</a><br>
-    <a href='../verification/verification.html'>Don't have an account? Signup here!</a>
-</body>
+    <hr />
+    <a href="../password_reset/password_reset.html"
+      >Forgot password? Reset it here!</a
+    ><br />
+    <a href="../verification/verification.html"
+      >Don't have an account? Signup here!</a
+    >
+  </body>
 </html>

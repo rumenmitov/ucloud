@@ -1,85 +1,154 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>UCloud</title>
-    <link rel="shortcut icon" href="../images_website/logo.png" type="image/x-icon">
-    <link rel="stylesheet" href="./homePage.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet">
+    <link
+      rel="shortcut icon"
+      href="../images_website/logo.png"
+      type="image/x-icon"
+    />
+    <link rel="stylesheet" href="./homePage.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap"
+      rel="stylesheet"
+    />
     <script defer src="./homePage.js"></script>
-</head>
-<body>
+  </head>
+  <body>
     <header>
-        <img src="../images_website/logo.png" id='logo' alt="logo">
-        <p><i>Make it your own!</i></p>
+      <img src="../images_website/logo.png" id="logo" alt="logo" />
+      <p><i>Make it your own!</i></p>
     </header>
-    <section>
-    </section>
+    <section></section>
     <h1 id="location"></h1>
     <div id="actionIcons">
-        <img title='Upload a file' src="../images_website/upload.png" id="uploadImg" alt="upload">
-        <img title='Search' src="../images_website/search.png" id="searchImg" alt="search">
-        <img title='New folder' src="../images_website/mkdirIcon.png" id="mkdirImg" alt="create folder">
-        <img  title='Seach Users' src="../images_website/search_users.png" id='searchUsersImg' alt="search users">
+      <img
+        title="Upload a file"
+        src="../images_website/upload.png"
+        id="uploadImg"
+        alt="upload"
+      />
+      <img
+        title="Search"
+        src="../images_website/search.png"
+        id="searchImg"
+        alt="search"
+      />
+      <img
+        title="New folder"
+        src="../images_website/mkdirIcon.png"
+        id="mkdirImg"
+        alt="create folder"
+      />
+      <img
+        title="Seach Users"
+        src="../images_website/search_users.png"
+        id="searchUsersImg"
+        alt="search users"
+      />
     </div>
-	<p id="login">Login</p>
-	<ul id="profile_menu">
-	  <li id="avatar_li">Change Profile Pic</li>
-	  <li id="greeter_li">Change Greeter</li>
-	  <li id="logout">Log out</li>
-	</ul>
-    <form id='avatarForm' method="post" enctype="multipart/form-data">
-        <label for="avatarImg">Upload a Profile Pic:</label>
-        <input type="file" name="avatarImg" id="avatarImg" required>
-        <button  type='button' id="clearAvatarBtn">Clear</button>
-        <button type="submit" id="uploadAvatarBtn">Upload</button>
-        <img src="../images_website/close.png" id='closeAvatarUpload' alt="close">
+    <p id="login">Login</p>
+    <ul id="profile_menu">
+      <li id="avatar_li">Change Profile Pic</li>
+      <li id="greeter_li">Change Greeter</li>
+      <li id="logout">Log out</li>
+    </ul>
+    <form id="avatarForm" method="post" enctype="multipart/form-data">
+      <label for="avatarImg">Upload a Profile Pic:</label>
+      <input type="file" name="avatarImg" id="avatarImg" required />
+      <button type="button" id="clearAvatarBtn">Clear</button>
+      <button type="submit" id="uploadAvatarBtn">Upload</button>
+      <img
+        src="../images_website/close.png"
+        id="closeAvatarUpload"
+        alt="close"
+      />
     </form>
-    <form id='greeterForm' method="post" action='https://ucloudproject.com/changeGreeter/'>
-        <label for="newGreeter">Change Greeter:</label>
-        <input type="text" name="newGreeter" id="newGreeter" required pattern="[a-zA-Z_0-9\s?,!]{0,25}">
-        <button  type='button' id="clearGreeterBtn">Clear</button>
-        <button type="submit" id="changeGreeterBtn">Change</button>
-        <img src="../images_website/close.png" id='closeGreeter' alt="close">
+    <form
+      id="greeterForm"
+      method="post"
+      action="https://ucloudproject.com/changeGreeter/"
+    >
+      <label for="newGreeter">Change Greeter:</label>
+      <input
+        type="text"
+        name="newGreeter"
+        id="newGreeter"
+        required
+        pattern="[a-zA-Z_0-9\s?,!]{0,25}"
+      />
+      <button type="button" id="clearGreeterBtn">Clear</button>
+      <button type="submit" id="changeGreeterBtn">Change</button>
+      <img src="../images_website/close.png" id="closeGreeter" alt="close" />
     </form>
-    <form id='uploadForm' method="post" enctype="multipart/form-data">
-        <label for="userFile">Upload a File!</label>
-        <input type="file" name="userFile" id="userFile" multiple required>
-        <label for="file_name">Rename File</label>
-        <input type="text" name="file_name" placeholder="(optional)" pattern="[a-zA-Z_0-9.\s]{1,20}">
-        <label for="filePath">Location:</label>
-        <input type="text" name="filePath" id="filePath" readonly required>
-        <button type="submit" id="uploadBtn">Upload</button>
-        <button  type='button' id="clearBtn">Clear</button>
-        <img src="../images_website/close.png" id='closeUpload' alt="close">
+    <form id="uploadForm" method="post" enctype="multipart/form-data">
+      <label for="userFile">Upload a File!</label>
+      <input type="file" name="userFile" id="userFile" multiple required />
+      <label for="file_name">Rename File</label>
+      <input
+        type="text"
+        name="file_name"
+        placeholder="(optional)"
+        pattern="[a-zA-Z_0-9.\s]{1,20}"
+      />
+      <label for="filePath">Location:</label>
+      <input type="text" name="filePath" id="filePath" readonly required />
+      <button type="submit" id="uploadBtn">Upload</button>
+      <button type="button" id="clearBtn">Clear</button>
+      <img src="../images_website/close.png" id="closeUpload" alt="close" />
     </form>
     <div id="searchForm">
-        <label for="search_query">Look for a File:</label>
-        <input type="text" name="search_query" id="search_query" placeholder="Search..." pattern="[a-zA-Z_0-9.\s]{1,20}" autocomplete="off">
-        <button type="button" id="searchBtn">Search</button>
-        <button id="clearSearchBtn">Clear</button>
-        <img src="../images_website/close.png" id='closeSearch' alt="close">
+      <label for="search_query">Look for a File:</label>
+      <input
+        type="text"
+        name="search_query"
+        id="search_query"
+        placeholder="Search..."
+        pattern="[a-zA-Z_0-9.\s]{1,20}"
+        autocomplete="off"
+      />
+      <button type="button" id="searchBtn">Search</button>
+      <button id="clearSearchBtn">Clear</button>
+      <img src="../images_website/close.png" id="closeSearch" alt="close" />
     </div>
     <form id="folderForm" method="post">
-        <label for="folderName">Create a New Folder:</label>
-        <input type="text" name="folderName" id="folderName" required pattern="[a-zA-Z_0-9]{1,20}">
-        <label for="path">Location:</label>
-        <input type="text" name="path" id="path" readonly required>
-        <button type="submit" id="createFolderBtn">Create</button>
-        <button id="clearFolderBtn">Clear</button>
-        <img src="../images_website/close.png" id='closeFolder' alt="close">
+      <label for="folderName">Create a New Folder:</label>
+      <input
+        type="text"
+        name="folderName"
+        id="folderName"
+        required
+        pattern="[a-zA-Z_0-9]{1,20}"
+      />
+      <label for="path">Location:</label>
+      <input type="text" name="path" id="path" readonly required />
+      <button type="submit" id="createFolderBtn">Create</button>
+      <button id="clearFolderBtn">Clear</button>
+      <img src="../images_website/close.png" id="closeFolder" alt="close" />
     </form>
     <div id="search_usersForm">
-        <label for="search_users_query">Look for a User:</label>
-        <input type="text" name="search_users_query" id="search_users_query" placeholder="Search..." pattern="[a-zA-Z_0-9]{1,20}" autocomplete="off">
-        <button type="button" id="searchUsersBtn">Search</button>
-        <button id="clearSearchUsersBtn">Clear</button>
-        <img src="../images_website/close.png" id='closeSearchUsers' alt="close">
+      <label for="search_users_query">Look for a User:</label>
+      <input
+        type="text"
+        name="search_users_query"
+        id="search_users_query"
+        placeholder="Search..."
+        pattern="[a-zA-Z_0-9]{1,20}"
+        autocomplete="off"
+      />
+      <button type="button" id="searchUsersBtn">Search</button>
+      <button id="clearSearchUsersBtn">Clear</button>
+      <img
+        src="../images_website/close.png"
+        id="closeSearchUsers"
+        alt="close"
+      />
     </div>
     <div id="box"></div>
-</body>
+  </body>
 </html>
