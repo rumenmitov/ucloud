@@ -430,7 +430,7 @@ uploadRouter.route('/').post((req, res, next) => {
     let ownerofDir = dir.split('/')[0];
     if (ownerofDir !== req.session.username) {
       res.send(
-        `Error: User lacking permission to edit. <a href='https://${LINK}/homePage/homePage.html?pwd=${fields.filePath}'>Back to site</a>`
+        `Error: User lacking permission to edit.`
       );
       return next();
     }
@@ -736,7 +736,7 @@ renameRouter.route('/:renameOBJ').put((req, res, next) => {
   let ownerofDir = dir.split('/')[1];
   if (ownerofDir !== req.session.username) {
     res.send(
-      `Error: User lacking permission to edit. <a href='https://${LINK}/homePage/homePage.html?pwd=${prevDir}'>Back to site</a>`
+      `Error: User lacking permission to edit.`
     );
     return next();
   }
@@ -808,7 +808,7 @@ deleteRouter.route('/:deleteOBJ').delete((req, res, next) => {
   let ownerofDir = dir.split('/')[1];
   if (ownerofDir !== req.session.username) {
     res.send(
-      `Error: User lacking permission to edit. <a href='https://${LINK}/homePage/homePage.html?pwd=${prevDir}'>Back to site</a>`
+      `Error: User lacking permission to edit.`
     );
     return next();
   }
