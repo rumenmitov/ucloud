@@ -225,10 +225,7 @@ function deleteFile(event) {
       type: targetType
     });
 
-    deleteRequest.open(
-      `delete`,
-      `https://ucloudproject.com/delete/${deleteOBJ}`
-    );
+    deleteRequest.open(`delete`, `https://ucloudproject.com/delete/${deleteOBJ}`);
     deleteRequest.setRequestHeader('Content-type', 'application/json');
     deleteRequest.withCredentials = true;
     deleteRequest.send(JSON.stringify({ path: event.target.link }));
@@ -324,7 +321,10 @@ window.onload = () => {
     searchUsersBtn: document.querySelector('#searchUsersBtn'),
     clearSearchUsersBtn: document.querySelector('#clearSearchUsersBtn'),
     search_users_query: document.querySelector('#search_users_query'),
-    closeSearchUsers: document.querySelector('#closeSearchUsers')
+    closeSearchUsers: document.querySelector('#closeSearchUsers'),
+    screenCover: document.querySelector('#screenCover'),
+    loader: document.querySelector('#loader'),
+    coverText: document.querySelector('#coverText')
   };
 
   domOBJ.location.innerHTML = '/' + currentDir;
@@ -393,6 +393,12 @@ window.onload = () => {
 
   domOBJ.uploadForm.click();
 
+  domOBJ.uploadForm.addEventListener('submit', ()=>{
+    domOBJ.screenCover.style = 'display:block';
+    domOBJ.loader.style = 'display:block;';
+    domOBJ.coverText.style = 'display:block;';
+  });
+
   domOBJ.filePath.addEventListener('click', (e) => {
     e.target.value = currentDir;
   });
@@ -434,10 +440,7 @@ window.onload = () => {
     if (!search_query) return getAllFiles(JSON.stringify({ path: currentDir }));
 
     let xhttp = new XMLHttpRequest();
-    xhttp.open(
-      'get',
-      `https://ucloudproject.com/search/${JSON.stringify(searchOBJ)}`
-    );
+    xhttp.open('get', `https://ucloudproject.com/search/${JSON.stringify(searchOBJ)}`);
     xhttp.withCredentials = true;
     xhttp.send(null);
 
