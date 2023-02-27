@@ -61,7 +61,7 @@ function displayFiles(responseArray) {
   document.querySelector('body').appendChild(box);
 
   responseArray.forEach((file) => {
-    if (file.name === 'ucloud_files.txt') return;
+    if (file.name === 'ucloud_files.txt' || !file.name) return;
 
     const fileName = file.name.split('/').pop();
     const link = `https://ucloudproject.com/users${file.linkUrl}`;
@@ -71,7 +71,7 @@ function displayFiles(responseArray) {
     fileBox.class = 'fileBox';
     document.querySelector('#box').appendChild(fileBox);
 
-    if (!type && fileName) {
+    if (!type) {
       let image = document.createElement('img');
       image.src = '../images_website/folderIcon.png';
       image.id = file.linkUrl;
