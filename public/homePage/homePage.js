@@ -71,7 +71,7 @@ function displayFiles(responseArray) {
     fileBox.class = 'fileBox';
     document.querySelector('#box').appendChild(fileBox);
 
-    if (!type) {
+    if (!type && fileName) {
       let image = document.createElement('img');
       image.src = '../images_website/folderIcon.png';
       image.id = file.linkUrl;
