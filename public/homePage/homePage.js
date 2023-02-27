@@ -149,15 +149,15 @@ function displayFiles(responseArray) {
       downloadLink.innerHTML = `Download<br>`;
       downloadLink.title = fileName;
       fileBox.appendChild(downloadLink);
-    }
 
-    let renameButton = document.createElement('button');
-    renameButton.innerText = 'Rename';
-    renameButton.id = fileName;
-    renameButton.link = file.linkUrl;
-    renameButton.addEventListener('click', renameFile);
-    fileBox.appendChild(renameButton);
-    fileBox.appendChild(document.createElement('br'));
+      let renameButton = document.createElement('button');
+      renameButton.innerText = 'Rename';
+      renameButton.id = fileName;
+      renameButton.link = file.linkUrl;
+      renameButton.addEventListener('click', renameFile);
+      fileBox.appendChild(renameButton);
+      fileBox.appendChild(document.createElement('br'));
+    }
 
     let deleteBtn = document.createElement('button');
     deleteBtn.innerText = 'Delete';
