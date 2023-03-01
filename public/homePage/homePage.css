@@ -297,7 +297,7 @@ img, video, iframe{
 
 @media screen and (min-width: 700px) {
   #box {
-    margin-left: 0.25vw;
+    margin-left: 0.5vw;
     column-gap: 0.75vw;
     row-gap: 10vh;
     grid-template-columns: auto auto auto;
@@ -306,7 +306,7 @@ img, video, iframe{
 
 @media screen and (min-width: 1000px) {
   #box {
-    margin-left: 0.75vw;
+    margin-left: 1vw;
     column-gap: 0.25vw;
     row-gap: 15vh;
     grid-template-columns: auto auto auto auto;
