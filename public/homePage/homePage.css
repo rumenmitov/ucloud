@@ -290,9 +290,25 @@ img, video, iframe{
     margin-top: 45vh;
     display: grid;
     column-gap: 1vw;
-    row-gap: 15vh;
+    row-gap: 5vh;
     grid-template-columns: auto auto;
     justify-content: space-evenly;
+}
+
+@media screen and (min-width: 700px) {
+  #box {
+    column-gap: 0.75vw;
+    row-gap: 10vh;
+    grid-template-columns: auto auto auto;
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  #box {
+    column-gap: 0.5vw;
+    row-gap: 15vh;
+    grid-template-columns: auto auto auto auto;
+  }
 }
 
 td {
