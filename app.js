@@ -49,7 +49,7 @@ verifyRouter.route('/').post((req, res) => {
       html: `<a href='https://${LINK}/signup/signup.html?userCode=${encodedEmail}'>Verify</a>`
     },
     (err) => {
-      if (err) console.log(err);
+      if (err) { console.log(err); }
 
       res.send('Verification email sent. Check your inbox.');
     }
@@ -80,12 +80,12 @@ signupRouter.route('/').post((req, res, next) => {
   req.body.email = req.body.email.toLowerCase();
 
   client.connect((err) => {
-    if (err) console.log(err);
+    if (err) { console.log(err); }
 
     let usersCollection = client.db('ucloud').collection('users');
 
     usersCollection.find({ email: req.body.email }).toArray((err, results) => {
-      if (err) console.log(err);
+      if (err) { console.log(err); }
 
       if (results) {
         res.send('Oops! Email is already in use.');
@@ -95,7 +95,7 @@ signupRouter.route('/').post((req, res, next) => {
         usersCollection
           .find({ username: req.body.username })
           .toArray((err, results) => {
-            if (err) console.log(err);
+            if (err) { console.log(err); }
 
             if (results) {
               res.send(
@@ -106,12 +106,12 @@ signupRouter.route('/').post((req, res, next) => {
             }
 
             usersCollection.insertOne(req.body, (err) => {
-              if (err) console.log(err);
+              if (err) { console.log(err); }
 
               fs.mkdir(
                 __dirname + '/public/users/' + req.body.username,
                 (err) => {
-                  if (err) console.log(err);
+                  if (err) { console.log(err); }
 
                   fs.mkdir(
                     __dirname +
@@ -120,7 +120,7 @@ signupRouter.route('/').post((req, res, next) => {
                       '/.' +
                       req.body.username,
                     (err) => {
-                      if (err) console.log(err);
+                      if (err) { console.log(err); }
 
                       fs.writeFileSync(
                         __dirname +
@@ -151,15 +151,18 @@ signupRouter.route('/').post((req, res, next) => {
 
 let isUserLoggedInRouter = express.Router();
 isUserLoggedInRouter.route('/').all((req, res) => {
-  if (req.session.username) res.send(req.session.username);
-  else res.send(null);
+  if (req.session.username) { 
+    res.send(req.session.username);
+  } else {
+    res.send(null);
+  }
 });
 
 let loginRouter = express.Router();
 loginRouter.use(bodyParser.urlencoded({ extended: true }));
 loginRouter.route('/').post((req, res, next) => {
   client.connect((err) => {
-    if (err) console.log(err);
+    if (err) { console.log(err); }
 
     let usersCollection = client.db('ucloud').collection('users');
     usersCollection
@@ -167,7 +170,7 @@ loginRouter.route('/').post((req, res, next) => {
         $or: [{ email: req.body.username }, { username: req.body.username }]
       })
       .toArray((err, results) => {
-        if (err) console.log(err);
+        if (err) { console.log(err); }
 
         if (!results || !results[0]) {
           res.send(
@@ -208,7 +211,7 @@ passResetRouter.route('/:userCode').post((req, res, next) => {
 
   if (userCode == 0) {
     client.connect((err) => {
-      if (err) console.log(err);
+      if (err) { console.log(err); }
 
       let usersCollection = client.db('ucloud').collection('users');
       usersCollection
@@ -216,13 +219,13 @@ passResetRouter.route('/:userCode').post((req, res, next) => {
           $or: [{ username: req.body.username }, { email: req.body.username }]
         })
         .toArray((err, results) => {
-          if (err) console.log(err);
+          if (err) { console.log(err); }
 
-          if (!results[0])
+          if (!results[0]) {
             res.send(
               'User does not exist! Make sure that you typed your username / email correctly.'
             );
-          else {
+	  } else {
             let userId = results[0]._id.toString();
             let userId_encoded = Buffer.from(userId).toString('base64');
             mailTransporter.sendMail(
@@ -233,7 +236,7 @@ passResetRouter.route('/:userCode').post((req, res, next) => {
                 html: `<a href='https://${LINK}/password_reset/new_password.html?userCode=${userId_encoded}'>Change Password</a>`
               },
               (err) => {
-                if (err) console.log(err);
+                if (err) { console.log(err); }
 
                 res.send('Password reset email sent. Check your inbox.');
               }
@@ -243,17 +246,17 @@ passResetRouter.route('/:userCode').post((req, res, next) => {
         });
     });
   } else {
-    if (req.body.newPassword !== req.body.confirmPassword)
+    if (req.body.newPassword !== req.body.confirmPassword) {
       res.send('Passwords do not match! Please try again!');
-    else {
+    } else {
       client.connect((err) => {
-        if (err) console.log(err);
+        if (err) { console.log(err); }
 
         let userId = new mongodb.ObjectID(req.body.userId);
         let usersCollection = client.db('ucloud').collection('users');
         // NOTE: First check if user has not been deleted
         usersCollection.find({ _id: userId }).toArray((err, results) => {
-          if (err) console.log(err);
+          if (err) { console.log(err); }
 
           if (!results[0]) {
             res.send('This user does not exist. Please try making an account!');
@@ -268,7 +271,7 @@ passResetRouter.route('/:userCode').post((req, res, next) => {
                 }
               },
               (err, results) => {
-                if (err) console.log(err);
+                if (err) { console.log(err); }
 
                 res.send('Password reset successfully!');
                 client.close();
@@ -286,19 +289,22 @@ userExistsRouter.use(bodyParser.json());
 userExistsRouter.use(bodyParser.urlencoded({ extended: true }));
 userExistsRouter.route('/').post((req, res) => {
   client.connect((err) => {
-    if (err) console.log(err);
+    if (err) { console.log(err); }
 
     let usersCollection = client.db('ucloud').collection('users');
     usersCollection
       .find({ username: req.body.user })
       .toArray((err, results) => {
-        if (err) console.log(err);
+        if (err) { console.log(err); }
 
-        if (!results[0]) res.send({ error: 'Error! User does not exit!' });
+        if (!results) { 
+	  res.send({ error: 'Error! User does not exit!' });
+        }
+
         folderSize(
           __dirname + `/public/users/${req.body.user}`,
           (err, bytes) => {
-            if (err) console.log(err);
+            if (err) { console.log(err); }
 
             res.send({ freeSpace: 1000000000 - bytes });
             client.close();
@@ -325,8 +331,9 @@ homeRouter.route('/').post((req, res) => {
     filesArray.forEach((file) => {
       let fileType = '';
       let fileComponents = file.split('.');
-      if (fileComponents.length > 1)
+      if (fileComponents.length > 1) {
         fileType = fileComponents[fileComponents.length - 1];
+      }
 
       let linkPath = '/' + file;
 
@@ -374,7 +381,7 @@ avatarRouter.use(bodyParser.urlencoded({ extended: true }));
 avatarRouter.route('/').post((req, res, next) => {
   let form = formidable({ multiples: true });
   form.parse(req, (err, fields, files) => {
-    if (err) console.log(err);
+    if (err) { console.log(err); }
 
     if (
       path.extname(files.avatarImg.originalFilename) !== '.jpg' &&
@@ -393,7 +400,7 @@ avatarRouter.route('/').post((req, res, next) => {
       __dirname +
         `/public/users/${req.session.username}/.${req.session.username}/${req.session.username}_avatar.png`,
       (err) => {
-        if (err) console.log(err);
+        if (err) { console.log(err); }
 
         res.send(
           `Profile pic changed. <a href='https://${LINK}/homePage/homePage.html?pwd=${req.session.username}'>Back to site</a>`
@@ -423,7 +430,7 @@ uploadRouter.use(bodyParser.urlencoded({ extended: true }));
 uploadRouter.route('/').post((req, res, next) => {
   let form = formidable({ multiples: true });
   form.parse(req, (err, fields, files) => {
-    if (err) console.log(err);
+    if (err) { console.log(err); }
 
     let dir = fields.filePath;
 
@@ -497,19 +504,20 @@ uploadRouter.route('/').post((req, res, next) => {
           }
         }
 
-        if (fs.existsSync(fileListPath))
+        if (fs.existsSync(fileListPath)) {
           fs.writeFileSync(fileListPath, `\r\n` + name, {
             encoding: 'utf-8',
             flag: 'a'
           });
-        else
+	} else {
           fs.writeFileSync(fileListPath, name, {
             encoding: 'utf-8',
             flag: 'w'
           });
+	}
 
         fs.rename(oldPath, newPath, (err) => {
-          if (err) console.log(err);
+          if (err) { console.log(err); }
         });
       }
     } else {
@@ -559,13 +567,14 @@ uploadRouter.route('/').post((req, res, next) => {
         }
       }
 
-      if (fs.existsSync(fileListPath))
+      if (fs.existsSync(fileListPath)) {
         fs.writeFileSync(fileListPath, `\r\n` + name, {
           encoding: 'utf-8',
           flag: 'a'
         });
-      else
+      } else {
         fs.writeFileSync(fileListPath, name, { encoding: 'utf-8', flag: 'w' });
+      }
 
       fs.rename(oldPath, newPath, (err) => {
         if (err) console.log(err);
@@ -608,7 +617,7 @@ mkdirRouter.route('/').post((req, res, next) => {
   }
 
   fs.mkdir(__dirname + '/public/users/' + dir + '/' + name, (err) => {
-    if (err) console.log(err);
+    if (err) { console.log(err); }
 
     fs.writeFileSync(
       __dirname + '/public/users/' + dir + '/' + name + '/ucloud_files.txt',
@@ -616,16 +625,17 @@ mkdirRouter.route('/').post((req, res, next) => {
       { encoding: 'utf-8', flag: 'w' }
     );
 
-    if (fs.existsSync(fileListPath))
+    if (fs.existsSync(fileListPath)) {
       fs.writeFileSync(fileListPath, '\r\n' + dir + '/' + name, {
         encoding: 'utf-8',
         flag: 'a'
       });
-    else
+    } else {
       fs.writeFileSync(fileListPath, dir + '/' + name, {
         encoding: 'utf-8',
         flag: 'w'
       });
+    }
     res.redirect(`https://${LINK}/homePage/homePage.html?pwd=${dir}`);
   });
 });
@@ -698,11 +708,11 @@ searchUsersRouter.route('/:search_query').get((req, res) => {
   let search_query = req.params['search_query'];
 
   client.connect((err) => {
-    if (err) console.log(err);
+    if (err) { console.log(err); }
 
     let usersCollection = client.db('ucloud').collection('users');
     usersCollection.find({ username: search_query }).toArray((err, results) => {
-      if (err) console.log(err);
+      if (err) { console.log(err); }
 
       if (results[0]) {
         results.forEach((user) => {
@@ -711,9 +721,9 @@ searchUsersRouter.route('/:search_query').get((req, res) => {
               __dirname +
                 `/public/users/${user.username}/.${user.username}/${user.username}_avatar.png`
             )
-          )
+          ) {
             user.avatarLink = `../users/${user.username}/.${user.username}/${user.username}_avatar.png`;
-          else user.avatarLink = '../images_website/avatar.png';
+	  } else { user.avatarLink = '../images_website/avatar.png'; }
         });
       }
 
@@ -741,24 +751,24 @@ renameRouter.route('/:renameOBJ').put((req, res, next) => {
   }
 
   let prevDirAbs = prevDir;
-  if (prevDir[0] != '/') prevDirAbs = '/' + prevDir;
+  if (prevDir[0] != '/') { prevDirAbs = '/' + prevDir; }
 
   let fileListPath =
     __dirname + '/public/users' + prevDirAbs + '/ucloud_files.txt';
 
   let queryOBJ = JSON.parse(req.params['renameOBJ']);
-  if (queryOBJ.extension) queryOBJ.extension = '.' + queryOBJ.extension;
-  if (queryOBJ.type == 'file') queryOBJ.newFileName += queryOBJ.extension;
+  if (queryOBJ.extension) { queryOBJ.extension = '.' + queryOBJ.extension; }
+  if (queryOBJ.type == 'file') { queryOBJ.newFileName += queryOBJ.extension; }
 
   let allFilesArray = fs.readFileSync(fileListPath, 'utf-8').split('\r\n');
 
   let dirAbs = dir;
-  if (dir[0] != '/') dirAbs = '/' + dir;
+  if (dir[0] != '/') { dirAbs = '/' + dir; }
   fs.rename(
     __dirname + '/public/users' + dirAbs,
     __dirname + '/public/users' + prevDirAbs + '/' + queryOBJ.newFileName,
     (err) => {
-      if (err) console.log(err);
+      if (err) { console.log(err); }
     }
   );
 
@@ -787,7 +797,7 @@ renameRouter.route('/:renameOBJ').put((req, res, next) => {
     }
   } else {
     fs.rm(fileListPath, (err) => {
-      if (err) console.log(err);
+      if (err) { console.log(err); }
     });
   }
   res.send(`File renamed successfully`);
@@ -810,15 +820,15 @@ deleteRouter.route('/:deleteOBJ').delete((req, res, next) => {
     return next();
   }
 
-  if (prevDir[0] != '/') prevDir = '/' + prevDir;
+  if (prevDir[0] != '/') { prevDir = '/' + prevDir; }
   let fileListPath =
     __dirname + '/public/users' + prevDir + '/ucloud_files.txt';
 
   let allFilesArray = fs.readFileSync(fileListPath, 'utf-8').split('\r\n');
 
-  if (dir[0] != '/') dir = '/' + dir;
+  if (dir[0] != '/') { dir = '/' + dir; }
   fs.rm(__dirname + '/public/users' + dir, { recursive: true }, (err) => {
-    if (err) console.log(err);
+    if (err) { console.log(err); }
   });
 
   for (let item in allFilesArray) {
@@ -842,7 +852,7 @@ deleteRouter.route('/:deleteOBJ').delete((req, res, next) => {
     }
   } else {
     fs.rm(fileListPath, (err) => {
-      if (err) console.log(err);
+      if (err) { console.log(err); }
     });
   }
   res.send(`File: '${queryOBJ.query}' deleted successfully`);
