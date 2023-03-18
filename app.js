@@ -87,7 +87,7 @@ signupRouter.route('/').post((req, res, next) => {
     usersCollection.find({ email: req.body.email }).toArray((err, results) => {
       if (err) console.log(err);
 
-      if (results[0]) {
+      if (results) {
         res.send('Oops! Email is already in use.');
         client.close();
         return next();
@@ -169,7 +169,7 @@ loginRouter.route('/').post((req, res, next) => {
       .toArray((err, results) => {
         if (err) console.log(err);
 
-        if (!results[0]) {
+        if (!results || !results[0]) {
           res.send(
             `Username and password do not match. <a href="https://${LINK}/login/login.html">Try again</a>`
           );
