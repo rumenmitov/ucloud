@@ -87,7 +87,7 @@ signupRouter.route('/').post((req, res, next) => {
     usersCollection.find({ email: req.body.email }).toArray((err, results) => {
       if (err) { console.log(err); }
 
-      if (results) {
+      if (results && results[0]) {
         res.send('Oops! Email is already in use.');
         client.close();
         return next();
