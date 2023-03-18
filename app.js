@@ -429,9 +429,7 @@ uploadRouter.route('/').post((req, res, next) => {
 
     let ownerofDir = dir.split('/')[0];
     if (ownerofDir !== req.session.username) {
-      res.send(
-        `Error: User lacking permission to edit.`
-      );
+      res.send(`Error: User lacking permission to edit.`);
       return next();
     }
 
@@ -647,8 +645,9 @@ searchRouter.route('/:searchOBJ').get((req, res) => {
         if (
           path.basename(file) === 'ucloud_greeter.txt' ||
           path.basename(file) === `${searchOBJ.path.split('/')[0]}_avatar.png`
-        )
+	) {
           return;
+	}
 
         let fileComponents = path.basename(file).split('.');
         let type = fileComponents[fileComponents.length - 1];
@@ -670,8 +669,10 @@ searchRouter.route('/:searchOBJ').get((req, res) => {
         __dirname + '/public/users/' + searchOBJ.path,
         function (searchResults) {
           searchResults.forEach((file) => {
-            if (path.basename(file) === `.${searchOBJ.path.split('/')[0]}`)
+	    if (path.basename(file) === `.${searchOBJ.path.split('/')[0]}`) {
               return;
+	    }
+	    
 
             let type = undefined;
 
@@ -735,9 +736,7 @@ renameRouter.route('/:renameOBJ').put((req, res, next) => {
 
   let ownerofDir = dir.split('/')[1];
   if (ownerofDir !== req.session.username) {
-    res.send(
-      `Error: User lacking permission to edit.`
-    );
+    res.send(`Error: User lacking permission to edit.`);
     return next();
   }
 
@@ -807,9 +806,7 @@ deleteRouter.route('/:deleteOBJ').delete((req, res, next) => {
 
   let ownerofDir = dir.split('/')[1];
   if (ownerofDir !== req.session.username) {
-    res.send(
-      `Error: User lacking permission to edit.`
-    );
+    res.send(`Error: User lacking permission to edit.`);
     return next();
   }
 
