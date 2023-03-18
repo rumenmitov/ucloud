@@ -437,7 +437,7 @@ window.onload = () => {
     box.id = 'box';
     document.querySelector('body').appendChild(box);
 
-    if (!search_query) {
+    if (!searchOBJ.search_query) {
       getAllFiles(JSON.stringify({ path: currentDir }));
       return;
     } else {
