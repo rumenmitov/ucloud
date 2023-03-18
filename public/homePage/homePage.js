@@ -439,6 +439,7 @@ window.onload = () => {
 
     if (!search_query) {
       getAllFiles(JSON.stringify({ path: currentDir }));
+      return;
     }
 
     let xhttp = new XMLHttpRequest();
