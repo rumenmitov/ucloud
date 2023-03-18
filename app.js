@@ -97,7 +97,7 @@ signupRouter.route('/').post((req, res, next) => {
           .toArray((err, results) => {
             if (err) console.log(err);
 
-            if (results[0]) {
+            if (results) {
               res.send(
                 'Oops! Username already taken. Please try with another one'
               );
