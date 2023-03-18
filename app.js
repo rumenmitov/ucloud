@@ -693,7 +693,7 @@ searchRouter.route('/:searchOBJ').get((req, res) => {
 
             let fileName = searchOBJ.path + '/' + filePath;
 
-            searchData.push({ name: fileName, linkUrl: filePath, type: type });
+            searchData.push({ name: fileName, linkUrl: '/' + searchOBJ.path + '/' + filePath, type: type });
           });
           res.send(searchData);
         }
