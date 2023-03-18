@@ -437,7 +437,9 @@ window.onload = () => {
     box.id = 'box';
     document.querySelector('body').appendChild(box);
 
-    if (!search_query) getAllFiles(JSON.stringify({ path: currentDir }));
+    if (!search_query) {
+      getAllFiles(JSON.stringify({ path: currentDir }));
+    }
 
     let xhttp = new XMLHttpRequest();
     xhttp.open('get', `https://ucloudproject.com/search/${JSON.stringify(searchOBJ)}`);
