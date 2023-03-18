@@ -440,16 +440,16 @@ window.onload = () => {
     if (!search_query) {
       getAllFiles(JSON.stringify({ path: currentDir }));
       return;
-    }
+    } else {
+      let xhttp = new XMLHttpRequest();
+      xhttp.open('get', `https://ucloudproject.com/search/${JSON.stringify(searchOBJ)}`);
+      xhttp.withCredentials = true;
+      xhttp.send(null);
 
-    let xhttp = new XMLHttpRequest();
-    xhttp.open('get', `https://ucloudproject.com/search/${JSON.stringify(searchOBJ)}`);
-    xhttp.withCredentials = true;
-    xhttp.send(null);
-
-    xhttp.onload = function () {
-      displayFiles(JSON.parse(this.responseText));
-      console.log(JSON.parse(this.responseText));
+      xhttp.onload = function () {
+	displayFiles(JSON.parse(this.responseText));
+	console.log(JSON.parse(this.responseText));
+      }
     };
   });
 
