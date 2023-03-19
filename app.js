@@ -713,10 +713,12 @@ searchUsersRouter.route('/:search_query').get((req, res) => {
       results.forEach(user =>{
 	user = user.split('/');
 	user = user[user.length - 1];
-	responseArray.push({
-	  username: user,
-	  avatarLink: '../users/' + user + '/.' + user + '/' + user + '_avatar/png'
-	});
+	if (!user.split('.')[1]) {
+	  responseArray.push({
+	    username: user,
+	    avatarLink: '../users/' + user + '/.' + user + '/' + user + '_avatar.png'
+	  });
+	}
       });
       res.send(responseArray);
     } else {
