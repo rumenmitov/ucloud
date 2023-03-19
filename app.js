@@ -706,8 +706,8 @@ let searchUsersRouter = express.Router();
 searchUsersRouter.use(bodyParser.urlencoded({ extended: true }));
 searchUsersRouter.route('/:search_query').get((req, res) => {
   let search_query = req.params['search_query'];
-  
-  find.dir(search_query, __dirname + '/public/users', (results)=>{
+  let query = new RegExp(`${searchOBJ.search_query}`, 'i');
+  find.dir(query, __dirname + '/public/users', (results)=>{
     if (results) {
       let responseArray = [];
       results.forEach(user =>{

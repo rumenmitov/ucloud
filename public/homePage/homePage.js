@@ -518,7 +518,7 @@ window.onload = () => {
 
     xhttp.onload = function () {
       displayUsers(JSON.parse(this.responseText));
-      domOBJ.search_usersForm.style = 'display:none;';
+      // domOBJ.search_usersForm.style = 'display:none;';
     };
   });
 
