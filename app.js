@@ -711,6 +711,8 @@ searchUsersRouter.route('/:search_query').get((req, res) => {
     if (results) {
       let responseArray = [];
       results.forEach(user =>{
+	user = user.split('/');
+	user = user[user.length - 1];
 	responseArray.push({
 	  username: user,
 	  avatarLink: '../users/' + user + '/.' + user + '/' + user + '_avatar/png'
