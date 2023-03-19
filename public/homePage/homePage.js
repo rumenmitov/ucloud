@@ -534,8 +534,20 @@ window.onload = () => {
   });
 
   domOBJ.search_usersForm.addEventListener('input', function () {
-    domOBJ.searchUsersBtn.click();
-    domOBJ.search_usersForm.style = 'display:block;';
+    let search_query = document.querySelector('#search_users_query').value;
+
+    document.querySelector('#box').remove();
+    let box = document.createElement('div');
+    box.id = 'box';
+    document.querySelector('body').appendChild(box);
+
+    let xhttp = new XMLHttpRequest();
+    xhttp.open('get', `https://ucloudproject.com/search_users/${search_query}`);
+    xhttp.send(null);
+
+    xhttp.onload = function () {
+      displayUsers(JSON.parse(this.responseText));
+    };
   });
 
   // Key press events
