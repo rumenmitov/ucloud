@@ -510,7 +510,7 @@ window.onload = () => {
     box.id = 'box';
     document.querySelector('body').appendChild(box);
 
-    if (!search_query) return document.write('No users found!');
+    // if (!search_query) return document.write('No users found!');
 
     let xhttp = new XMLHttpRequest();
     xhttp.open('get', `https://ucloudproject.com/search_users/${search_query}`);
@@ -535,8 +535,8 @@ window.onload = () => {
     domOBJ.search_usersForm.style = 'display:none;';
   });
 
-  domOBJ.search_usersForm.addEventListener('mouseleave', function () {
-    domOBJ.search_usersForm.style = 'display:none;';
+  domOBJ.search_usersForm.addEventListener('input', function () {
+    domOBJ.searchUsersBtn.click();
   });
 
   // Key press events

@@ -706,31 +706,21 @@ let searchUsersRouter = express.Router();
 searchUsersRouter.use(bodyParser.urlencoded({ extended: true }));
 searchUsersRouter.route('/:search_query').get((req, res) => {
   let search_query = req.params['search_query'];
-
-  client.connect((err) => {
-    if (err) { console.log(err); }
-
-    let usersCollection = client.db('ucloud').collection('users');
-    usersCollection.find({ username: search_query }).toArray((err, results) => {
-      if (err) { console.log(err); }
-
-      if (results[0]) {
-        results.forEach((user) => {
-          if (
-            fs.existsSync(
-              __dirname +
-                `/public/users/${user.username}/.${user.username}/${user.username}_avatar.png`
-            )
-          ) {
-            user.avatarLink = `../users/${user.username}/.${user.username}/${user.username}_avatar.png`;
-	  } else { user.avatarLink = '../images_website/avatar.png'; }
-        });
-      }
-
-      res.send(results);
-      client.close();
-    });
-  });
+  
+  find.dir(search_query, __dirname + '/public/users', (results)=>{
+    if (results) {
+      let responseArray = [];
+      results.forEach(user =>{
+	responseArray.push({
+	  username: user,
+	  avatarLink: '../users/' + user + '/.' + user + '/' + user + '_avatar/png';
+	});
+      });
+      res.send(responseArray);
+    } else {
+      res.send(null);
+    }
+  })
 });
 
 let renameRouter = express.Router();
