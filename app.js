@@ -713,7 +713,7 @@ searchUsersRouter.route('/:search_query').get((req, res) => {
       results.forEach(user =>{
 	responseArray.push({
 	  username: user,
-	  avatarLink: '../users/' + user + '/.' + user + '/' + user + '_avatar/png';
+	  avatarLink: '../users/' + user + '/.' + user + '/' + user + '_avatar/png'
 	});
       });
       res.send(responseArray);
