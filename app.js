@@ -651,7 +651,6 @@ searchRouter.route('/:searchOBJ').get((req, res) => {
     query,
     __dirname + '/public/users/' + searchOBJ.path,
     function (searchResults) {
-      console.log(searchResults);
       searchResults.forEach((file) => {
         if (
           path.basename(file) !== 'ucloud_greeter.txt' &&
@@ -665,6 +664,7 @@ searchRouter.route('/:searchOBJ').get((req, res) => {
 	    .split('\\')
 	    .join('/');
 
+	  console.log('/' + searchOBJ.path + '/' + filePath);
 	  searchData.push({
 	    name: path.basename(file),
 	    linkUrl: '/' + searchOBJ.path + '/' + filePath,
