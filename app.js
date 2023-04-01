@@ -651,27 +651,27 @@ searchRouter.route('/:searchOBJ').get((req, res) => {
     query,
     __dirname + '/public/users/' + searchOBJ.path,
     function (searchResults) {
+      console.log(searchResults);
       searchResults.forEach((file) => {
         if (
-          path.basename(file) === 'ucloud_greeter.txt' ||
-          path.basename(file) === `${searchOBJ.path.split('/')[0]}_avatar.png`
+          path.basename(file) !== 'ucloud_greeter.txt' &&
+          path.basename(file) !== `${searchOBJ.path.split('/')[0]}_avatar.png`
 	) {
-          return;
+	  let fileComponents = path.basename(file).split('.');
+	  let type = fileComponents[fileComponents.length - 1];
+
+	  let filePath = path
+	    .relative(__dirname + '/public/users/' + searchOBJ.path, file)
+	    .split('\\')
+	    .join('/');
+
+	  searchData.push({
+	    name: path.basename(file),
+	    linkUrl: '/' + searchOBJ.path + '/' + filePath,
+	    type: type
+	  });
 	}
 
-        let fileComponents = path.basename(file).split('.');
-        let type = fileComponents[fileComponents.length - 1];
-
-        let filePath = path
-          .relative(__dirname + '/public/users/' + searchOBJ.path, file)
-          .split('\\')
-          .join('/');
-
-        searchData.push({
-          name: path.basename(file),
-          linkUrl: '/' + searchOBJ.path + '/' + filePath,
-          type: type
-        });
       });
 
       find.dir(
@@ -713,7 +713,7 @@ searchUsersRouter.route('/:search_query').get((req, res) => {
       results.forEach(user =>{
 	user = user.split('/');
 	user = user[user.length - 1];
-	if (!user.split('.')[1]) {
+	if (!user.split('.')[1] && !user.split('/')[4]) {
 	  responseArray.push({
 	    username: user,
 	    avatarLink: '../users/' + user + '/.' + user + '/' + user + '_avatar.png'

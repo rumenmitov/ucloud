@@ -92,6 +92,7 @@ function displayFiles(responseArray) {
     } else {
       if (
         type === 'jpg' ||
+	type === 'jpeg' ||
         type === 'png' ||
         type === 'webp' ||
         type === 'gif'
