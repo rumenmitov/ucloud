@@ -664,7 +664,6 @@ searchRouter.route('/:searchOBJ').get((req, res) => {
 	    .split('\\')
 	    .join('/');
 
-	  console.log('/' + searchOBJ.path + '/' + filePath);
 	  searchData.push({
 	    name: path.basename(file),
 	    linkUrl: '/' + searchOBJ.path + '/' + filePath,
@@ -712,12 +711,15 @@ searchUsersRouter.route('/:search_query').get((req, res) => {
       let responseArray = [];
       results.forEach(user =>{
 	user = user.split('/');
-	user = user[user.length - 1];
-	if (!user.split('.')[1] && !user.split('/')[4]) {
-	  responseArray.push({
-	    username: user,
-	    avatarLink: '../users/' + user + '/.' + user + '/' + user + '_avatar.png'
-	  });
+	console.log(user);
+	if (!user[2]) {
+	  user = user[user.length - 1];
+	  if (!user.split('.')[1] && !user.split('/')[4]) {
+	    responseArray.push({
+	      username: user,
+	      avatarLink: '../users/' + user + '/.' + user + '/' + user + '_avatar.png'
+	    });
+	  }
 	}
       });
       res.send(responseArray);
