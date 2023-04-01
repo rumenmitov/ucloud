@@ -712,7 +712,6 @@ searchUsersRouter.route('/:search_query').get((req, res) => {
       results.forEach(user =>{
 	user = user.split('/');
 	// output: /home/rumencho/ucloud/public/<user + ...>   <--- array
-	console.log(user);
 	if (!user[7]) {
 	  user = user[user.length - 1];
 	  if (!user.split('.')[1] && !user.split('/')[4]) {

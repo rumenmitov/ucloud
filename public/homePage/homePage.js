@@ -256,7 +256,6 @@ function displayUsers(responseArray) {
 
   let userTable = document.createElement('table');
   box.appendChild(userTable);
-  console.log(userTable);
 
   responseArray.forEach((user) => {
     let userRow = document.createElement('tr');
@@ -449,7 +448,6 @@ window.onload = () => {
 
       xhttp.onload = function () {
 	displayFiles(JSON.parse(this.responseText));
-	console.log(JSON.parse(this.responseText));
       }
     };
   });
@@ -573,7 +571,6 @@ window.onload = () => {
   });
 
   domOBJ.avatarForm.addEventListener('keypress', (e) => {
-    console.log(e);
     if (e.keyCode == 13) domOBJ.uploadAvatarBtn.click();
     else if (e.keyCode == 27) domOBJ.clearAvatarBtn.click();
   });
